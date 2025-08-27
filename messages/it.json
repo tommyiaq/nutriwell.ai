@@ -1,0 +1,16 @@
+{
+  "header": {
+    "title": "nutriwell",
+    "tagline": "Nutrizione Intelligente, Alimentata dall'AI",
+    "nav": {
+      "features": "Funzionalità",
+      "about": "Chi Siamo",
+      "pricing": "Prezzi",
+      "getStarted": "Inizia Ora"
+    }
+  },
+  "home": {
+    "welcome": "Benvenuto su nutriwell",
+    "description": "Demo statica del progetto con un header moderno e professionale."
+  }
+}

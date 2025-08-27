@@ -1,0 +1,16 @@
+{
+  "header": {
+    "title": "nutriwell",
+    "tagline": "Smart Nutrition, Powered by AI",
+    "nav": {
+      "features": "Features",
+      "about": "About",
+      "pricing": "Pricing",
+      "getStarted": "Get Started"
+    }
+  },
+  "home": {
+    "welcome": "Welcome to nutriwell",
+    "description": "Static demo of the project with a modern and professional header."
+  }
+}

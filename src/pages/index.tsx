@@ -1,12 +1,15 @@
 import Header from '../components/Header';
+import {useTranslations} from 'next-intl';
 
 const Home = () => {
+  const t = useTranslations('home');
+  
   return (
     <div>
       <Header />
       <main className="nv-main-container">
-        <h2>Benvenuto su nutriwell.ai</h2>
-        <p>Demo statica del progetto con un header moderno e professionale.</p>
+        <h2>{t('welcome')}</h2>
+        <p>{t('description')}</p>
       </main>
     </div>
   );
