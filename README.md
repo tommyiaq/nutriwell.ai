@@ -1,4 +1,4 @@
-# My Next.js App
+# nutriwell
 
 This is a Next.js application created with TypeScript. Below are the instructions for setting up and deploying the project on GitHub Pages.
 
