@@ -9,8 +9,60 @@
       "getStarted": "Inizia Ora"
     }
   },
-  "home": {
-    "welcome": "Benvenuto su nutriwell",
-    "description": "Demo statica del progetto con un header moderno e professionale."
+  "hero": {
+    "title": "Il Primo Nutrizionista Digitale Educativo",
+    "subtitle": "Il tuo compagno nutrizionale personalizzato progettato per supportarti nel tuo percorso alimentare quotidiano con consigli basati sulla scienza.",
+    "description": "Alimentato da tecnologia AI avanzata, nutriwell fornisce guidance nutrizionale educativa basata su fonti scientifiche e database proprietari.",
+    "ctaPrimary": "Inizia Ora",
+    "ctaSecondary": "Scopri di Più"
+  },
+  "features": {
+    "title": "Cosa può fare nutriwell?",
+    "items": [
+      {
+        "icon": "🧮",
+        "title": "Calcola il Fabbisogno Energetico",
+        "description": "Determina il tuo fabbisogno energetico giornaliero (BMR e TDEE) con precisione."
+      },
+      {
+        "icon": "📚",
+        "title": "Educazione Nutrizionale",
+        "description": "Impara concetti come deficit calorico, metabolismo, porzioni e macronutrienti."
+      },
+      {
+        "icon": "🔄",
+        "title": "Sostituzioni Alimentari",
+        "description": "Ricevi aiuto nella scelta di alternative alimentari e nella lettura delle etichette nutrizionali."
+      },
+      {
+        "icon": "🍽️",
+        "title": "Idee per Pasti Equilibrati",
+        "description": "Ricevi esempi di pasti equilibrati (non piani alimentari personalizzati)."
+      },
+      {
+        "icon": "📸",
+        "title": "Analisi Alimentare",
+        "description": "Analizza immagini del tuo frigo o della tua spesa per ottenere insights."
+      },
+      {
+        "icon": "🏥",
+        "title": "Supporto per Condizioni di Salute",
+        "description": "Informazioni educative per condizioni comuni come diabete e colesterolo."
+      }
+    ]
+  },
+  "product": {
+    "title": "Perché scegliere nutriwell?",
+    "description": "Ottieni guidance nutrizionale personalizzata alimentata dall'AI che si adatta al tuo stile di vita e ai tuoi obiettivi.",
+    "benefits": [
+      "Analisi nutrizionale e raccomandazioni alimentate dall'AI",
+      "Guidance basata sulla scienza da fonti verificate",
+      "Approccio educativo per una nutrizione sostenibile",
+      "Supporto per varie condizioni di salute e obiettivi"
+    ]
+  },
+  "disclaimer": {
+    "title": "Nota Importante",
+    "content": "Tutti i contenuti sono solo a scopo educativo e non sostituiscono il consiglio medico professionale. Consulta sempre i professionisti sanitari per guidance medica personalizzata."
   }
 }

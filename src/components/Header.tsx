@@ -1,5 +1,6 @@
 import React from 'react';
 import {useTranslations} from 'next-intl';
+import Link from 'next/link';
 import LanguageSwitcher from './LanguageSwitcher';
 
 const Header: React.FC = () => {
@@ -8,10 +9,10 @@ const Header: React.FC = () => {
     return (
         <header className="nv-header">
             <div className="nv-container">
-                <div className="nv-logo">
+                <Link href="/" className="nv-logo">
                     <h1 className="nv-title">{t('title')}</h1>
                     <span className="nv-tagline">{t('tagline')}</span>
-                </div>
+                </Link>
                 <nav className="nv-nav">
                     <a href="#features" className="nv-nav-link">{t('nav.features')}</a>
                     <a href="#about" className="nv-nav-link">{t('nav.about')}</a>
