@@ -7,4 +7,5 @@ module.exports = {
   basePath: '/nutrivell.ai',
   assetPrefix: '/nutrivell.ai/',
   output: 'export',
+  distDir: 'docs',
 };
