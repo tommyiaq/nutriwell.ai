@@ -3,10 +3,11 @@
     "title": "NutriWell.ai",
     "tagline": "Smart Nutrition, Powered by AI",
     "nav": {
-      "features": "Features",
       "about": "About",
-      "pricing": "Pricing",
-      "getStarted": "Get Started"
+      "pricing": "Pricing", 
+      "chat": "Chat",
+      "signIn": "Sign In",
+      "signUp": "Sign Up"
     }
   },
   "hero": {

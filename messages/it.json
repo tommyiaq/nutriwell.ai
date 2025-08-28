@@ -3,10 +3,11 @@
     "title": "NutriWell.ai",
     "tagline": "Nutrizione Intelligente, Alimentata dall'AI",
     "nav": {
-      "features": "Funzionalità",
       "about": "Chi Siamo",
       "pricing": "Prezzi",
-      "getStarted": "Inizia Ora"
+      "chat": "Chat",
+      "signIn": "Accedi",
+      "signUp": "Registrati"
     }
   },
   "hero": {

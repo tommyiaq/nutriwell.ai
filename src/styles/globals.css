@@ -35,6 +35,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
+  width: 100%;
 }
 
 .nv-container {
@@ -86,15 +87,191 @@ body {
   gap: 2rem;
 }
 
+.nv-nav-desktop {
+  display: flex;
+}
+
+.nv-nav-mobile {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+}
+
 .nv-nav-link {
   color: white;
   text-decoration: none;
   font-weight: 500;
   transition: opacity 0.2s ease;
+  padding: 0.5rem 0;
 }
 
 .nv-nav-link:hover {
   opacity: 0.8;
+}
+
+.nv-nav-chat {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+.nv-nav-chat:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Auth Buttons */
+.nv-auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nv-auth-signin {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: opacity 0.2s ease;
+}
+
+.nv-auth-signin:hover {
+  opacity: 0.8;
+}
+
+.nv-auth-signup {
+  background: white;
+  color: var(--nv-primary);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  border: 1px solid white;
+}
+
+.nv-auth-signup:hover {
+  background: var(--nv-light-green);
+  color: var(--nv-primary);
+}
+
+/* Hamburger Menu */
+.nv-hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.nv-hamburger:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nv-hamburger-line {
+  width: 24px;
+  height: 2px;
+  background: white;
+  transition: all 0.3s ease;
+  border-radius: 1px;
+}
+
+.nv-hamburger-line.open:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.nv-hamburger-line.open:nth-child(2) {
+  opacity: 0;
+}
+
+.nv-hamburger-line.open:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Mobile Menu Dropdown */
+.nv-mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--nv-primary);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(10, 68, 53, 0.2);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+
+.nv-mobile-menu-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 1rem 2rem;
+  transition: background 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nv-mobile-menu-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nv-mobile-menu-link:last-child {
+  border-bottom: none;
+}
+
+.nv-mobile-chat {
+  background: rgba(255, 255, 255, 0.2);
+  margin: 0.5rem 2rem;
+  border-radius: 6px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Mobile Auth Buttons */
+.nv-mobile-auth {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 0.5rem;
+}
+
+.nv-mobile-auth-signin {
+  flex: 1;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.75rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.nv-mobile-auth-signin:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nv-mobile-auth-signup {
+  flex: 1;
+  background: white;
+  color: var(--nv-primary);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.75rem;
+  text-align: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.nv-mobile-auth-signup:hover {
+  background: var(--nv-light-green);
 }
 
 .nv-cta-button {
@@ -457,27 +634,21 @@ body {
 @media (max-width: 768px) {
   .nv-container {
     padding: 0 1rem;
-    flex-direction: column;
-    gap: 1rem;
   }
   
   .nv-header .nv-container {
     flex-direction: row;
     justify-content: space-between;
+    position: relative;
   }
   
-  .nv-nav {
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-  
-  .nv-nav-link {
+  .nv-nav-desktop {
     display: none;
   }
   
-  .nv-cta-button {
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
+  .nv-nav-mobile {
+    display: flex;
+    gap: 0.75rem;
   }
   
   .nv-hero {
@@ -757,5 +928,114 @@ body {
   
   .nv-message-content {
     max-width: 85%;
+  }
+}
+
+/* Auth Pages Styles */
+.nv-auth-page {
+  min-height: 100vh;
+  background: var(--nv-bg);
+}
+
+.nv-auth-container {
+  max-width: 400px;
+  margin: 4rem auto;
+  padding: 0 1rem;
+}
+
+.nv-auth-card {
+  background: white;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(10, 68, 53, 0.1);
+  border: 1px solid rgba(10, 68, 53, 0.1);
+}
+
+.nv-auth-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--nv-primary);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.nv-auth-subtitle {
+  color: #666;
+  text-align: center;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.nv-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.nv-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nv-form-group label {
+  font-weight: 600;
+  color: var(--nv-text);
+  font-size: 0.875rem;
+}
+
+.nv-form-group input {
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+  outline: none;
+}
+
+.nv-form-group input:focus {
+  border-color: var(--nv-primary);
+}
+
+.nv-auth-button {
+  background: var(--nv-primary);
+  color: white;
+  padding: 0.875rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-top: 1rem;
+}
+
+.nv-auth-button:hover {
+  background: var(--nv-secondary);
+}
+
+.nv-auth-link {
+  text-align: center;
+  margin-top: 2rem;
+  color: #666;
+}
+
+.nv-auth-link a {
+  color: var(--nv-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nv-auth-link a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .nv-auth-container {
+    margin: 2rem auto;
+  }
+  
+  .nv-auth-card {
+    padding: 2rem 1.5rem;
   }
 }
