@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { useTranslations } from 'next-intl';
 
 interface Message {
@@ -146,6 +147,7 @@ const Chat = () => {
           </p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import {useTranslations} from 'next-intl';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
@@ -245,15 +246,21 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="nv-cta">
-        <div className="nv-container">
-          <h2 className="nv-cta-title">🚀 Ready to get started?</h2>
-          <p className="nv-cta-description">Transform your nutrition journey with AI-powered guidance tailored to your needs.</p>
-          <Link href="/chat" className="nv-btn-primary nv-btn-large">
-            {t('hero.ctaPrimary')}
-          </Link>
+      {/* CTA & Footer Combined Section */}
+      <section className="nv-cta-footer">
+        {/* CTA Section */}
+        <div className="nv-cta">
+          <div className="nv-container">
+            <h2 className="nv-cta-title">🚀 {t('cta.title')}</h2>
+            <p className="nv-cta-description">{t('cta.description')}</p>
+            <Link href="/chat" className="nv-btn-primary nv-btn-large">
+              {t('hero.ctaPrimary')}
+            </Link>
+          </div>
         </div>
+
+        {/* Footer Section */}
+        <Footer />
       </section>
     </div>
   );

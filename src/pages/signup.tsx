@@ -1,4 +1,5 @@
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import {useTranslations} from 'next-intl';
 
 const SignUp = () => {
@@ -44,6 +45,7 @@ const SignUp = () => {
           </p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -65,5 +65,32 @@
   "disclaimer": {
     "title": "Nota Importante",
     "content": "Tutti i contenuti sono solo a scopo educativo e non sostituiscono il consiglio medico professionale. Consulta sempre i professionisti sanitari per guidance medica personalizzata."
+  },
+  "cta": {
+    "title": "Pronto per iniziare?",
+    "description": "Trasforma il tuo percorso nutrizionale con una guida AI personalizzata alle tue esigenze."
+  },
+  "footer": {
+    "brand": "NutriWell.ai",
+    "description": "Il tuo compagno nutrizionale personalizzato progettato per supportare il tuo percorso alimentare quotidiano con una guida basata sulla scienza.",
+    "contact": {
+      "title": "Contatti",
+      "email": "info@nutriwell.ai",
+      "phone": "+39 123 456 7890"
+    },
+    "links": {
+      "title": "Link Rapidi",
+      "home": "Home",
+      "about": "Chi Siamo",
+      "features": "Funzionalità",
+      "pricing": "Prezzi",
+      "chat": "Chat",
+      "privacy": "Privacy Policy",
+      "terms": "Termini di Servizio"
+    },
+    "social": {
+      "title": "Seguici"
+    },
+    "copyright": "© 2025 NutriWell.ai. Tutti i diritti riservati."
   }
 }
