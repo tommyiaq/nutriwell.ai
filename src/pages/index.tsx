@@ -218,27 +218,30 @@ const Home = () => {
         <AutoCarousel features={t.raw('features.items')} />
       </section>
 
-      {/* Product Section */}
-      <section className="nv-product">
+      {/* Product & Disclaimer Combined Section */}
+      <section className="nv-product-disclaimer">
         <div className="nv-container">
-          <h2 className="nv-section-title">💚 {t('product.title')}</h2>
-          <p className="nv-product-description">{t('product.description')}</p>
-          <div className="nv-benefits-grid">
-            {t.raw('product.benefits').map((benefit: string, index: number) => (
-              <div key={index} className="nv-benefit-item">
-                <span className="nv-check">✓</span>
-                <span>{benefit}</span>
+          <div className="nv-product-disclaimer-wrapper">
+            {/* Product Section */}
+            <div className="nv-product-content">
+              <h2 className="nv-section-title">💚 {t('product.title')}</h2>
+              <p className="nv-product-description">{t('product.description')}</p>
+              <div className="nv-benefits-grid">
+                {t.raw('product.benefits').map((benefit: string, index: number) => (
+                  <div key={index} className="nv-benefit-item">
+                    <span className="nv-check">✓</span>
+                    <span>{benefit}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
 
-      {/* Disclaimer Section */}
-      <section className="nv-disclaimer">
-        <div className="nv-container">
-          <h3 className="nv-disclaimer-title">❗ {t('disclaimer.title')}</h3>
-          <p className="nv-disclaimer-content">{t('disclaimer.content')}</p>
+            {/* Disclaimer Section */}
+            <div className="nv-disclaimer-content">
+              <h3 className="nv-disclaimer-title">❗ {t('disclaimer.title')}</h3>
+              <p className="nv-disclaimer-text">{t('disclaimer.content')}</p>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -490,8 +490,65 @@ body {
   text-align: center;
 }
 
+.nv-product .nv-container {
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
 .nv-product {
   background: var(--nv-bg);
+}
+
+/* Combined Product & Disclaimer Section */
+.nv-product-disclaimer {
+  background: var(--nv-bg);
+  padding: 4rem 0;
+}
+
+.nv-product-disclaimer .nv-container {
+  justify-content: center;
+  text-align: left;
+  flex-direction: column;
+}
+
+.nv-product-disclaimer-wrapper {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.nv-product-content {
+  text-align: center;
+}
+
+.nv-disclaimer-content {
+  background: rgba(255, 193, 7, 0.1);
+  border-left: 4px solid #ffc107;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.nv-disclaimer-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e65100;
+  margin-bottom: 1rem;
+}
+
+.nv-disclaimer-text {
+  color: #6c757d;
+  line-height: 1.6;
+  margin: 0;
 }
 
 .nv-product-description {
@@ -805,6 +862,26 @@ body {
   
   .nv-benefits-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .nv-benefit-item {
+    padding: 1.25rem;
+    font-size: 0.95rem;
+  }
+  
+  /* Mobile styles for combined product-disclaimer section */
+  .nv-product-disclaimer-wrapper {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .nv-disclaimer-content {
+    padding: 1.5rem;
+  }
+  
+  .nv-disclaimer-title {
+    font-size: 1.1rem;
   }
   
   .nv-section-title {
