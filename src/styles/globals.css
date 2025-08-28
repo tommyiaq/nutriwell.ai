@@ -485,6 +485,11 @@ body {
   background: white;
 }
 
+.nv-features .nv-container {
+  justify-content: center;
+  text-align: center;
+}
+
 .nv-product {
   background: var(--nv-bg);
 }
@@ -539,44 +544,146 @@ body {
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Features Grid */
-.nv-features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+/* Features Carousel */
+.nv-features-carousel-container {
+  width: 100%;
+  overflow: hidden;
+  padding: 2rem 0;
+  position: relative;
+  cursor: grab;
+  mask: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+.nv-features-carousel-container:hover {
+  cursor: grab;
+}
+
+.nv-features-carousel-container:active {
+  cursor: grabbing;
+}
+
+.nv-features-carousel {
+  display: flex;
   gap: 2rem;
+  padding: 0 2rem;
+  transition: filter 0.3s ease;
+  will-change: transform;
+  user-select: none; /* Prevent text selection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.nv-features-carousel-container:hover .nv-features-carousel {
+  filter: none;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .nv-feature-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(10, 68, 53, 0.08);
+  background: linear-gradient(135deg, white 0%, #fafafa 100%);
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(10, 68, 53, 0.12);
   text-align: center;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(10, 68, 53, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(10, 68, 53, 0.08);
+  min-width: 320px;
+  max-width: 350px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  user-select: none; /* Prevent text selection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
-.nv-feature-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(10, 68, 53, 0.15);
+.nv-feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--nv-primary) 0%, var(--nv-accent) 100%);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.nv-features-carousel-container:hover .nv-feature-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 48px rgba(10, 68, 53, 0.2);
   border-color: var(--nv-accent);
+  z-index: 10;
+}
+
+.nv-features-carousel-container:hover .nv-feature-card:hover::before {
+  transform: scaleX(1);
 }
 
 .nv-feature-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--nv-bg) 0%, var(--nv-light-green) 100%);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem auto;
+  transition: transform 0.3s ease;
+}
+
+.nv-features-carousel-container:hover .nv-feature-card:hover .nv-feature-icon {
+  transform: scale(1.1) rotate(5deg);
 }
 
 .nv-feature-title {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 700;
   margin-bottom: 1rem;
-  color: var(--nv-text);
+  color: var(--nv-primary);
+  line-height: 1.3;
 }
 
 .nv-feature-description {
-  color: #666;
-  line-height: 1.6;
+  color: #555;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* Pause indicator */
+.nv-features-carousel-container::after {
+  content: '⏸️ Hover to pause';
+  position: absolute;
+  bottom: 0.5rem;
+  right: 2rem;
+  background: rgba(10, 68, 53, 0.9);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.nv-features-carousel-container:hover::after {
+  opacity: 1;
 }
 
 /* Beta Section */
@@ -674,9 +781,26 @@ body {
     max-width: 280px;
   }
   
-  .nv-features-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+  .nv-features-carousel {
+    padding: 0 1rem;
+    gap: 1.5rem;
+  }
+  
+  .nv-feature-card {
+    min-width: 280px;
+    max-width: 300px;
+    padding: 2rem 1.5rem;
+  }
+  
+  .nv-feature-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 3rem;
+  }
+  
+  .nv-features-carousel-container::after {
+    content: '⏸️ Touch to pause';
+    right: 1rem;
   }
   
   .nv-benefits-grid {

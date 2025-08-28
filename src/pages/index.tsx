@@ -1,6 +1,7 @@
 import Header from '../components/Header';
 import {useTranslations} from 'next-intl';
 import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 
 const FeatureCard = ({ icon, title, description }: { icon: string; title: string; description: string }) => (
   <div className="nv-feature-card">
@@ -9,6 +10,173 @@ const FeatureCard = ({ icon, title, description }: { icon: string; title: string
     <p className="nv-feature-description">{description}</p>
   </div>
 );
+
+const AutoCarousel = ({ features }: { features: any[] }) => {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const animationRef = useRef<number | null>(null);
+  const positionRef = useRef(0);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Drag state
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, scrollLeft: 0 });
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    const cardWidth = isMobile ? 312 : 352; // card width + gap
+    const totalOriginalWidth = cardWidth * features.length;
+    const speed = isMobile ? 1.5 : 0.5; // Much faster on mobile
+
+    const animate = () => {
+      if (!isPaused && !isDragging && carousel) {
+        positionRef.current += speed;
+        
+        // Reset position when we've scrolled one full set
+        if (positionRef.current >= totalOriginalWidth) {
+          positionRef.current = 0;
+        }
+        
+        carousel.style.transform = `translateX(-${positionRef.current}px)`;
+      }
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [isPaused, isDragging, features.length, isMobile]);
+
+  // Mouse drag handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setIsPaused(true);
+    setDragStart({
+      x: e.pageX,
+      scrollLeft: positionRef.current
+    });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    
+    const x = e.pageX;
+    const walk = (x - dragStart.x) * 0.8; // Reduced sensitivity from 2 to 0.8
+    const newPosition = dragStart.scrollLeft - walk;
+    
+    // Handle wrapping
+    const cardWidth = isMobile ? 312 : 352;
+    const totalOriginalWidth = cardWidth * features.length;
+    
+    if (newPosition < 0) {
+      positionRef.current = totalOriginalWidth + newPosition;
+    } else if (newPosition >= totalOriginalWidth) {
+      positionRef.current = newPosition - totalOriginalWidth;
+    } else {
+      positionRef.current = newPosition;
+    }
+    
+    if (carouselRef.current) {
+      carouselRef.current.style.transform = `translateX(-${positionRef.current}px)`;
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setTimeout(() => setIsPaused(false), 1000); // Resume auto-scroll after 1 second
+  };
+
+  // Touch handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true);
+    setIsPaused(true);
+    setDragStart({
+      x: e.touches[0].pageX,
+      scrollLeft: positionRef.current
+    });
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    
+    const x = e.touches[0].pageX;
+    const walk = (x - dragStart.x) * 0.8; // Reduced sensitivity to match mouse
+    const newPosition = dragStart.scrollLeft - walk;
+    
+    // Handle wrapping
+    const cardWidth = isMobile ? 312 : 352;
+    const totalOriginalWidth = cardWidth * features.length;
+    
+    if (newPosition < 0) {
+      positionRef.current = totalOriginalWidth + newPosition;
+    } else if (newPosition >= totalOriginalWidth) {
+      positionRef.current = newPosition - totalOriginalWidth;
+    } else {
+      positionRef.current = newPosition;
+    }
+    
+    if (carouselRef.current) {
+      carouselRef.current.style.transform = `translateX(-${positionRef.current}px)`;
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    setTimeout(() => setIsPaused(false), 1000); // Resume auto-scroll after 1 second
+  };
+
+  // Just duplicate once for seamless loop
+  const duplicatedFeatures = [...features, ...features];
+
+  return (
+    <div 
+      className="nv-features-carousel-container"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => !isDragging && setIsPaused(false)}
+    >
+      <div className="nv-features-carousel-wrapper">
+        <div 
+          className="nv-features-carousel"
+          ref={carouselRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+        >
+          {duplicatedFeatures.map((feature: any, index: number) => (
+            <FeatureCard
+              key={`${feature.title}-${index}`}
+              icon={feature.icon}
+              title={feature.title}
+              description={feature.description}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Home = () => {
   const t = useTranslations();
@@ -46,17 +214,8 @@ const Home = () => {
       <section className="nv-features" id="features">
         <div className="nv-container">
           <h2 className="nv-section-title">{t('features.title')}</h2>
-          <div className="nv-features-grid">
-            {t.raw('features.items').map((feature: any, index: number) => (
-              <FeatureCard
-                key={index}
-                icon={feature.icon}
-                title={feature.title}
-                description={feature.description}
-              />
-            ))}
-          </div>
         </div>
+        <AutoCarousel features={t.raw('features.items')} />
       </section>
 
       {/* Product Section */}
