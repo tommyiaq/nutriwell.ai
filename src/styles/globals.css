@@ -1106,65 +1106,74 @@ body {
 
 /* Chat Page Styles */
 .nv-chat-page {
-  min-height: 100vh;
+  height: 100vh;
   background: var(--nv-bg);
-}
-
-.nv-chat-container {
-  max-width: 800px;
-  margin: 0 auto;
-  height: calc(100vh - 80px);
   display: flex;
   flex-direction: column;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(10, 68, 53, 0.1);
   overflow: hidden;
 }
 
-.nv-chat-header {
-  background: var(--nv-primary);
-  color: white;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.nv-chat-title {
+.nv-chat-container {
+  flex: 1;
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  flex-direction: column;
+  background: white;
+  overflow: hidden;
+  height: calc(100vh - 80px);
 }
 
-.nv-ai-avatar {
-  font-size: 2rem;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
+/* Mobile Mini Header */
+.nv-chat-mobile-header {
+  display: none;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.75rem 1rem;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-.nv-chat-title h1 {
-  margin: 0;
-  font-size: 1.5rem;
+.nv-chat-back-btn,
+.nv-chat-menu-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--nv-primary);
+  transition: background-color 0.2s ease;
+}
+
+.nv-chat-back-btn:hover,
+.nv-chat-menu-btn:hover {
+  background: #f3f4f6;
+}
+
+.nv-chat-mobile-title {
+  font-size: 1.125rem;
   font-weight: 600;
-}
-
-.nv-chat-status {
+  color: var(--nv-primary);
   margin: 0;
-  font-size: 0.875rem;
-  opacity: 0.9;
 }
 
 .nv-messages-container {
   flex: 1;
   overflow-y: auto;
-  padding: 1rem;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.nv-messages-list {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
+  min-height: 100%;
 }
 
 .nv-message {
@@ -1257,9 +1266,12 @@ body {
   border-top: 1px solid #e5e7eb;
   padding: 1rem 1.5rem;
   background: #f9fafb;
+  flex-shrink: 0;
 }
 
 .nv-chat-input-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
   display: flex;
   gap: 0.75rem;
   align-items: flex-end;
@@ -1316,10 +1328,132 @@ body {
 }
 
 @media (max-width: 768px) {
+  .nv-chat-page {
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
+  
+  .nv-chat-page .nv-header {
+    display: none;
+  }
+  
+  .nv-chat-mobile-header {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    background: white;
+    height: 60px;
+  }
+  
   .nv-chat-container {
     height: 100vh;
+    height: 100dvh;
     border-radius: 0;
     margin: 0;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .nv-messages-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 0;
+    padding-bottom: 0;
+  }
+  
+  .nv-messages-list {
+    padding: 0.75rem;
+    padding-bottom: 8rem; /* Large bottom padding to ensure last message is visible */
+    min-height: calc(100% - 6rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  
+  .nv-chat-input-container {
+    padding: 0.75rem 1rem;
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 15;
+    /* Ensure it stays above keyboard */
+    min-height: 80px;
+  }
+  
+  .nv-chat-input-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-end;
+  }
+  
+  .nv-chat-input {
+    flex: 1;
+    border: 2px solid #e5e7eb;
+    border-radius: 20px;
+    padding: 0.75rem 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s ease;
+    max-height: 120px;
+    min-height: 44px;
+    background: white;
+    /* Prevent zoom on iOS */
+    font-size: 16px;
+  }
+  
+  .nv-chat-input:focus {
+    border-color: var(--nv-primary);
+  }
+  
+  .nv-chat-send-btn {
+    background: var(--nv-primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+  
+  /* Additional support for iOS safe area */
+  @supports (padding: max(0px)) {
+    .nv-chat-input-container {
+      padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+    }
+  }
+  
+  /* When keyboard is open, adjust layout */
+  .nv-keyboard-open .nv-messages-list {
+    padding-bottom: 12rem; /* Even more space when keyboard is open */
+  }
+  
+  .nv-keyboard-open .nv-messages-container {
+    max-height: calc(100vh - 200px); /* Reduce available space for messages */
   }
   
   .nv-message-content {

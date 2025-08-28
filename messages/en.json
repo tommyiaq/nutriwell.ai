@@ -70,6 +70,10 @@
     "title": "Ready to get started?",
     "description": "Transform your nutrition journey with AI-powered guidance tailored to your needs."
   },
+  "chat": {
+    "placeholder": "Ask about nutrition, calories, meals...",
+    "disclaimer": "Demo version. Consult healthcare professionals for medical advice."
+  },
   "footer": {
     "brand": "NutriWell.ai",
     "description": "Your personalized nutrition companion designed to support your daily dietary journey with science-based guidance.",

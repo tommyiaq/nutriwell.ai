@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { useTranslations } from 'next-intl';
 
 interface Message {
@@ -12,6 +11,7 @@ interface Message {
 
 const Chat = () => {
   const t = useTranslations();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -22,6 +22,73 @@ const Chat = () => {
   ]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping]);
+
+  // Handle mobile keyboard visibility
+  useEffect(() => {
+    let initialViewportHeight = window.innerHeight;
+    
+    const handleResize = () => {
+      const currentHeight = window.innerHeight;
+      const heightDifference = initialViewportHeight - currentHeight;
+      
+      // If viewport height decreased significantly (keyboard opened)
+      if (heightDifference > 150) {
+        setIsKeyboardOpen(true);
+        setTimeout(() => {
+          scrollToBottom();
+          // Additional scroll to ensure input is visible
+          const inputContainer = document.querySelector('.nv-chat-input-container');
+          if (inputContainer) {
+            inputContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+          }
+        }, 100);
+      } else {
+        // Keyboard closed
+        setIsKeyboardOpen(false);
+        setTimeout(() => {
+          scrollToBottom();
+        }, 100);
+      }
+    };
+
+    // Also handle orientation change
+    const handleOrientationChange = () => {
+      setTimeout(() => {
+        initialViewportHeight = window.innerHeight;
+        scrollToBottom();
+      }, 500);
+    };
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleOrientationChange);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleOrientationChange);
+    };
+  }, []);
+
+  // Handle input focus for mobile
+  const handleInputFocus = () => {
+    // Scroll to bottom first
+    setTimeout(() => {
+      scrollToBottom();
+      // Then ensure input is visible
+      const inputContainer = document.querySelector('.nv-chat-input-container');
+      if (inputContainer) {
+        inputContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }
+    }, 300);
+  };
 
   const handleSendMessage = async () => {
     if (!inputText.trim()) return;
@@ -66,24 +133,34 @@ const Chat = () => {
   };
 
   return (
-    <div className="nv-chat-page">
+    <div className={`nv-chat-page ${isKeyboardOpen ? 'nv-keyboard-open' : ''}`}>
       <Header />
       
+      {/* Mobile Mini Header */}
+      <div className="nv-chat-mobile-header">
+        <button 
+          className="nv-chat-back-btn"
+          onClick={() => window.history.back()}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5m7-7l-7 7 7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+        <h1 className="nv-chat-mobile-title">NutriWell.ai</h1>
+        <button className="nv-chat-menu-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="1" fill="currentColor"/>
+            <circle cx="12" cy="5" r="1" fill="currentColor"/>
+            <circle cx="12" cy="19" r="1" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      
       <div className="nv-chat-container">
-        {/* Chat Header */}
-        <div className="nv-chat-header">
-          <div className="nv-chat-title">
-            <div className="nv-ai-avatar">🤖</div>
-            <div>
-              <h1>nutriwell AI Assistant</h1>
-              <p className="nv-chat-status">Online • Ready to help</p>
-            </div>
-          </div>
-        </div>
-
         {/* Messages Container */}
         <div className="nv-messages-container">
-          {messages.map((message) => (
+          <div className="nv-messages-list">
+            {messages.map((message) => (
             <div
               key={message.id}
               className={`nv-message ${message.sender === 'user' ? 'nv-message-user' : 'nv-message-ai'}`}
@@ -116,6 +193,8 @@ const Chat = () => {
               </div>
             </div>
           )}
+          <div ref={messagesEndRef} />
+          </div>
         </div>
 
         {/* Input Area */}
@@ -125,7 +204,8 @@ const Chat = () => {
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Ask me about nutrition, calories, meal planning..."
+              onFocus={handleInputFocus}
+              placeholder={t('chat.placeholder')}
               className="nv-chat-input"
               rows={1}
             />
@@ -143,11 +223,10 @@ const Chat = () => {
             </button>
           </div>
           <p className="nv-chat-disclaimer">
-            This is a demo version. Always consult healthcare professionals for medical advice.
+            {t('chat.disclaimer')}
           </p>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

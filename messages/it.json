@@ -70,6 +70,10 @@
     "title": "Pronto per iniziare?",
     "description": "Trasforma il tuo percorso nutrizionale con una guida AI personalizzata alle tue esigenze."
   },
+  "chat": {
+    "placeholder": "Chiedi di nutrizione, calorie, pasti...",
+    "disclaimer": "Versione demo. Consulta professionisti sanitari per consigli medici."
+  },
   "footer": {
     "brand": "NutriWell.ai",
     "description": "Il tuo compagno nutrizionale personalizzato progettato per supportare il tuo percorso alimentare quotidiano con una guida basata sulla scienza.",
