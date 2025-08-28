@@ -15,7 +15,7 @@ const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "Hello! I'm your AI nutrition assistant. How can I help you today?",
+      text: "Ciao! Sono il tuo assistente nutrizionale AI. Come posso aiutarti oggi?",
       sender: 'ai',
       timestamp: new Date()
     }
