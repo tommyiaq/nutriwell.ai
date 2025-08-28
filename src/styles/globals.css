@@ -1,4 +1,15 @@
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 :root {
   --nv-primary: #0A4435;
   --nv-secondary: #2D6A4F;
@@ -14,6 +25,7 @@ body {
   background: var(--nv-bg);
   color: var(--nv-text);
   line-height: 1.6;
+  width: 100%;
 }
 
 .nv-header {
@@ -28,10 +40,17 @@ body {
 .nv-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .nv-container {
+    padding: 0 2rem;
+  }
 }
 
 .nv-logo {
@@ -198,7 +217,14 @@ body {
 .nv-hero-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .nv-hero-container {
+    padding: 0 2rem;
+  }
 }
 
 .nv-hero-title {
@@ -274,6 +300,8 @@ body {
 /* Sections */
 .nv-features, .nv-product, .nv-disclaimer, .nv-cta {
   padding: 4rem 0;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .nv-features {
@@ -427,6 +455,35 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .nv-container {
+    padding: 0 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .nv-header .nv-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .nv-nav {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .nv-nav-link {
+    display: none;
+  }
+  
+  .nv-cta-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .nv-hero {
+    padding: 3rem 0;
+  }
+  
   .nv-hero-title {
     font-size: 2rem;
   }
@@ -438,6 +495,7 @@ body {
   .nv-hero-actions {
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
   }
   
   .nv-btn-primary, .nv-btn-secondary {
@@ -447,6 +505,7 @@ body {
   
   .nv-features-grid {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
   
   .nv-benefits-grid {
@@ -455,6 +514,10 @@ body {
   
   .nv-section-title {
     font-size: 2rem;
+  }
+  
+  .nv-features, .nv-product, .nv-disclaimer, .nv-cta {
+    padding: 3rem 0;
   }
 }
 
@@ -468,21 +531,9 @@ body {
 }
 
 @media (max-width: 768px) {
-  .nv-container {
-    padding: 0 1rem;
-  }
-  
-  .nv-nav {
-    gap: 1rem;
-  }
-  
-  .nv-nav-link {
-    display: none;
-  }
-  
-  .nv-cta-button {
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
+  .nv-main-container {
+    margin: 1rem;
+    padding: 1rem;
   }
 }
 
