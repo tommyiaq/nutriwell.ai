@@ -23,6 +23,19 @@ const Chat = () => {
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile on mount
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -134,27 +147,73 @@ const Chat = () => {
 
   return (
     <div className={`nv-chat-page ${isKeyboardOpen ? 'nv-keyboard-open' : ''}`}>
-      <Header />
+      {!isMobile && <Header />}
       
       {/* Mobile Mini Header */}
-      <div className="nv-chat-mobile-header">
-        <button 
-          className="nv-chat-back-btn"
-          onClick={() => window.history.back()}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M19 12H5m7-7l-7 7 7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-        <h1 className="nv-chat-mobile-title">NutriWell.ai</h1>
-        <button className="nv-chat-menu-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="1" fill="currentColor"/>
-            <circle cx="12" cy="5" r="1" fill="currentColor"/>
-            <circle cx="12" cy="19" r="1" fill="currentColor"/>
-          </svg>
-        </button>
+      {isMobile && (
+        <div className="nv-chat-mobile-header">
+          <button 
+            className="nv-chat-menu-btn"
+            onClick={() => setIsSidePanelOpen(!isSidePanelOpen)}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          <button 
+            className="nv-chat-title-btn"
+            onClick={() => window.location.href = '/'}
+          >
+            <h1 className="nv-chat-mobile-title">NutriWell.ai</h1>
+          </button>
+          <div className="nv-chat-spacer"></div>
+        </div>
+      )}
+
+      {/* Desktop Main Content Wrapper */}
+      <div className={`nv-chat-main-content ${!isMobile ? 'nv-desktop' : ''}`}>
+        {/* Side Panel */}
+        <div className={`nv-side-panel ${(isSidePanelOpen && isMobile) || !isMobile ? 'nv-side-panel-open' : ''}`}>
+        <div className="nv-side-panel-content">
+          {/* Configuration Section */}
+          <div className="nv-side-section">
+            <h3 className="nv-side-section-title">Configuration</h3>
+            <div className="nv-side-section-item">
+              <span>Knowledge Base</span>
+            </div>
+          </div>
+
+          {/* Chat Sessions Section */}
+          <div className="nv-side-section">
+            <h3 className="nv-side-section-title">Chat Sessions</h3>
+            <div className="nv-side-section-item nv-active">
+              <span>Current Session</span>
+            </div>
+            <div className="nv-side-section-item">
+              <span>Previous Session 1</span>
+            </div>
+            <div className="nv-side-section-item">
+              <span>Previous Session 2</span>
+            </div>
+          </div>
+
+          {/* User Section */}
+          <div className="nv-side-section nv-side-user">
+            <div className="nv-user-info">
+              <div className="nv-user-avatar">👤</div>
+              <span className="nv-username">Guest User</span>
+            </div>
+          </div>
+        </div>
       </div>
+
+      {/* Side Panel Overlay */}
+      {isSidePanelOpen && isMobile && (
+        <div 
+          className="nv-side-panel-overlay"
+          onClick={() => setIsSidePanelOpen(false)}
+        ></div>
+      )}
       
       <div className="nv-chat-container">
         {/* Messages Container */}
@@ -227,6 +286,15 @@ const Chat = () => {
           </p>
         </div>
       </div>
+      </div>
+
+      {/* Side Panel Overlay */}
+      {isSidePanelOpen && isMobile && (
+        <div 
+          className="nv-side-panel-overlay"
+          onClick={() => setIsSidePanelOpen(false)}
+        ></div>
+      )}
     </div>
   );
 };
