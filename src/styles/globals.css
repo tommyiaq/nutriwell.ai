@@ -17,6 +17,8 @@ html, body {
   --nv-text: #222;
   --nv-accent: #52B788;
   --nv-light-green: #B7E4C7;
+  --nv-header-height: 80px;
+  --nv-header-spacing: calc(var(--nv-header-height) + 3rem);
 }
 
 body {
@@ -31,20 +33,26 @@ body {
 .nv-header {
   background: transparent;
   padding: 0.5rem 1rem 0.5rem 1rem;
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 100;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   width: 100%;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .nv-header-card {
-  background: var(--nv-primary);
+  background: rgba(10, 68, 53, 0.95);
   box-shadow: 0 2px 20px rgba(10, 68, 53, 0.15);
   border-radius: 12px;
   width: 100%;
   position: relative;
   padding: 0.75rem 0;
   transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .nv-header-card:hover {
@@ -425,6 +433,7 @@ body {
   background: transparent;
   padding: 0.5rem 1rem 0.5rem 1rem;
   width: 100%;
+  margin-top: var(--nv-header-spacing);
 }
 
 .nv-hero-wrapper {
@@ -824,6 +833,7 @@ body {
   background: transparent;
   padding: 0.5rem 0;
   min-height: 100vh;
+  margin-top: var(--nv-header-spacing);
 }
 
 .nv-pricing-wrapper {
@@ -1410,6 +1420,11 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  :root {
+    --nv-header-height: 70px;
+    --nv-header-spacing: calc(var(--nv-header-height) + 2.5rem);
+  }
+  
   .nv-container {
     padding: 0 1rem;
   }
