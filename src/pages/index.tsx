@@ -188,27 +188,32 @@ const Home = () => {
       
       {/* Hero Section */}
       <section className="nv-hero">
-        <div className="nv-hero-card">
-          <div className="nv-hero-container">
-            <div className="nv-hero-content">
-              <h1 className="nv-hero-title">
-                ✨ {t('hero.title')}
-              </h1>
-              <p className="nv-hero-subtitle">
-                {t('hero.subtitle')}
-              </p>
-              <p className="nv-hero-description">
-                {t('hero.description')}
-              </p>
-              <div className="nv-hero-actions">
-                <Link href="/chat" className="nv-btn-primary">
-                  {t('hero.ctaPrimary')}
-                </Link>
-                <button className="nv-btn-secondary">
-                  {t('hero.ctaSecondary')}
-                </button>
+        <div className="nv-hero-wrapper">
+          <div className="nv-hero-card">
+            <div className="nv-hero-container">
+              <div className="nv-hero-content">
+                <h1 className="nv-hero-title">
+                  ✨ {t('hero.title')}
+                </h1>
+                <p className="nv-hero-subtitle">
+                  {t('hero.subtitle')}
+                </p>
+                <p className="nv-hero-description">
+                  {t('hero.description')}
+                </p>
+                <div className="nv-hero-actions">
+                  <Link href="/chat" className="nv-btn-primary">
+                    {t('hero.ctaPrimary')}
+                  </Link>
+                  <button className="nv-btn-secondary">
+                    {t('hero.ctaSecondary')}
+                  </button>
+                </div>
               </div>
             </div>
+          </div>
+          <div className="nv-hero-image-card">
+            <img src="/images/hero/francesco-berardino-nutrizionista-foggia-visual.png" alt="Francesco Berardino - Nutrizionista Foggia" className="nv-hero-image" />
           </div>
         </div>
       </section>

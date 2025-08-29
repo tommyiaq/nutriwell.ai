@@ -421,6 +421,19 @@ body {
   width: 100%;
 }
 
+.nv-hero-wrapper {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .nv-hero-wrapper {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
 .nv-hero-card {
   background: linear-gradient(135deg, var(--nv-primary) 0%, var(--nv-secondary) 100%);
   color: white;
@@ -429,6 +442,29 @@ body {
   border-radius: 12px;
   box-shadow: 0 4px 24px rgba(10, 68, 53, 0.15);
   width: 100%;
+  flex: 1;
+}
+
+.nv-hero-image-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(10, 68, 53, 0.15);
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .nv-hero-image-card {
+    max-width: 400px;
+  }
+}
+
+.nv-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .nv-hero-container {
@@ -1028,6 +1064,10 @@ body {
   
   .nv-hero-card {
     padding: 2rem 1rem;
+  }
+  
+  .nv-hero-image-card {
+    min-height: 300px;
   }
   
   .nv-hero-title {
