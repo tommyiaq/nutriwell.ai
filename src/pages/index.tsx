@@ -232,48 +232,66 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Product & Disclaimer Combined Section */}
-      <section className="nv-product-disclaimer">
-        <div className="nv-container">
-          <div className="nv-product-disclaimer-wrapper">
-            {/* Product Section */}
-            <div className="nv-product-content">
-              <h2 className="nv-section-title">💚 {t('product.title')}</h2>
-              <p className="nv-product-description">{t('product.description')}</p>
-              <div className="nv-benefits-grid">
-                {t.raw('product.benefits').map((benefit: string, index: number) => (
-                  <div key={index} className="nv-benefit-item">
-                    <span className="nv-check">✓</span>
-                    <span>{benefit}</span>
-                  </div>
-                ))}
+      {/* Product Section */}
+      <section className="nv-product" id="product">
+        <div className="nv-product-wrapper">
+          <div className="nv-product-card">
+            <div className="nv-product-container">
+              <div className="nv-product-content">
+                <h2 className="nv-section-title">💚 {t('product.title')}</h2>
+                <p className="nv-product-description">{t('product.description')}</p>
+                <div className="nv-benefits-grid">
+                  {t.raw('product.benefits').map((benefit: string, index: number) => (
+                    <div key={index} className="nv-benefit-item">
+                      <span className="nv-check">✓</span>
+                      <span>{benefit}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-
-            {/* Disclaimer Section */}
-            <div className="nv-disclaimer-content">
-              <h3 className="nv-disclaimer-title">❗ {t('disclaimer.title')}</h3>
-              <p className="nv-disclaimer-text">{t('disclaimer.content')}</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA & Footer Combined Section */}
-      <section className="nv-cta-footer">
-        {/* CTA Section */}
-        <div className="nv-cta">
-          <div className="nv-container">
-            <h2 className="nv-cta-title">🚀 {t('cta.title')}</h2>
-            <p className="nv-cta-description">{t('cta.description')}</p>
-            <Link href="/chat" className="nv-btn-primary nv-btn-large">
-              {t('hero.ctaPrimary')}
-            </Link>
+      {/* Disclaimer Section */}
+      <section className="nv-disclaimer" id="disclaimer">
+        <div className="nv-disclaimer-wrapper">
+          <div className="nv-disclaimer-card">
+            <div className="nv-disclaimer-container">
+              <div className="nv-disclaimer-content">
+                <h3 className="nv-disclaimer-title">❗ {t('disclaimer.title')}</h3>
+                <p className="nv-disclaimer-text">{t('disclaimer.content')}</p>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
 
-        {/* Footer Section */}
-        <Footer />
+      {/* CTA Section */}
+      <section className="nv-cta" id="cta">
+        <div className="nv-cta-wrapper">
+          <div className="nv-cta-card">
+            <div className="nv-cta-container">
+              <div className="nv-cta-content">
+                <h2 className="nv-cta-title">🚀 {t('cta.title')}</h2>
+                <p className="nv-cta-description">{t('cta.description')}</p>
+                <Link href="/chat" className="nv-btn-primary nv-btn-large">
+                  {t('hero.ctaPrimary')}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer Section */}
+      <section className="nv-footer-section">
+        <div className="nv-footer-wrapper">
+          <div className="nv-footer-card">
+            <Footer />
+          </div>
+        </div>
       </section>
     </div>
   );

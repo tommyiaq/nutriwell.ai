@@ -638,42 +638,162 @@ body {
   background: var(--nv-bg);
 }
 
-/* Combined Product & Disclaimer Section */
-.nv-product-disclaimer {
+/* Product Section */
+.nv-product {
+  background: transparent;
+  padding: 0.5rem 0;
+}
+
+.nv-product-wrapper {
+  width: 100%;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .nv-product-wrapper {
+    padding: 0 1rem;
+  }
+}
+
+.nv-product-card {
   background: var(--nv-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(10, 68, 53, 0.15);
   padding: 4rem 0;
+  transition: all 0.3s ease;
 }
 
-.nv-product-disclaimer .nv-container {
-  justify-content: center;
-  text-align: left;
-  flex-direction: column;
+.nv-product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(10, 68, 53, 0.25);
 }
 
-.nv-product-disclaimer-wrapper {
-  display: grid;
-  grid-template-columns: 2.5fr 1fr;
-  gap: 4rem;
-  align-items: center;
+.nv-product-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
 }
 
 .nv-product-content {
   text-align: center;
+  padding: 0 2rem;
+}
+
+/* Disclaimer Section */
+.nv-disclaimer {
+  background: transparent;
+  padding: 0.5rem 0;
+}
+
+.nv-disclaimer-wrapper {
+  width: 100%;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .nv-disclaimer-wrapper {
+    padding: 0 1rem;
+  }
+}
+
+.nv-disclaimer-card {
+  background: rgba(255, 193, 7, 0.1);
+  border: 2px solid #ffc107;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(255, 193, 7, 0.15);
+  padding: 3rem 0;
+  transition: all 0.3s ease;
+}
+
+.nv-disclaimer-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(255, 193, 7, 0.25);
+}
+
+.nv-disclaimer-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
 }
 
 .nv-disclaimer-content {
-  background: rgba(255, 193, 7, 0.1);
-  border-left: 4px solid #ffc107;
-  padding: 2rem;
-  border-radius: 8px;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: fit-content;
-  max-width: 300px;
+  padding: 0 2rem;
+}
+
+/* CTA Section */
+.nv-cta {
+  background: transparent;
+  padding: 0.5rem 0;
+}
+
+.nv-cta-wrapper {
+  width: 100%;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .nv-cta-wrapper {
+    padding: 0 1rem;
+  }
+}
+
+.nv-cta-card {
+  background: linear-gradient(135deg, var(--nv-primary) 0%, var(--nv-secondary) 100%);
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(10, 68, 53, 0.15);
+  padding: 4rem 0;
+  transition: all 0.3s ease;
+}
+
+.nv-cta-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(10, 68, 53, 0.25);
+}
+
+.nv-cta-container {
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0;
+  width: 100%;
+}
+
+.nv-cta-content {
+  text-align: center;
+  padding: 0 2rem;
+}
+
+/* Footer Section */
+.nv-footer-section {
+  background: transparent;
+  padding: 0.5rem 0;
+}
+
+.nv-footer-wrapper {
+  width: 100%;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .nv-footer-wrapper {
+    padding: 0 1rem;
+  }
+}
+
+.nv-footer-card {
+  background: #1a5523;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(26, 85, 35, 0.15);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.nv-footer-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(26, 85, 35, 0.25);
 }
 
 .nv-disclaimer-title {
@@ -697,25 +817,6 @@ body {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 3rem;
-}
-
-.nv-disclaimer {
-  background: #fff3cd;
-  border-top: 4px solid #ffc107;
-}
-
-.nv-cta {
-  background: linear-gradient(135deg, var(--nv-primary) 0%, var(--nv-secondary) 100%);
-  color: white;
-  text-align: center;
-  padding: 4rem 0;
-}
-
-.nv-cta .nv-container {
-  justify-content: center;
-  text-align: center;
-  flex-direction: column;
 }
 
 /* Footer Section */
@@ -1195,24 +1296,64 @@ body {
     font-size: 0.95rem;
   }
   
-  /* Mobile styles for combined product-disclaimer section */
-  .nv-product-disclaimer-wrapper {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+  /* Mobile styles for new card sections */
+  .nv-product-card {
+    padding: 3rem 0;
+  }
+  
+  .nv-product-content {
+    padding: 0 1rem;
+  }
+  
+  .nv-disclaimer-card {
+    padding: 2rem 0;
   }
   
   .nv-disclaimer-content {
-    padding: 1.5rem;
+    padding: 0 1rem;
   }
   
-  .nv-disclaimer-title {
-    font-size: 1.1rem;
+  .nv-cta-card {
+    padding: 3rem 0;
   }
   
+  .nv-cta-content {
+    padding: 0 1rem;
+  }
+
   /* Mobile Footer Styles */
   .nv-footer-content {
     grid-template-columns: 1fr;
     gap: 2rem;
+    text-align: center;
+  }
+  
+  .nv-footer-column {
+    text-align: center;
+  }
+  
+  .nv-footer-brand {
+    max-width: none;
+  }
+  
+  .nv-footer-description {
+    text-align: center;
+  }
+  
+  .nv-footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .nv-footer-contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .nv-footer-contact li {
+    justify-content: center;
   }
   
   .nv-footer-bottom {
@@ -1239,10 +1380,6 @@ body {
   
   .nv-section-title {
     font-size: 2rem;
-  }
-  
-  .nv-features, .nv-product, .nv-disclaimer, .nv-cta {
-    padding: 3rem 0;
   }
 }
 
