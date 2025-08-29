@@ -23,7 +23,7 @@ const Header: React.FC = () => {
                 {/* Desktop Navigation */}
                 <nav className="nv-nav nv-nav-desktop">
                     <Link href="#about" className="nv-nav-link">{t('nav.about')}</Link>
-                    <Link href="#pricing" className="nv-nav-link">{t('nav.pricing')}</Link>
+                    <Link href="/pricing" className="nv-nav-link">{t('nav.pricing')}</Link>
                     <Link href="/chat" className="nv-nav-link nv-nav-chat">{t('nav.chat')}</Link>
                     <div className="nv-auth-buttons">
                         <Link href="/signin" className="nv-auth-signin">{t('nav.signIn')}</Link>
@@ -49,13 +49,13 @@ const Header: React.FC = () => {
                 {isMobileMenuOpen && (
                     <div className="nv-mobile-menu">
                         <div className="nv-mobile-language">
-                            <span className="nv-mobile-language-label">Lingua:</span>
+                            <span className="nv-mobile-language-label">{t('language')}</span>
                             <LanguageSwitcher />
                         </div>
                         <Link href="#about" className="nv-mobile-menu-link" onClick={() => setIsMobileMenuOpen(false)}>
                             {t('nav.about')}
                         </Link>
-                        <Link href="#pricing" className="nv-mobile-menu-link" onClick={() => setIsMobileMenuOpen(false)}>
+                        <Link href="/pricing" className="nv-mobile-menu-link" onClick={() => setIsMobileMenuOpen(false)}>
                             {t('nav.pricing')}
                         </Link>
                         <Link href="/chat" className="nv-mobile-menu-link nv-mobile-chat" onClick={() => setIsMobileMenuOpen(false)}>

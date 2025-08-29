@@ -8,7 +8,8 @@
       "chat": "Chat",
       "signIn": "Accedi",
       "signUp": "Registrati"
-    }
+    },
+    "language": "Lingua:"
   },
 
 
@@ -98,5 +99,53 @@
       "title": "Seguici"
     },
     "copyright": "© 2025 NutriWell.ai. Tutti i diritti riservati."
+  },
+  "pricing": {
+    "title": "Scegli il Tuo Piano",
+    "subtitle": "Seleziona il piano perfetto per le tue esigenze nutrizionali",
+    "mostPopular": "Più Popolare",
+    "continue": "Prosegui",
+    "plans": {
+      "free": {
+        "name": "Gratuito",
+        "price": "€0/mese",
+        "description": "Perfetto per iniziare il tuo percorso nutrizionale",
+        "features": [
+          "Calcolo BMR e TDEE di base",
+          "5 domande al giorno",
+          "Consigli nutrizionali generali",
+          "Accesso alla community",
+          "Supporto email"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "€9.99/mese",
+        "description": "Ideale per un supporto nutrizionale completo",
+        "features": [
+          "Tutto del piano Gratuito",
+          "Domande illimitate",
+          "Analisi personalizzate dettagliate",
+          "Sostituzioni alimentari avanzate",
+          "Supporto prioritario",
+          "Piani pasto settimanali",
+          "Analisi immagini alimenti"
+        ]
+      },
+      "proplus": {
+        "name": "Pro Certificato",
+        "price": "€19.99/mese",
+        "description": "Massimo supporto con consulenza professionale",
+        "features": [
+          "Tutto del piano Pro",
+          "Consulenze con nutrizionisti certificati",
+          "Piani alimentari personalizzati",
+          "Monitoraggio progressi avanzato",
+          "Supporto telefonico dedicato",
+          "Accesso anticipato a nuove funzionalità",
+          "Integrazione con dispositivi fitness"
+        ]
+      }
+    }
   }
 }

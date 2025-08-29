@@ -8,7 +8,8 @@
       "chat": "Chat",
       "signIn": "Sign In",
       "signUp": "Sign Up"
-    }
+    },
+    "language": "Language:"
   },
   "hero": {
     "title": "The First Digital Educational Nutritionist",
@@ -96,5 +97,53 @@
       "title": "Follow Us"
     },
     "copyright": "© 2025 NutriWell.ai. All rights reserved."
+  },
+  "pricing": {
+    "title": "Choose Your Plan",
+    "subtitle": "Select the perfect plan for your nutritional needs",
+    "mostPopular": "Most Popular",
+    "continue": "Continue",
+    "plans": {
+      "free": {
+        "name": "Free",
+        "price": "$0/month",
+        "description": "Perfect to start your nutritional journey",
+        "features": [
+          "Basic BMR and TDEE calculation",
+          "5 questions per day",
+          "General nutritional advice",
+          "Community access",
+          "Email support"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "$9.99/month",
+        "description": "Ideal for comprehensive nutritional support",
+        "features": [
+          "Everything in Free plan",
+          "Unlimited questions",
+          "Detailed personalized analysis",
+          "Advanced food substitutions",
+          "Priority support",
+          "Weekly meal plans",
+          "Food image analysis"
+        ]
+      },
+      "proplus": {
+        "name": "Pro Certified",
+        "price": "$19.99/month",
+        "description": "Maximum support with professional consultation",
+        "features": [
+          "Everything in Pro plan",
+          "Consultations with certified nutritionists",
+          "Personalized meal plans",
+          "Advanced progress tracking",
+          "Dedicated phone support",
+          "Early access to new features",
+          "Fitness device integration"
+        ]
+      }
+    }
   }
 }
