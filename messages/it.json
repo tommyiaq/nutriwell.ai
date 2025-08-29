@@ -10,10 +10,12 @@
       "signUp": "Registrati"
     }
   },
+
+
   "hero": {
-    "title": "Il Primo Nutrizionista Digitale Educativo",
-    "subtitle": "Il tuo compagno nutrizionale personalizzato progettato per supportarti nel tuo percorso alimentare quotidiano con consigli basati sulla scienza.",
-    "description": "Alimentato da tecnologia AI avanzata, nutriwell fornisce guidance nutrizionale educativa basata su fonti scientifiche e database proprietari.",
+    "title": "Il Primo Nutrizionista Educativo Digitale",
+    "subtitle": "La tua guida nutrizionale personalizzata progettata per supportarti nel percorso alimentare quotidiano con consigli basati sulla scienza.",
+    "description": "Fornito di tecnologia AI avanzata, NutriWell ti insegna a prenderti cura della tua alimentazione basandosi su fonti scientifiche e database certificati.",
     "ctaPrimary": "Inizia Ora",
     "ctaSecondary": "Scopri di Più"
   },
