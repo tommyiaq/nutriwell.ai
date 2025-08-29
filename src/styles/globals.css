@@ -44,6 +44,12 @@ body {
   width: 100%;
   position: relative;
   padding: 0.75rem 0;
+  transition: all 0.3s ease;
+}
+
+.nv-header-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 28px rgba(10, 68, 53, 0.25);
 }
 
 .nv-container {
@@ -443,6 +449,13 @@ body {
   box-shadow: 0 4px 24px rgba(10, 68, 53, 0.15);
   width: 100%;
   flex: 1;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.nv-hero-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(10, 68, 53, 0.25);
 }
 
 .nv-hero-image-card {
@@ -452,6 +465,17 @@ body {
   width: 100%;
   flex: 1;
   overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.nv-hero-image-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(10, 68, 53, 0.25);
+}
+
+.nv-hero-image-card:hover .nv-hero-image {
+  transform: scale(1.05);
 }
 
 @media (min-width: 768px) {
@@ -465,6 +489,7 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.3s ease;
 }
 
 .nv-hero-container {
