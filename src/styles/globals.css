@@ -416,22 +416,31 @@ body {
 
 /* Hero Section */
 .nv-hero {
+  background: transparent;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  width: 100%;
+}
+
+.nv-hero-card {
   background: linear-gradient(135deg, var(--nv-primary) 0%, var(--nv-secondary) 100%);
   color: white;
-  padding: 4rem 0;
+  padding: 2rem 0;
   text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(10, 68, 53, 0.15);
+  width: 100%;
 }
 
 .nv-hero-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0;
   width: 100%;
 }
 
 @media (min-width: 768px) {
   .nv-hero-container {
-    padding: 0 2rem;
+    padding: 0;
   }
 }
 
@@ -1014,7 +1023,11 @@ body {
   }
   
   .nv-hero {
-    padding: 3rem 0;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+  }
+  
+  .nv-hero-card {
+    padding: 2rem 1rem;
   }
   
   .nv-hero-title {
