@@ -220,10 +220,16 @@ const Home = () => {
 
       {/* Features Section */}
       <section className="nv-features" id="features">
-        <div className="nv-container">
-          <h2 className="nv-section-title">{t('features.title')}</h2>
+        <div className="nv-features-wrapper">
+          <div className="nv-features-card">
+            <div className="nv-features-container">
+              <div className="nv-features-content">
+                <h2 className="nv-section-title">{t('features.title')}</h2>
+              </div>
+            </div>
+            <AutoCarousel features={t.raw('features.items')} />
+          </div>
         </div>
-        <AutoCarousel features={t.raw('features.items')} />
       </section>
 
       {/* Product & Disclaimer Combined Section */}

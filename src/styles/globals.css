@@ -583,7 +583,44 @@ body {
 }
 
 .nv-features {
+  background: transparent;
+  padding: 0.5rem 0;
+}
+
+.nv-features-wrapper {
+  width: 100%;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .nv-features-wrapper {
+    padding: 0 1rem;
+  }
+}
+
+.nv-features-card {
   background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(10, 68, 53, 0.15);
+  padding: 4rem 0;
+  transition: all 0.3s ease;
+}
+
+.nv-features-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(10, 68, 53, 0.25);
+}
+
+.nv-features-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+}
+
+.nv-features-content {
+  text-align: center;
+  padding: 2rem 2rem 0 2rem;
 }
 
 .nv-features .nv-container {
@@ -1089,6 +1126,18 @@ body {
   
   .nv-hero-card {
     padding: 2rem 1rem;
+  }
+  
+  .nv-features {
+    padding: 0.5rem 0;
+  }
+  
+  .nv-features-card {
+    padding: 3rem 0;
+  }
+  
+  .nv-features-content {
+    padding: 0 1rem 0 1rem;
   }
   
   .nv-hero-image-card {
