@@ -29,23 +29,37 @@ body {
 }
 
 .nv-header {
-  background: var(--nv-primary);
-  padding: 1rem 0;
-  box-shadow: 0 2px 20px rgba(10, 68, 53, 0.15);
+  background: transparent;
+  padding: 0.5rem 1rem 0.5rem 1rem;
   position: sticky;
   top: 0;
   z-index: 100;
   width: 100%;
 }
 
+.nv-header-card {
+  background: var(--nv-primary);
+  box-shadow: 0 2px 20px rgba(10, 68, 53, 0.15);
+  border-radius: 12px;
+  width: 100%;
+  position: relative;
+  padding: 0.75rem 0;
+}
+
 .nv-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+@media (max-width: 767px) {
+  .nv-container {
+    padding: 0 1rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -201,6 +215,7 @@ body {
   right: 0;
   background: var(--nv-primary);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0 0 12px 12px;
   box-shadow: 0 4px 20px rgba(10, 68, 53, 0.2);
   z-index: 1000;
   display: flex;
@@ -231,6 +246,22 @@ body {
   border-radius: 6px;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Mobile Language Switcher */
+.nv-mobile-language {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nv-mobile-language-label {
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
 }
 
 /* Mobile Auth Buttons */

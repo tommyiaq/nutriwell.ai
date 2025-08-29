@@ -13,11 +13,12 @@ const Header: React.FC = () => {
     
     return (
         <header className="nv-header">
-            <div className="nv-container">
-                <Link href="/" className="nv-logo">
-                    <h1 className="nv-title">{t('title')}</h1>
-                    <span className="nv-tagline">{t('tagline')}</span>
-                </Link>
+            <div className="nv-header-card">
+                <div className="nv-container">
+                    <Link href="/" className="nv-logo">
+                        <h1 className="nv-title">{t('title')}</h1>
+                        <span className="nv-tagline">{t('tagline')}</span>
+                    </Link>
                 
                 {/* Desktop Navigation */}
                 <nav className="nv-nav nv-nav-desktop">
@@ -33,7 +34,6 @@ const Header: React.FC = () => {
 
                 {/* Mobile Navigation */}
                 <div className="nv-nav-mobile">
-                    <LanguageSwitcher />
                     <button 
                         className="nv-hamburger" 
                         onClick={toggleMobileMenu}
@@ -48,6 +48,10 @@ const Header: React.FC = () => {
                 {/* Mobile Menu Dropdown */}
                 {isMobileMenuOpen && (
                     <div className="nv-mobile-menu">
+                        <div className="nv-mobile-language">
+                            <span className="nv-mobile-language-label">Lingua:</span>
+                            <LanguageSwitcher />
+                        </div>
                         <Link href="#about" className="nv-mobile-menu-link" onClick={() => setIsMobileMenuOpen(false)}>
                             {t('nav.about')}
                         </Link>
@@ -68,6 +72,7 @@ const Header: React.FC = () => {
                     </div>
                 )}
             </div>
+        </div>
         </header>
     );
 };
