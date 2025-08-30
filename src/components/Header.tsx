@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import LanguageSwitcher from './LanguageSwitcher';
 
@@ -13,7 +14,24 @@ import LanguageSwitcher from './LanguageSwitcher';
  */
 const Header: React.FC = () => {
   const t = useTranslations('header');
+  const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  /**
+   * Get the active class for navigation links
+   */
+  const getNavLinkClass = (href: string) => {
+    const isActive = router.pathname === href;
+    return `nv-nav-link${isActive ? ' nv-nav-active' : ''}`;
+  };
+
+  /**
+   * Get the active class for mobile navigation links
+   */
+  const getMobileNavLinkClass = (href: string) => {
+    const isActive = router.pathname === href;
+    return `nv-mobile-menu-link${isActive ? ' nv-mobile-menu-active' : ''}`;
+  };
 
   /**
    * Toggle mobile menu visibility
@@ -46,27 +64,33 @@ const Header: React.FC = () => {
             role="navigation"
             aria-label="Main navigation"
           >
-            <Link href="#about" className="nv-nav-link">
-              {t('nav.about')}
-            </Link>
-            <Link href="/pricing" className="nv-nav-link">
-              {t('nav.pricing')}
-            </Link>
-            <Link href="/chat" className="nv-nav-link nv-nav-chat">
-              {t('nav.chat')}
-            </Link>
-
-            {/* Authentication buttons */}
-            <div className="nv-auth-buttons">
-              <Link href="/signin" className="nv-auth-signin">
-                {t('nav.signIn')}
+            {/* Left side navigation links */}
+            <div className="nv-nav-links">
+              <Link href="/" className={getNavLinkClass('/')}>
+                {t('nav.about')}
               </Link>
-              <Link href="/signup" className="nv-auth-signup">
-                {t('nav.signUp')}
+              <Link href="/pricing" className={getNavLinkClass('/pricing')}>
+                {t('nav.pricing')}
+              </Link>
+              <Link href="/chat" className={getNavLinkClass('/chat')}>
+                {t('nav.chat')}
               </Link>
             </div>
 
-            <LanguageSwitcher />
+            {/* Right side auth and language */}
+            <div className="nv-nav-right">
+              {/* Authentication buttons */}
+              <div className="nv-auth-buttons">
+                <Link href="/signin" className={`nv-auth-signin${router.pathname === '/signin' ? ' nv-auth-active' : ''}`}>
+                  {t('nav.signIn')}
+                </Link>
+                <Link href="/signup" className={`nv-auth-signup${router.pathname === '/signup' ? ' nv-auth-active' : ''}`}>
+                  {t('nav.signUp')}
+                </Link>
+              </div>
+
+              <LanguageSwitcher />
+            </div>
           </nav>
 
           {/* Mobile Navigation Toggle */}
@@ -108,22 +132,22 @@ const Header: React.FC = () => {
 
               {/* Navigation links */}
               <Link
-                href="#about"
-                className="nv-mobile-menu-link"
+                href="/"
+                className={getMobileNavLinkClass('/')}
                 onClick={closeMobileMenu}
               >
                 {t('nav.about')}
               </Link>
               <Link
                 href="/pricing"
-                className="nv-mobile-menu-link"
+                className={getMobileNavLinkClass('/pricing')}
                 onClick={closeMobileMenu}
               >
                 {t('nav.pricing')}
               </Link>
               <Link
                 href="/chat"
-                className="nv-mobile-menu-link nv-mobile-chat"
+                className={getMobileNavLinkClass('/chat')}
                 onClick={closeMobileMenu}
               >
                 {t('nav.chat')}
