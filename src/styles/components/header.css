@@ -365,3 +365,97 @@
     font-size: 2rem;
   }
 }
+
+/* Language Selector Component */
+.nv-language-dropdown {
+  position: relative;
+  margin-left: 1rem;
+}
+
+.nv-lang-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 80px;
+}
+
+.nv-lang-trigger:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.nv-flag {
+  display: flex;
+  align-items: center;
+}
+
+.nv-flag-icon {
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nv-lang-code {
+  font-weight: 600;
+}
+
+.nv-chevron {
+  font-size: 0.75em;
+  transition: transform 0.2s ease;
+}
+
+.nv-chevron.open {
+  transform: rotate(180deg);
+}
+
+.nv-lang-options {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  min-width: 140px;
+  z-index: 1000;
+}
+
+.nv-lang-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: var(--nv-text);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.nv-lang-option:hover {
+  background-color: #f5f5f5;
+}
+
+.nv-lang-option.active {
+  background-color: var(--nv-primary);
+  color: white;
+}
+
+.nv-lang-option.active:hover {
+  background-color: var(--nv-secondary);
+}
+
+.nv-lang-name {
+  font-weight: 500;
+}

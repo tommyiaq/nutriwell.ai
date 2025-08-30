@@ -1,6 +1,8 @@
 import '../styles/globals.css';
-import '../styles/components/header.css';
-import '../styles/components/footer.css';
+// Shared component styles
+import '@/styles/components/header.css'
+import '@/styles/components/footer.css'
+import '@/styles/components/buttons.css'
 // Page-specific styles
 import '@/styles/pages/index.css'
 import '@/styles/pages/pricing.css'
