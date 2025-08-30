@@ -18,7 +18,7 @@ html, body {
   --nv-accent: #52B788;
   --nv-light-green: #B7E4C7;
   --nv-header-height: 80px;
-  --nv-header-spacing: calc(var(--nv-header-height) + 3rem);
+  --nv-header-spacing: calc(var(--nv-header-height) + 1rem);
 }
 
 body {

@@ -9,7 +9,7 @@
 
 .nv-auth-container {
   max-width: 400px;
-  margin: 4rem auto;
+  margin: var(--nv-header-spacing) auto 2rem auto;
   padding: 0 1rem;
 }
 
@@ -103,7 +103,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .nv-auth-container {
-    margin: 2rem auto;
+    margin: calc(var(--nv-header-height) + 0.5rem) auto 2rem auto;
   }
   
   .nv-auth-card {
