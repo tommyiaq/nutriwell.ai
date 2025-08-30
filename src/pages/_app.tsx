@@ -1,11 +1,11 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import {NextIntlClientProvider} from 'next-intl';
-import {useRouter} from 'next/router';
+import { NextIntlClientProvider } from 'next-intl';
+import { useRouter } from 'next/router';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  
+
   // Load messages based on locale
   let messages;
   try {
@@ -13,12 +13,9 @@ export default function App({ Component, pageProps }: AppProps) {
   } catch (error) {
     messages = require(`../../messages/en.json`);
   }
-  
+
   return (
-    <NextIntlClientProvider
-      locale={router.locale || 'en'}
-      messages={messages}
-    >
+    <NextIntlClientProvider locale={router.locale || 'en'} messages={messages}>
       <Component {...pageProps} />
     </NextIntlClientProvider>
   );

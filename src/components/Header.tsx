@@ -1,80 +1,157 @@
-import React, { useState } from 'react';
-import {useTranslations} from 'next-intl';
+import React, { useState, useCallback } from 'react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import LanguageSwitcher from './LanguageSwitcher';
 
+/**
+ * Header component with responsive navigation and mobile menu
+ * Features:
+ * - Responsive design with desktop/mobile navigation
+ * - Internationalization support
+ * - Accessibility features (ARIA labels, keyboard navigation)
+ * - Smooth animations and hover effects
+ */
 const Header: React.FC = () => {
-    const t = useTranslations('header');
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    
-    const toggleMobileMenu = () => {
-        setIsMobileMenuOpen(!isMobileMenuOpen);
-    };
-    
-    return (
-        <header className="nv-header">
-            <div className="nv-header-card">
-                <div className="nv-container">
-                    <Link href="/" className="nv-logo">
-                        <h1 className="nv-title">{t('title')}</h1>
-                        <span className="nv-tagline">{t('tagline')}</span>
-                    </Link>
-                
-                {/* Desktop Navigation */}
-                <nav className="nv-nav nv-nav-desktop">
-                    <Link href="#about" className="nv-nav-link">{t('nav.about')}</Link>
-                    <Link href="/pricing" className="nv-nav-link">{t('nav.pricing')}</Link>
-                    <Link href="/chat" className="nv-nav-link nv-nav-chat">{t('nav.chat')}</Link>
-                    <div className="nv-auth-buttons">
-                        <Link href="/signin" className="nv-auth-signin">{t('nav.signIn')}</Link>
-                        <Link href="/signup" className="nv-auth-signup">{t('nav.signUp')}</Link>
-                    </div>
-                    <LanguageSwitcher />
-                </nav>
+  const t = useTranslations('header');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-                {/* Mobile Navigation */}
-                <div className="nv-nav-mobile">
-                    <button 
-                        className="nv-hamburger" 
-                        onClick={toggleMobileMenu}
-                        aria-label="Toggle menu"
-                    >
-                        <span className={`nv-hamburger-line ${isMobileMenuOpen ? 'open' : ''}`}></span>
-                        <span className={`nv-hamburger-line ${isMobileMenuOpen ? 'open' : ''}`}></span>
-                        <span className={`nv-hamburger-line ${isMobileMenuOpen ? 'open' : ''}`}></span>
-                    </button>
-                </div>
+  /**
+   * Toggle mobile menu visibility
+   * Uses useCallback to prevent unnecessary re-renders
+   */
+  const toggleMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(prev => !prev);
+  }, []);
 
-                {/* Mobile Menu Dropdown */}
-                {isMobileMenuOpen && (
-                    <div className="nv-mobile-menu">
-                        <div className="nv-mobile-language">
-                            <span className="nv-mobile-language-label">{t('language')}</span>
-                            <LanguageSwitcher />
-                        </div>
-                        <Link href="#about" className="nv-mobile-menu-link" onClick={() => setIsMobileMenuOpen(false)}>
-                            {t('nav.about')}
-                        </Link>
-                        <Link href="/pricing" className="nv-mobile-menu-link" onClick={() => setIsMobileMenuOpen(false)}>
-                            {t('nav.pricing')}
-                        </Link>
-                        <Link href="/chat" className="nv-mobile-menu-link nv-mobile-chat" onClick={() => setIsMobileMenuOpen(false)}>
-                            {t('nav.chat')}
-                        </Link>
-                        <div className="nv-mobile-auth">
-                            <Link href="/signin" className="nv-mobile-auth-signin" onClick={() => setIsMobileMenuOpen(false)}>
-                                {t('nav.signIn')}
-                            </Link>
-                            <Link href="/signup" className="nv-mobile-auth-signup" onClick={() => setIsMobileMenuOpen(false)}>
-                                {t('nav.signUp')}
-                            </Link>
-                        </div>
-                    </div>
-                )}
+  /**
+   * Close mobile menu when navigation link is clicked
+   */
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
+
+  return (
+    <header className="nv-header">
+      <div className="nv-header-card">
+        <div className="nv-container">
+          {/* Logo and Brand */}
+          <Link href="/" className="nv-logo" aria-label="NutriWell.ai Homepage">
+            <h1 className="nv-title">{t('title')}</h1>
+            <span className="nv-tagline">{t('tagline')}</span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav
+            className="nv-nav nv-nav-desktop"
+            role="navigation"
+            aria-label="Main navigation"
+          >
+            <Link href="#about" className="nv-nav-link">
+              {t('nav.about')}
+            </Link>
+            <Link href="/pricing" className="nv-nav-link">
+              {t('nav.pricing')}
+            </Link>
+            <Link href="/chat" className="nv-nav-link nv-nav-chat">
+              {t('nav.chat')}
+            </Link>
+
+            {/* Authentication buttons */}
+            <div className="nv-auth-buttons">
+              <Link href="/signin" className="nv-auth-signin">
+                {t('nav.signIn')}
+              </Link>
+              <Link href="/signup" className="nv-auth-signup">
+                {t('nav.signUp')}
+              </Link>
             </div>
+
+            <LanguageSwitcher />
+          </nav>
+
+          {/* Mobile Navigation Toggle */}
+          <div className="nv-nav-mobile">
+            <button
+              className="nv-hamburger"
+              onClick={toggleMobileMenu}
+              aria-label="Toggle navigation menu"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
+            >
+              <span
+                className={`nv-hamburger-line ${isMobileMenuOpen ? 'open' : ''}`}
+              />
+              <span
+                className={`nv-hamburger-line ${isMobileMenuOpen ? 'open' : ''}`}
+              />
+              <span
+                className={`nv-hamburger-line ${isMobileMenuOpen ? 'open' : ''}`}
+              />
+            </button>
+          </div>
+
+          {/* Mobile Menu Dropdown */}
+          {isMobileMenuOpen && (
+            <div
+              className="nv-mobile-menu"
+              id="mobile-menu"
+              role="navigation"
+              aria-label="Mobile navigation"
+            >
+              {/* Language selector for mobile */}
+              <div className="nv-mobile-language">
+                <span className="nv-mobile-language-label">
+                  {t('language')}
+                </span>
+                <LanguageSwitcher />
+              </div>
+
+              {/* Navigation links */}
+              <Link
+                href="#about"
+                className="nv-mobile-menu-link"
+                onClick={closeMobileMenu}
+              >
+                {t('nav.about')}
+              </Link>
+              <Link
+                href="/pricing"
+                className="nv-mobile-menu-link"
+                onClick={closeMobileMenu}
+              >
+                {t('nav.pricing')}
+              </Link>
+              <Link
+                href="/chat"
+                className="nv-mobile-menu-link nv-mobile-chat"
+                onClick={closeMobileMenu}
+              >
+                {t('nav.chat')}
+              </Link>
+
+              {/* Authentication buttons for mobile */}
+              <div className="nv-mobile-auth">
+                <Link
+                  href="/signin"
+                  className="nv-mobile-auth-signin"
+                  onClick={closeMobileMenu}
+                >
+                  {t('nav.signIn')}
+                </Link>
+                <Link
+                  href="/signup"
+                  className="nv-mobile-auth-signup"
+                  onClick={closeMobileMenu}
+                >
+                  {t('nav.signUp')}
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
-        </header>
-    );
+      </div>
+    </header>
+  );
 };
 
 export default Header;

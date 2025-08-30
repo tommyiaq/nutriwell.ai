@@ -14,7 +14,7 @@ const PricingPage = () => {
       price: t('pricing.plans.free.price'),
       description: t('pricing.plans.free.description'),
       features: t.raw('pricing.plans.free.features'),
-      popular: false
+      popular: false,
     },
     {
       id: 'pro',
@@ -22,7 +22,7 @@ const PricingPage = () => {
       price: t('pricing.plans.pro.price'),
       description: t('pricing.plans.pro.description'),
       features: t.raw('pricing.plans.pro.features'),
-      popular: true
+      popular: true,
     },
     {
       id: 'proplus',
@@ -30,14 +30,14 @@ const PricingPage = () => {
       price: t('pricing.plans.proplus.price'),
       description: t('pricing.plans.proplus.description'),
       features: t.raw('pricing.plans.proplus.features'),
-      popular: false
-    }
+      popular: false,
+    },
   ];
 
   return (
     <div>
       <Header />
-      
+
       {/* Pricing Section */}
       <section className="nv-pricing" id="pricing">
         <div className="nv-pricing-wrapper">
@@ -46,29 +46,31 @@ const PricingPage = () => {
               <div className="nv-pricing-content">
                 <h1 className="nv-section-title">{t('pricing.title')}</h1>
                 <p className="nv-pricing-subtitle">{t('pricing.subtitle')}</p>
-                
+
                 <div className="nv-pricing-plans">
-                  {plans.map((plan) => (
+                  {plans.map(plan => (
                     <div key={plan.id} className="nv-pricing-plan-wrapper">
                       {plan.popular && (
                         <div className="nv-popular-badge">
                           {t('pricing.mostPopular')}
                         </div>
                       )}
-                      <div 
+                      <div
                         className={`nv-pricing-plan ${selectedPlan === plan.id ? 'selected' : ''}`}
                         onClick={() => setSelectedPlan(plan.id)}
                       >
                         <div className="nv-plan-header">
                           <h3 className="nv-plan-name">{plan.name}</h3>
                           <div className="nv-plan-price">{plan.price}</div>
-                          <p className="nv-plan-description">{plan.description}</p>
+                          <p className="nv-plan-description">
+                            {plan.description}
+                          </p>
                         </div>
-                        
-                        <button 
+
+                        <button
                           className={`nv-btn-primary nv-plan-cta ${selectedPlan === plan.id ? 'active' : 'disabled'}`}
                           disabled={selectedPlan !== plan.id}
-                          onClick={(e) => {
+                          onClick={e => {
                             e.stopPropagation();
                             if (selectedPlan === plan.id) {
                               // Handle plan selection/continue action
@@ -78,15 +80,17 @@ const PricingPage = () => {
                         >
                           {t('pricing.continue')}
                         </button>
-                        
+
                         <div className="nv-plan-features">
                           <ul>
-                            {plan.features.map((feature: string, index: number) => (
-                              <li key={index}>
-                                <span className="nv-feature-check">✓</span>
-                                {feature}
-                              </li>
-                            ))}
+                            {plan.features.map(
+                              (feature: string, index: number) => (
+                                <li key={index}>
+                                  <span className="nv-feature-check">✓</span>
+                                  {feature}
+                                </li>
+                              )
+                            )}
                           </ul>
                         </div>
                       </div>

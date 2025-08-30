@@ -1,47 +1,61 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import {useTranslations} from 'next-intl';
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 const SignUp = () => {
-  const t = useTranslations();
-  
+  const t = useTranslations('auth');
+
   return (
     <div className="nv-auth-page">
       <Header />
-      
+
       <div className="nv-auth-container">
         <div className="nv-auth-card">
-          <h1 className="nv-auth-title">Join NutriWell.ai</h1>
-          <p className="nv-auth-subtitle">Create your account and start your nutrition journey today.</p>
-          
+          <h1 className="nv-auth-title">{t('signUp.title')}</h1>
+          <p className="nv-auth-subtitle">{t('signUp.subtitle')}</p>
+
           <form className="nv-auth-form">
             <div className="nv-form-group">
-              <label htmlFor="fullname">Full Name</label>
-              <input type="text" id="fullname" placeholder="Enter your full name" />
+              <label htmlFor="fullname">{t('signUp.name')}</label>
+              <input
+                type="text"
+                id="fullname"
+                placeholder={t('signUp.namePlaceholder')}
+              />
             </div>
-            
+
             <div className="nv-form-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">{t('signUp.email')}</label>
               <input type="email" id="email" placeholder="Enter your email" />
             </div>
-            
+
             <div className="nv-form-group">
               <label htmlFor="password">Password</label>
-              <input type="password" id="password" placeholder="Create a password" />
+              <input
+                type="password"
+                id="password"
+                placeholder="Create a password"
+              />
             </div>
-            
+
             <div className="nv-form-group">
               <label htmlFor="confirmPassword">Confirm Password</label>
-              <input type="password" id="confirmPassword" placeholder="Confirm your password" />
+              <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm your password"
+              />
             </div>
-            
+
             <button type="submit" className="nv-auth-button">
-              Sign Up
+              {t('signUp.signUpButton')}
             </button>
           </form>
-          
+
           <p className="nv-auth-link">
-            Already have an account? <a href="/signin">Sign in here</a>
+            {t('signUp.hasAccount')}{' '}
+            <Link href="/signin">{t('signUp.signInLink')}</Link>
           </p>
         </div>
       </div>

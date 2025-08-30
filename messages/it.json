@@ -11,8 +11,32 @@
     },
     "language": "Lingua:"
   },
-
-
+  "auth": {
+    "signIn": {
+      "title": "Accedi a NutriWell.ai",
+      "subtitle": "Bentornato! Accedi al tuo account.",
+      "email": "Email",
+      "password": "Password",
+      "emailPlaceholder": "Inserisci la tua email",
+      "passwordPlaceholder": "Inserisci la tua password",
+      "signInButton": "Accedi",
+      "noAccount": "Non hai un account?",
+      "signUpLink": "Registrati qui"
+    },
+    "signUp": {
+      "title": "Unisciti a NutriWell.ai",
+      "subtitle": "Crea il tuo account e inizia il tuo percorso nutrizionale.",
+      "name": "Nome Completo",
+      "email": "Email",
+      "password": "Password",
+      "namePlaceholder": "Inserisci il tuo nome completo",
+      "emailPlaceholder": "Inserisci la tua email",
+      "passwordPlaceholder": "Crea una password",
+      "signUpButton": "Crea Account",
+      "hasAccount": "Hai già un account?",
+      "signInLink": "Accedi qui"
+    }
+  },
   "hero": {
     "title": "Il Primo Nutrizionista Educativo Digitale",
     "subtitle": "La tua guida nutrizionale personalizzata progettata per supportarti nel percorso alimentare quotidiano con consigli basati sulla scienza.",
