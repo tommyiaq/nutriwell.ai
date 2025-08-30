@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import Header from '../components/Header';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 interface Message {
@@ -151,10 +151,10 @@ const Chat = () => {
     <div className={`nv-chat-page ${isKeyboardOpen ? 'nv-keyboard-open' : ''}`}>
       {!isMobile && (
         <div className="nv-chat-mini-header">
-          <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: '#0A4435', fontWeight: 700, fontSize: '1.2rem', padding: '0.75rem 1.5rem', borderBottom: '1px solid #e5e7eb' }}>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: '#0A4435', fontWeight: 700, fontSize: '1.2rem', padding: '0.75rem 1.5rem', borderBottom: '1px solid #e5e7eb' }}>
             <img src="/favicon.ico" alt="NutriWell.ai" style={{ width: 32, height: 32, marginRight: '0.5rem' }} />
             NutriWell.ai
-          </a>
+          </Link>
         </div>
       )}
 

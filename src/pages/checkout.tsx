@@ -12,11 +12,11 @@ export default function Checkout() {
   });
   const [message, setMessage] = useState('');
 
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  function handlePay(e) {
+  function handlePay(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     // Simulate payment
     if (!form.name || !form.email || !form.card || !form.expiry || !form.cvc) {
