@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import '../styles/components/header.css';
 import '../styles/components/footer.css';
+import '../styles/pages/pricing.css';
 import type { AppProps } from 'next/app';
 import { NextIntlClientProvider } from 'next-intl';
 import { useRouter } from 'next/router';
