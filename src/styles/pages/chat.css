@@ -1,3 +1,4 @@
+  margin-top: 80px;
 /* ===================================
    CHAT PAGE STYLES
    =================================== */
@@ -27,7 +28,7 @@
   flex-direction: column;
   background: white;
   overflow: hidden;
-  height: calc(100vh - 80px);
+  margin-top: 80px;
 }
 
 /* Main Content Wrapper */
@@ -87,7 +88,7 @@
 /* Side Panel */
 .nv-side-panel {
   position: fixed;
-  top: 0;
+  top: 80px;
   left: -300px;
   width: 300px;
   height: 100vh;

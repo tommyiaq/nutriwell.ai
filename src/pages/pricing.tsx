@@ -68,14 +68,9 @@ const PricingPage = () => {
                         </div>
 
                         <button
-                          className={`nv-btn-primary nv-plan-cta ${selectedPlan === plan.id ? 'active' : 'disabled'}`}
-                          disabled={selectedPlan !== plan.id}
-                          onClick={e => {
-                            e.stopPropagation();
-                            if (selectedPlan === plan.id) {
-                              // Handle plan selection/continue action
-                              console.log('Continue with plan:', plan.id);
-                            }
+                          className={`nv-btn-primary nv-plan-cta ${selectedPlan === plan.id ? 'active' : ''}`}
+                          onClick={() => {
+                            window.location.href = '/checkout';
                           }}
                         >
                           {t('pricing.continue')}

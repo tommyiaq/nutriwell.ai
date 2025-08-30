@@ -12,7 +12,11 @@ import LanguageSwitcher from './LanguageSwitcher';
  * - Accessibility features (ARIA labels, keyboard navigation)
  * - Smooth animations and hover effects
  */
-const Header: React.FC = () => {
+interface HeaderProps {
+  sticky?: boolean;
+}
+
+const Header: React.FC<HeaderProps> = ({ sticky = true }) => {
   const t = useTranslations('header');
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -49,7 +53,7 @@ const Header: React.FC = () => {
   }, []);
 
   return (
-    <header className="nv-header">
+    <header className={`nv-header${!sticky ? ' nv-header-static' : ''}`}> 
       <div className="nv-header-card">
         <div className="nv-container">
           {/* Logo and Brand */}
