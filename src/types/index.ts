@@ -41,31 +41,6 @@ export interface AuthState {
   };
 }
 
-/**
- * Nutrition calculation parameters
- */
-export interface NutritionParams {
-  age: number;
-  gender: 'male' | 'female';
-  height: number; // in cm
-  weight: number; // in kg
-  activityLevel: 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active';
-  goal: 'maintain' | 'lose' | 'gain';
-}
-
-/**
- * Nutrition calculation results
- */
-export interface NutritionResults {
-  bmr: number; // Basal Metabolic Rate
-  tdee: number; // Total Daily Energy Expenditure
-  calories: number; // Recommended daily calories
-  macros: {
-    protein: number; // in grams
-    carbs: number; // in grams
-    fat: number; // in grams
-  };
-}
 
 /**
  * Chat message structure
