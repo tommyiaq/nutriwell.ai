@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import '../styles/components/header.css';
 import type { AppProps } from 'next/app';
 import { NextIntlClientProvider } from 'next-intl';
 import { useRouter } from 'next/router';
