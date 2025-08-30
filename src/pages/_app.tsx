@@ -3,6 +3,7 @@ import '../styles/components/header.css';
 import '../styles/components/footer.css';
 import '../styles/pages/pricing.css';
 import '../styles/pages/chat.css';
+import '../styles/pages/auth.css';
 import type { AppProps } from 'next/app';
 import { NextIntlClientProvider } from 'next-intl';
 import { useRouter } from 'next/router';
