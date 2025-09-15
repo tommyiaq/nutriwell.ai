@@ -502,7 +502,7 @@
   gap: 0.375rem;
   background: rgba(255, 255, 255, 0.2);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1.5px solid #009246;
   padding: 0.375rem 0.625rem;
   border-radius: 6px;
   font-size: 0.8rem;
@@ -532,6 +532,7 @@
 
 .nv-chevron {
   font-size: 0.75em;
+  color: #009246;
   transition: transform 0.2s ease;
 }
 
@@ -582,4 +583,66 @@
 
 .nv-lang-name {
   font-weight: 500;
+}
+
+/* ========================================
+   USER AUTHENTICATION DISPLAY
+   ======================================== */
+
+.nv-user-welcome {
+  color: var(--nv-text-light);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-right: 1rem;
+  white-space: nowrap;
+}
+
+.nv-auth-logout {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--nv-text-light);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.nv-auth-logout:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.nv-mobile-user-info {
+  color: var(--nv-text-light);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.5rem;
+}
+
+.nv-mobile-auth-logout {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.nv-mobile-auth-logout:hover {
+  background: rgba(220, 53, 69, 0.15);
+  border-color: rgba(220, 53, 69, 0.4);
 }

@@ -1,8 +1,11 @@
 import Link from 'next/link';
 import { FiArrowLeft } from 'react-icons/fi';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Checkout() {
+  const router = useRouter();
+  const { plan } = router.query;
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -11,6 +14,18 @@ export default function Checkout() {
     cvc: ''
   });
   const [message, setMessage] = useState('');
+
+  // Plan info
+  const plans = {
+    free: { name: 'Piano NutriWell Free', price: '€0/mese' },
+    pro: { name: 'Piano NutriWell Pro', price: '€9/mese' },
+    proplus: { name: 'Piano NutriWell Pro+', price: '€19/mese' }
+  };
+  type PlanKey = 'free' | 'pro' | 'proplus';
+  let selectedPlan = plans['pro'];
+  if (typeof plan === 'string' && ['free','pro','proplus'].includes(plan)) {
+    selectedPlan = plans[plan as PlanKey];
+  }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,7 +44,7 @@ export default function Checkout() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#EFF9F0' }}>
       <div style={{ width: '100%', maxWidth: 400, margin: '2rem auto', position: 'relative' }}>
-        <Link href="/pricing" style={{ position: 'absolute', left: 0, top: 0, display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#0A4435', textDecoration: 'none', fontWeight: 600, fontSize: '1.1rem' }}>
+        <Link href="/#prezzi" style={{ position: 'absolute', left: 0, top: 0, display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#0A4435', textDecoration: 'none', fontWeight: 600, fontSize: '1.1rem' }}>
           <FiArrowLeft size={24} />
           <span>Indietro</span>
         </Link>
@@ -38,10 +53,9 @@ export default function Checkout() {
           <div style={{ marginBottom: '1.5rem', textAlign: 'center', color: '#222', fontWeight: 500 }}>
             <span>Riepilogo piano selezionato</span>
             <div style={{ marginTop: '0.5rem', fontSize: '1.1rem', color: '#2D6A4F' }}>
-              {/* You can pass plan info via query or context if needed */}
-              Piano NutriWell Pro
+              {selectedPlan.name}
             </div>
-            <div style={{ fontSize: '0.95rem', color: '#666' }}>€19/mese</div>
+            <div style={{ fontSize: '0.95rem', color: '#666' }}>{selectedPlan.price}</div>
           </div>
           <form onSubmit={handlePay} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <input name="name" type="text" placeholder="Nome" value={form.name} onChange={handleChange} style={inputStyle} />

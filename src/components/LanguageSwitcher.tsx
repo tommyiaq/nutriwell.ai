@@ -8,12 +8,12 @@ const LanguageSwitcher: React.FC = () => {
   const FlagUS = () => (
     <svg width="20" height="15" viewBox="0 0 20 15" className="nv-flag-icon">
       <rect width="20" height="15" fill="#B22234" />
-      <rect width="20" height="1.15" y="1.15" fill="white" />
-      <rect width="20" height="1.15" y="3.46" fill="white" />
-      <rect width="20" height="1.15" y="5.77" fill="white" />
-      <rect width="20" height="1.15" y="8.08" fill="white" />
-      <rect width="20" height="1.15" y="10.38" fill="white" />
-      <rect width="20" height="1.15" y="12.69" fill="white" />
+      <rect width="20" height="1.15" y="1.15" fill="#F6F8FB" />
+      <rect width="20" height="1.15" y="3.46" fill="#F6F8FB" />
+      <rect width="20" height="1.15" y="5.77" fill="#F6F8FB" />
+      <rect width="20" height="1.15" y="8.08" fill="#F6F8FB" />
+      <rect width="20" height="1.15" y="10.38" fill="#F6F8FB" />
+      <rect width="20" height="1.15" y="12.69" fill="#F6F8FB" />
       <rect width="8" height="7.5" fill="#3C3B6E" />
     </svg>
   );
@@ -21,7 +21,7 @@ const LanguageSwitcher: React.FC = () => {
   const FlagIT = () => (
     <svg width="20" height="15" viewBox="0 0 20 15" className="nv-flag-icon">
       <rect width="6.67" height="15" fill="#009246" />
-      <rect x="6.67" width="6.67" height="15" fill="white" />
+      <rect x="6.67" width="6.67" height="15" fill="#F6F8FB" />
       <rect x="13.33" width="6.67" height="15" fill="#CE2B37" />
     </svg>
   );
@@ -43,7 +43,6 @@ const LanguageSwitcher: React.FC = () => {
     <div className="nv-language-dropdown">
       <button className="nv-lang-trigger" onClick={() => setIsOpen(!isOpen)}>
         <span className="nv-flag">{currentLang?.flag}</span>
-        <span className="nv-lang-code">{currentLang?.code.toUpperCase()}</span>
         <span className={`nv-chevron ${isOpen ? 'open' : ''}`}>▼</span>
       </button>
 

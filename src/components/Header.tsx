@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import LanguageSwitcher from './LanguageSwitcher';
+import { useUser } from '../contexts/UserContext';
 
 /**
  * Header component with responsive navigation and mobile menu
@@ -20,6 +21,7 @@ const Header: React.FC<HeaderProps> = ({ sticky = true }) => {
   const t = useTranslations('header');
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, isAuthenticated, logout } = useUser();
 
   /**
    * Get the active class for navigation links
@@ -73,9 +75,6 @@ const Header: React.FC<HeaderProps> = ({ sticky = true }) => {
               <Link href="/" className={getNavLinkClass('/')}>
                 {t('nav.about')}
               </Link>
-              <Link href="/pricing" className={getNavLinkClass('/pricing')}>
-                {t('nav.pricing')}
-              </Link>
               <Link href="/chat" className={getNavLinkClass('/chat')}>
                 {t('nav.chat')}
               </Link>
@@ -85,12 +84,28 @@ const Header: React.FC<HeaderProps> = ({ sticky = true }) => {
             <div className="nv-nav-right">
               {/* Authentication buttons */}
               <div className="nv-auth-buttons">
-                <Link href="/signin" className={`nv-auth-signin${router.pathname === '/signin' ? ' nv-auth-active' : ''}`}>
-                  {t('nav.signIn')}
-                </Link>
-                <Link href="/signup" className={`nv-auth-signup${router.pathname === '/signup' ? ' nv-auth-active' : ''}`}>
-                  {t('nav.signUp')}
-                </Link>
+                {isAuthenticated ? (
+                  <>
+                    <span className="nv-user-welcome">
+                      Hello, {user?.firstName} {user?.lastName}
+                    </span>
+                    <button 
+                      onClick={logout}
+                      className="nv-auth-logout"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link href="/signin" className={`nv-auth-signin${router.pathname === '/signin' ? ' nv-auth-active' : ''}`}>
+                      {t('nav.signIn')}
+                    </Link>
+                    <Link href="/signup" className={`nv-auth-signup${router.pathname === '/signup' ? ' nv-auth-active' : ''}`}>
+                      {t('nav.signUp')}
+                    </Link>
+                  </>
+                )}
               </div>
 
               <LanguageSwitcher />
@@ -143,13 +158,6 @@ const Header: React.FC<HeaderProps> = ({ sticky = true }) => {
                 {t('nav.about')}
               </Link>
               <Link
-                href="/pricing"
-                className={getMobileNavLinkClass('/pricing')}
-                onClick={closeMobileMenu}
-              >
-                {t('nav.pricing')}
-              </Link>
-              <Link
                 href="/chat"
                 className={getMobileNavLinkClass('/chat')}
                 onClick={closeMobileMenu}
@@ -159,20 +167,39 @@ const Header: React.FC<HeaderProps> = ({ sticky = true }) => {
 
               {/* Authentication buttons for mobile */}
               <div className="nv-mobile-auth">
-                <Link
-                  href="/signin"
-                  className="nv-mobile-auth-signin"
-                  onClick={closeMobileMenu}
-                >
-                  {t('nav.signIn')}
-                </Link>
-                <Link
-                  href="/signup"
-                  className="nv-mobile-auth-signup"
-                  onClick={closeMobileMenu}
-                >
-                  {t('nav.signUp')}
-                </Link>
+                {isAuthenticated ? (
+                  <>
+                    <div className="nv-mobile-user-info">
+                      Hello, {user?.firstName} {user?.lastName}
+                    </div>
+                    <button 
+                      onClick={() => {
+                        logout();
+                        closeMobileMenu();
+                      }}
+                      className="nv-mobile-auth-logout"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/signin"
+                      className="nv-mobile-auth-signin"
+                      onClick={closeMobileMenu}
+                    >
+                      {t('nav.signIn')}
+                    </Link>
+                    <Link
+                      href="/signup"
+                      className="nv-mobile-auth-signup"
+                      onClick={closeMobileMenu}
+                    >
+                      {t('nav.signUp')}
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           )}

@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
+import LandingHeader from '../components/landing-Header';
+import { useUser } from '../contexts/UserContext';
 
 interface Message {
   id: number;
@@ -12,6 +13,9 @@ interface Message {
 const Chat = () => {
   const t = useTranslations();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { user, isAuthenticated } = useUser();
+  
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -149,41 +153,7 @@ const Chat = () => {
 
   return (
     <div className={`nv-chat-page ${isKeyboardOpen ? 'nv-keyboard-open' : ''}`}>
-      {!isMobile && (
-        <div className="nv-chat-mini-header">
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: '#0A4435', fontWeight: 700, fontSize: '1.2rem', padding: '0.75rem 1.5rem', borderBottom: '1px solid #e5e7eb' }}>
-            <img src="/favicon.ico" alt="NutriWell.ai" style={{ width: 32, height: 32, marginRight: '0.5rem' }} />
-            NutriWell.ai
-          </Link>
-        </div>
-      )}
-
-      {/* Mobile Mini Header */}
-      {isMobile && (
-        <div className="nv-chat-mobile-header">
-          <button
-            className="nv-chat-menu-btn"
-            onClick={() => setIsSidePanelOpen(!isSidePanelOpen)}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M3 12h18M3 6h18M3 18h18"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
-          <button
-            className="nv-chat-title-btn"
-            onClick={() => (window.location.href = '/')}
-          >
-            <h1 className="nv-chat-mobile-title">NutriWell.ai</h1>
-          </button>
-          <div className="nv-chat-spacer"></div>
-        </div>
-      )}
+      <LandingHeader logoOnly={true} />
 
       {/* Desktop Main Content Wrapper */}
       <div className={`nv-chat-main-content ${!isMobile ? 'nv-desktop' : ''}`}>
@@ -218,7 +188,12 @@ const Chat = () => {
             <div className="nv-side-section nv-side-user">
               <div className="nv-user-info">
                 <div className="nv-user-avatar">👤</div>
-                <span className="nv-username">Guest User</span>
+                <span className="nv-username">
+                  {isAuthenticated && user 
+                    ? `${user.firstName} ${user.lastName}` 
+                    : 'Guest User'
+                  }
+                </span>
               </div>
             </div>
           </div>

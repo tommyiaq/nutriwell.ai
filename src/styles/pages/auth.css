@@ -9,7 +9,7 @@
 
 .nv-auth-container {
   max-width: 400px;
-  margin: var(--nv-header-spacing) auto 2rem auto;
+  margin: 2rem auto 2rem auto;
   padding: 0 1rem;
 }
 

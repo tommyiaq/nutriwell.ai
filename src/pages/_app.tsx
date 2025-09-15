@@ -5,12 +5,16 @@ import '@/styles/components/footer.css'
 import '@/styles/components/buttons.css'
 // Page-specific styles
 import '@/styles/pages/index.css'
-import '@/styles/pages/pricing.css'
 import '@/styles/pages/chat.css'
 import '@/styles/pages/auth.css'
 import type { AppProps } from 'next/app';
 import { NextIntlClientProvider } from 'next-intl';
 import { useRouter } from 'next/router';
+import { UserProvider } from '../contexts/UserContext';
+
+// importa QUI tutti i CSS globali
+import '../styles/tokens.css';
+import '../styles/landing.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -25,7 +29,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <NextIntlClientProvider locale={router.locale || 'en'} messages={messages}>
-      <Component {...pageProps} />
+      <UserProvider>
+        <Component {...pageProps} />
+      </UserProvider>
     </NextIntlClientProvider>
   );
 }

@@ -1,175 +1,46 @@
 {
-  "header": {
-    "title": "NutriWell.ai",
-    "tagline": "Nutrizione Intelligente, Alimentata dall'AI",
-    "nav": {
-      "about": "Chi Siamo",
-      "pricing": "Prezzi",
-      "chat": "Chat",
-      "signIn": "Accedi",
-      "signUp": "Registrati"
-    },
-    "language": "Lingua:"
-  },
-  "auth": {
-    "signIn": {
-      "title": "Accedi a NutriWell.ai",
-      "subtitle": "Bentornato! Accedi al tuo account.",
-      "email": "Email",
-      "password": "Password",
-      "emailPlaceholder": "Inserisci la tua email",
-      "passwordPlaceholder": "Inserisci la tua password",
-      "signInButton": "Accedi",
-      "noAccount": "Non hai un account?",
-      "signUpLink": "Registrati qui"
-    },
-    "signUp": {
-      "title": "Unisciti a NutriWell.ai",
-      "subtitle": "Crea il tuo account e inizia il tuo percorso nutrizionale.",
-      "name": "Nome Completo",
-      "email": "Email",
-      "password": "Password",
-      "namePlaceholder": "Inserisci il tuo nome completo",
-      "emailPlaceholder": "Inserisci la tua email",
-      "passwordPlaceholder": "Crea una password",
-      "signUpButton": "Crea Account",
-      "hasAccount": "Hai già un account?",
-      "signInLink": "Accedi qui"
-    }
-  },
   "hero": {
-    "title": "Il Primo Nutrizionista Educativo Digitale",
-    "subtitle": "La tua guida nutrizionale personalizzata progettata per supportarti nel percorso alimentare quotidiano con consigli basati sulla scienza.",
-    "description": "Fornito di tecnologia AI avanzata, NutriWell ti insegna a prenderti cura della tua alimentazione basandosi su fonti scientifiche e database certificati.",
-    "ctaPrimary": "Inizia Ora",
-    "ctaSecondary": "Scopri di Più"
-  },
-  "features": {
-    "title": "Cosa può fare NutriWell.ai?",
-    "items": [
-      {
-        "icon": "🧮",
-        "title": "Calcola il Fabbisogno Energetico",
-        "description": "Determina il tuo fabbisogno energetico giornaliero (BMR e TDEE) con precisione."
-      },
-      {
-        "icon": "📚",
-        "title": "Educazione Nutrizionale",
-        "description": "Impara concetti come deficit calorico, metabolismo, porzioni e macronutrienti."
-      },
-      {
-        "icon": "🔄",
-        "title": "Sostituzioni Alimentari",
-        "description": "Ricevi aiuto nella scelta di alternative alimentari e nella lettura delle etichette nutrizionali."
-      },
-      {
-        "icon": "🍽️",
-        "title": "Idee per Pasti Equilibrati",
-        "description": "Ricevi esempi di pasti equilibrati (non piani alimentari personalizzati)."
-      },
-      {
-        "icon": "📸",
-        "title": "Analisi Alimentare",
-        "description": "Analizza immagini del tuo frigo o della tua spesa per ottenere insights."
-      },
-      {
-        "icon": "🏥",
-        "title": "Supporto per Condizioni di Salute",
-        "description": "Informazioni educative per condizioni comuni come diabete e colesterolo."
-      }
-    ]
-  },
-  "product": {
-    "title": "Perché scegliere NutriWell.ai?",
-    "description": "Ottieni guidance nutrizionale personalizzata alimentata dall'AI che si adatta al tuo stile di vita e ai tuoi obiettivi.",
-    "benefits": [
-      "Analisi nutrizionale e raccomandazioni alimentate dall'AI",
-      "Guidance basata sulla scienza da fonti verificate",
-      "Approccio educativo per una nutrizione sostenibile",
-      "Supporto per varie condizioni di salute e obiettivi"
-    ]
-  },
-  "disclaimer": {
-    "title": "Nota Importante",
-    "content": "Tutti i contenuti sono solo a scopo educativo e non sostituiscono il consiglio medico professionale. Consulta sempre i professionisti sanitari per guidance medica personalizzata."
-  },
-  "cta": {
-    "title": "Pronto per iniziare?",
-    "description": "Trasforma il tuo percorso nutrizionale con una guida AI personalizzata alle tue esigenze."
-  },
-  "chat": {
-    "placeholder": "Chiedi di nutrizione, calorie, pasti...",
-    "disclaimer": "Versione demo. Consulta professionisti sanitari per consigli medici."
-  },
-  "footer": {
-    "brand": "NutriWell.ai",
-    "description": "Il tuo compagno nutrizionale personalizzato progettato per supportare il tuo percorso alimentare quotidiano con una guida basata sulla scienza.",
-    "contact": {
-      "title": "Contatti",
-      "email": "info@nutriwell.ai",
-      "phone": "+39 123 456 7890"
-    },
-    "links": {
-      "title": "Link Rapidi",
-      "home": "Home",
-      "about": "Chi Siamo",
-      "features": "Funzionalità",
-      "pricing": "Prezzi",
-      "chat": "Chat",
-      "privacy": "Privacy Policy",
-      "terms": "Termini di Servizio"
-    },
-    "social": {
-      "title": "Seguici"
-    },
-    "copyright": "© 2025 NutriWell.ai. Tutti i diritti riservati."
-  },
-  "pricing": {
-    "title": "Scegli il Tuo Piano",
-    "subtitle": "Seleziona il piano perfetto per le tue esigenze nutrizionali",
-    "mostPopular": "Più Popolare",
-    "continue": "Prosegui",
-    "plans": {
-      "free": {
-        "name": "Gratuito",
-        "price": "€0/mese",
-        "description": "Perfetto per iniziare il tuo percorso nutrizionale",
-        "features": [
-          "Calcolo BMR e TDEE di base",
-          "5 domande al giorno",
-          "Consigli nutrizionali generali",
-          "Accesso alla community",
-          "Supporto email"
-        ]
-      },
-      "pro": {
-        "name": "Pro",
-        "price": "€9.99/mese",
-        "description": "Ideale per un supporto nutrizionale completo",
-        "features": [
-          "Tutto del piano Gratuito",
-          "Domande illimitate",
-          "Analisi personalizzate dettagliate",
-          "Sostituzioni alimentari avanzate",
-          "Supporto prioritario",
-          "Piani pasto settimanali",
-          "Analisi immagini alimenti"
-        ]
-      },
-      "proplus": {
-        "name": "Pro Certificato",
-        "price": "€19.99/mese",
-        "description": "Massimo supporto con consulenza professionale",
-        "features": [
-          "Tutto del piano Pro",
-          "Consulenze con nutrizionisti certificati",
-          "Piani alimentari personalizzati",
-          "Monitoraggio progressi avanzato",
-          "Supporto telefonico dedicato",
-          "Accesso anticipato a nuove funzionalità",
-          "Integrazione con dispositivi fitness"
-        ]
-      }
+    "title": "Il primo nutrizionista educativo digitale",
+    "eyebrow": "✨ Mangia meglio, ogni giorno.",
+    "eyebrow2": "🤖 La nutrizione guidata dall'AI.",
+    "description": "La tua guida nutrizionale personalizzata progettata per supportarti nel percorso alimentare quotidiano con consigli basati sulla scienza. Fornito di tecnologia AI avanzata, NutriWell ti insegna a prenderti cura della tua alimentazione basandosi su fonti scientifiche e database certificati.",
+    "trust": {
+      "rating": "⭐ 4,9/5",
+      "users": "+2.300 utenti",
+      "guidelines": "Linee guida scientifiche"
     }
+  },
+  
+    "auth": {
+      "signIn": {
+        "title": "Accedi a NutriWell.ai",
+        "subtitle": "Bentornato! Effettua l'accesso al tuo account.",
+        "email": "Email",
+        "emailPlaceholder": "Inserisci la tua email",
+        "password": "Password",
+        "passwordPlaceholder": "Inserisci la tua password",
+        "signInButton": "Accedi",
+        "noAccount": "Non hai un account?",
+        "signUpLink": "Registrati qui"
+      },
+      "signUp": {
+        "title": "Iscriviti a NutriWell.ai",
+        "subtitle": "Crea il tuo account e inizia il tuo percorso nutrizionale.",
+        "name": "Nome completo",
+        "namePlaceholder": "Inserisci il tuo nome completo",
+        "email": "Email",
+        "emailPlaceholder": "Inserisci la tua email",
+        "password": "Password",
+        "passwordPlaceholder": "Crea una password",
+        "confirmPassword": "Conferma password",
+        "confirmPasswordPlaceholder": "Conferma la tua password",
+        "signUpButton": "Crea account",
+        "hasAccount": "Hai già un account?",
+        "signInLink": "Accedi qui"
+      }
+    },
+  "chat": {
+    "placeholder": "Scrivi il tuo messaggio...",
+    "disclaimer": "Questa è una demo. Consulta un professionista per consigli medici."
   }
 }

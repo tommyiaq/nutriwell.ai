@@ -1,23 +1,22 @@
 {
-  "header": {
-    "title": "NutriWell.ai",
-    "tagline": "Smart Nutrition, Powered by AI",
-    "nav": {
-      "about": "About",
-      "pricing": "Pricing", 
-      "chat": "Chat",
-      "signIn": "Sign In",
-      "signUp": "Sign Up"
-    },
-    "language": "Language:"
+  "hero": {
+    "title": "The first digital educational nutritionist",
+    "eyebrow": "✨ Eat better, every day.",
+    "eyebrow2": "🤖 AI-driven nutrition.",
+    "description": "Your personalized nutritional guide designed to support you in your daily dietary journey with science-based advice. Equipped with advanced AI technology, NutriWell teaches you how to take care of your nutrition based on scientific sources and certified databases.",
+    "trust": {
+      "rating": "⭐ 4.9/5",
+      "users": "+2,300 users",
+      "guidelines": "Scientific guidelines"
+    }
   },
   "auth": {
     "signIn": {
       "title": "Sign In to NutriWell.ai",
       "subtitle": "Welcome back! Please sign in to your account.",
       "email": "Email",
-      "password": "Password",
       "emailPlaceholder": "Enter your email",
+      "password": "Password",
       "passwordPlaceholder": "Enter your password",
       "signInButton": "Sign In",
       "noAccount": "Don't have an account?",
@@ -27,149 +26,20 @@
       "title": "Join NutriWell.ai",
       "subtitle": "Create your account and start your nutrition journey.",
       "name": "Full Name",
-      "email": "Email",
-      "password": "Password",
       "namePlaceholder": "Enter your full name",
+      "email": "Email",
       "emailPlaceholder": "Enter your email",
+      "password": "Password",
       "passwordPlaceholder": "Create a password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
       "signUpButton": "Create Account",
       "hasAccount": "Already have an account?",
       "signInLink": "Sign in here"
     }
   },
-  "hero": {
-    "title": "The First Digital Educational Nutritionist",
-    "subtitle": "Your personalized nutritional guide designed to support you in your daily dietary journey with science-based advice.",
-    "description": "Powered by advanced AI technology, NutriWell teaches you to take care of your nutrition based on scientific sources and certified databases.",
-    "ctaPrimary": "Start Now",
-    "ctaSecondary": "Learn More"
-  },
-  "features": {
-    "title": "What can NutriWell.ai do?",
-    "items": [
-      {
-        "icon": "🧮",
-        "title": "Calculate Energy Needs",
-        "description": "Determine your daily energy requirements (BMR and TDEE) with precision."
-      },
-      {
-        "icon": "📚",
-        "title": "Nutrition Education",
-        "description": "Learn about caloric deficit, metabolism, portions, and macronutrients."
-      },
-      {
-        "icon": "🔄",
-        "title": "Food Substitutions",
-        "description": "Get help choosing food alternatives and reading nutrition labels."
-      },
-      {
-        "icon": "🍽️",
-        "title": "Balanced Meal Ideas",
-        "description": "Receive examples of balanced meals (not personalized meal plans)."
-      },
-      {
-        "icon": "📸",
-        "title": "Food Analysis",
-        "description": "Analyze images of your fridge or grocery shopping for insights."
-      },
-      {
-        "icon": "🏥",
-        "title": "Health Conditions Support",
-        "description": "Educational information for common conditions like diabetes and cholesterol."
-      }
-    ]
-  },
-  "product": {
-    "title": "Why choose NutriWell.ai?",
-    "description": "Get personalized AI-powered nutrition guidance that adapts to your lifestyle and goals.",
-    "benefits": [
-      "AI-powered nutrition analysis and recommendations",
-      "Science-based guidance from verified sources",
-      "Educational approach to sustainable nutrition",
-      "Support for various health conditions and goals"
-    ]
-  },
-  "disclaimer": {
-    "title": "Important Note",
-    "content": "All content is for educational purposes only and does not replace professional medical advice. Always consult healthcare professionals for personalized medical guidance."
-  },
-  "cta": {
-    "title": "Ready to get started?",
-    "description": "Transform your nutrition journey with AI-powered guidance tailored to your needs."
-  },
   "chat": {
-    "placeholder": "Ask about nutrition, calories, meals...",
-    "disclaimer": "Demo version. Consult healthcare professionals for medical advice."
-  },
-  "footer": {
-    "brand": "NutriWell.ai",
-    "description": "Your personalized nutrition companion designed to support your daily dietary journey with science-based guidance.",
-    "contact": {
-      "title": "Contact",
-      "email": "info@nutriwell.ai",
-      "phone": "+1 (555) 123-4567"
-    },
-    "links": {
-      "title": "Quick Links",
-      "home": "Home",
-      "about": "About Us",
-      "features": "Features",
-      "pricing": "Pricing",
-      "chat": "Chat",
-      "privacy": "Privacy Policy",
-      "terms": "Terms of Service"
-    },
-    "social": {
-      "title": "Follow Us"
-    },
-    "copyright": "© 2025 NutriWell.ai. All rights reserved."
-  },
-  "pricing": {
-    "title": "Choose Your Plan",
-    "subtitle": "Select the perfect plan for your nutritional needs",
-    "mostPopular": "Most Popular",
-    "continue": "Continue",
-    "plans": {
-      "free": {
-        "name": "Free",
-        "price": "$0/month",
-        "description": "Perfect to start your nutritional journey",
-        "features": [
-          "Basic BMR and TDEE calculation",
-          "5 questions per day",
-          "General nutritional advice",
-          "Community access",
-          "Email support"
-        ]
-      },
-      "pro": {
-        "name": "Pro",
-        "price": "$9.99/month",
-        "description": "Ideal for comprehensive nutritional support",
-        "features": [
-          "Everything in Free plan",
-          "Unlimited questions",
-          "Detailed personalized analysis",
-          "Advanced food substitutions",
-          "Priority support",
-          "Weekly meal plans",
-          "Food image analysis"
-        ]
-      },
-      "proplus": {
-        "name": "Pro Certified",
-        "price": "$19.99/month",
-        "description": "Maximum support with professional consultation",
-        "features": [
-          "Everything in Pro plan",
-          "Consultations with certified nutritionists",
-          "Personalized meal plans",
-          "Advanced progress tracking",
-          "Dedicated phone support",
-          "Early access to new features",
-          "Fitness device integration"
-        ]
-      }
-    }
+    "placeholder": "Type your message...",
+    "disclaimer": "This is a demo. Consult a professional for medical advice."
   }
 }

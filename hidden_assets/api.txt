@@ -1,0 +1,85 @@
+=================================================================================================================
+General Protocol Info
+=================================================================================================================
+
+All Endpoints:
+
+- Use POST as method
+- Accept application/json as input
+- Emit application/json as output
+
+- The general output format is:
+
+  In case of success:
+
+  {
+    status: "ok",
+    data: {
+       ...
+    }
+  }
+  
+  In case of error:
+
+  {
+    status: "error",
+    error: "error message"
+  }
+
+- All the endpoints except Login.srv and Register.srv require the .NutriWellBackend.Session cookie (which is
+  returned by Login.srv)
+
+=================================================================================================================
+Endpoint /Services/Login.srv
+=================================================================================================================
+
+Authenticate the user.
+Sets a cookie (.NutriWellBackend.Session) that must be passed to all the subsequent calls.
+The cookie is set via Set-Cookie header and must be passed back via Cookie header.
+
+In: {
+	"mail": <e-mail>
+	"pass": <sha256 of the password>
+}
+
+Out: {
+	"status": "ok",
+	"data": {
+		"user": {
+			"id": <user id>
+			"firstName": <user first name>
+			"lastName": <user last name>
+			"mail": <user email>
+			"language": <user's language>
+		}
+    }  
+}
+
+=================================================================================================================
+Endpoint /Services/Register.srv
+=================================================================================================================
+
+Authenticate the user.
+Sets a cookie (.NutriWellBackend.Session) that must be passed to all the subsequent calls.
+The cookie is set via Set-Cookie header and must be passed back via Cookie header.
+
+In: {
+	"mail": <e-mail>,
+	"pass": <sha256 of the password>
+	"firstName": <user first name>
+	"lastName": <user last name>
+	"language": <user's language code (it, en, ...)>
+}
+
+Out: {
+	"status": "ok",
+	"data": {
+		"user": {
+			"id": <user id>
+			"firstName": <user first name>
+			"lastName": <user last name>
+			"mail": <user email>
+			"language": <user's language>
+		}
+    }  
+}
