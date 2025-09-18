@@ -14,6 +14,13 @@ const Chat = () => {
   const t = useTranslations();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { user, isAuthenticated } = useUser();
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isAuthenticated) {
+      window.location.href = '/signin';
+    }
+  }, [isAuthenticated]);
   
 
   const [messages, setMessages] = useState<Message[]>([

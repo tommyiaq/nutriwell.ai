@@ -20,6 +20,11 @@ export default function Document() {
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
+        {/* Google Fonts moved from index.tsx for best practice */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@700;800&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <body>
         <Main />

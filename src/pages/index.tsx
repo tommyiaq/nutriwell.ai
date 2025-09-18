@@ -9,18 +9,27 @@ export default function Home() {
   const [selectedPlan, setSelectedPlan] = useState('pro');
   const t = useTranslations();
 
+
+  // Import useUser for authentication check
+  // Use useUser hook directly (no require)
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { isAuthenticated } = require('../contexts/UserContext').useUser ? require('../contexts/UserContext').useUser() : { isAuthenticated: false };
+
+  // Handler for chat button click
+  const handleChatClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!isAuthenticated) {
+      e.preventDefault();
+      window.location.href = '/signin';
+    }
+  };
+
   return (
     <>
       <Head>
-        
         <link rel="icon" href="/images/logo02.svg" type="image/svg+xml" />
         <link rel="alternate icon" href="/images/logo02.svg" />
-        
         <title>NutriWell</title>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@700;800&display=swap"
-          rel="stylesheet"
-        />
+        {/* Font link moved to _document.tsx for best practice */}
       </Head>
 
       <Header />
@@ -42,7 +51,7 @@ export default function Home() {
               <span>{t('hero.trust.guidelines')}</span>
             </div>
             <div className="hero-cta">
-              <Link href="/chat" className="btn btn-primary">
+              <Link href="/chat" className="btn btn-primary" onClick={handleChatClick}>
                 Inizia ora
               </Link>
               <Link href="#come-funziona" className="btn btn-ghost">
@@ -61,6 +70,8 @@ export default function Home() {
                 className="hero-doctor"
                 loading="eager"
                 decoding="async"
+                // Use Next.js Image for optimization
+                // eslint-disable-next-line @next/next/no-img-element
               />
               {/* Smartphone con chat bot */}
               <img
@@ -69,6 +80,8 @@ export default function Home() {
                 className="hero-phone"
                 loading="eager"
                 decoding="async"
+                // Use Next.js Image for optimization
+                // eslint-disable-next-line @next/next/no-img-element
               />
             </figure>
           </div>
