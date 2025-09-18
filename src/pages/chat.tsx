@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import LandingHeader from '../components/landing-Header';
 import { useUser } from '../contexts/UserContext';
+import { getChatMessages, sendChatMessage, ApiChatMessage } from '../utils/api';
 
 interface Message {
   id: number;
@@ -23,19 +24,53 @@ const Chat = () => {
   }, [isAuthenticated]);
   
 
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      text: 'Ciao! Sono il tuo assistente nutrizionale AI. Come posso aiutarti oggi?',
-      sender: 'ai',
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoadingMessages, setIsLoadingMessages] = useState(true);
+  const [currentSessionId, setCurrentSessionId] = useState<string | undefined>(undefined);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Helper function to convert API messages to local message format
+  const convertApiMessagesToLocal = (apiMessages: ApiChatMessage[]): Message[] => {
+    return apiMessages.map((msg, index) => ({
+      id: index + 1,
+      text: msg.content.map(c => c.text).join(' '), // Combine all text content
+      sender: msg.role === 'user' ? 'user' as const : 'ai' as const,
+      timestamp: new Date(), // API doesn't provide timestamp, using current time
+    }));
+  };
+
+  // Load chat messages from API
+  useEffect(() => {
+    const loadMessages = async () => {
+      if (!isAuthenticated) return;
+
+      try {
+        setIsLoadingMessages(true);
+        const response = await getChatMessages(); // Call without sessionId to get the last session
+        
+        if (response.status === 'ok' && response.data) {
+          const localMessages = convertApiMessagesToLocal(response.data.messages);
+          setMessages(localMessages);
+        } else {
+          console.error('Failed to load messages:', response.error);
+          // No messages available - keep empty array
+          setMessages([]);
+        }
+      } catch (error) {
+        console.error('Error loading messages:', error);
+        // Error occurred - keep empty array, no placeholder message
+        setMessages([]);
+      } finally {
+        setIsLoadingMessages(false);
+      }
+    };
+
+    loadMessages();
+  }, [isAuthenticated]);
 
   // Check if mobile on mount
   useEffect(() => {
@@ -119,28 +154,66 @@ const Chat = () => {
   const handleSendMessage = async () => {
     if (!inputText.trim()) return;
 
+    const messageText = inputText.trim();
     const userMessage: Message = {
       id: Date.now(),
-      text: inputText.trim(),
+      text: messageText,
       sender: 'user',
       timestamp: new Date(),
     };
 
+    // Add user message immediately to UI
     setMessages(prev => [...prev, userMessage]);
     setInputText('');
     setIsTyping(true);
 
-    // Simulate AI response (dummy for now)
-    setTimeout(() => {
-      const aiMessage: Message = {
+    try {
+      // Send message to API
+      const response = await sendChatMessage(messageText, currentSessionId);
+      
+      if (response.status === 'ok' && response.data) {
+        // Update session ID if we got a new one
+        if (response.data.sessionId) {
+          setCurrentSessionId(response.data.sessionId);
+        }
+        
+        // Process AI response
+        const aiResponseText = response.data.output
+          .map(content => content.text)
+          .join(' ');
+          
+        const aiMessage: Message = {
+          id: Date.now() + 1,
+          text: aiResponseText,
+          sender: 'ai',
+          timestamp: new Date(),
+        };
+        
+        setMessages(prev => [...prev, aiMessage]);
+      } else {
+        // Handle API error
+        console.error('Failed to send message:', response.error);
+        const errorMessage: Message = {
+          id: Date.now() + 1,
+          text: 'Mi dispiace, si è verificato un errore. Riprova più tardi.',
+          sender: 'ai',
+          timestamp: new Date(),
+        };
+        setMessages(prev => [...prev, errorMessage]);
+      }
+    } catch (error) {
+      // Handle network/other errors
+      console.error('Error sending message:', error);
+      const errorMessage: Message = {
         id: Date.now() + 1,
-        text: 'Thank you for your question! This is a demo version. In the full version, I would provide personalized nutrition guidance based on your specific needs and goals.',
+        text: 'Mi dispiace, si è verificato un errore di connessione. Riprova più tardi.',
         sender: 'ai',
         timestamp: new Date(),
       };
-      setMessages(prev => [...prev, aiMessage]);
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -170,24 +243,13 @@ const Chat = () => {
         >
           <div className="nv-side-panel-content">
             {/* Configuration Section */}
-            <div className="nv-side-section">
-              <h3 className="nv-side-section-title">Configuration</h3>
-              <div className="nv-side-section-item">
-                <span>Knowledge Base</span>
-              </div>
-            </div>
+
 
             {/* Chat Sessions Section */}
             <div className="nv-side-section">
               <h3 className="nv-side-section-title">Chat Sessions</h3>
               <div className="nv-side-section-item nv-active">
                 <span>Current Session</span>
-              </div>
-              <div className="nv-side-section-item">
-                <span>Previous Session 1</span>
-              </div>
-              <div className="nv-side-section-item">
-                <span>Previous Session 2</span>
               </div>
             </div>
 
@@ -218,22 +280,37 @@ const Chat = () => {
           {/* Messages Container */}
           <div className="nv-messages-container">
             <div className="nv-messages-list">
-              {messages.map(message => (
-                <div
-                  key={message.id}
-                  className={`nv-message ${message.sender === 'user' ? 'nv-message-user' : 'nv-message-ai'}`}
-                >
-                  <div className="nv-message-avatar">
-                    {message.sender === 'user' ? '👤' : '🤖'}
-                  </div>
+              {isLoadingMessages ? (
+                <div className="nv-message nv-message-ai">
+                  <div className="nv-message-avatar">🤖</div>
                   <div className="nv-message-content">
-                    <div className="nv-message-bubble">{message.text}</div>
-                    <div className="nv-message-time">
-                      {formatTime(message.timestamp)}
+                    <div className="nv-message-bubble nv-typing">
+                      <div className="nv-typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              ))}
+              ) : (
+                messages.map(message => (
+                  <div
+                    key={message.id}
+                    className={`nv-message ${message.sender === 'user' ? 'nv-message-user' : 'nv-message-ai'}`}
+                  >
+                    <div className="nv-message-avatar">
+                      {message.sender === 'user' ? '👤' : '🤖'}
+                    </div>
+                    <div className="nv-message-content">
+                      <div className="nv-message-bubble">{message.text}</div>
+                      <div className="nv-message-time">
+                        {formatTime(message.timestamp)}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
 
               {isTyping && (
                 <div className="nv-message nv-message-ai">

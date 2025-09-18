@@ -102,6 +102,63 @@ export async function loginUser(credentials: LoginRequest): Promise<ApiResponse<
   return apiCall<{ user: User }>('/Services/Login.srv', credentials);
 }
 
+// Chat message interfaces
+export interface MessageContent {
+  type?: 'text';
+  text: string;
+}
+
+export interface ApiChatMessage {
+  role: 'user' | 'assistant';
+  content: MessageContent[];
+}
+
+export interface ChatGetMessagesRequest {
+  sessionId?: string;
+}
+
+export interface ChatGetMessagesResponse {
+  messages: ApiChatMessage[];
+}
+
+// Get chat messages
+export async function getChatMessages(sessionId?: string): Promise<ApiResponse<ChatGetMessagesResponse>> {
+  const requestData: ChatGetMessagesRequest = {};
+  if (sessionId) {
+    requestData.sessionId = sessionId;
+  }
+  return apiCall<ChatGetMessagesResponse>('/Services/ChatGetMessages.srv', requestData);
+}
+
+// Chat send message interfaces
+export interface ChatSendMessageRequest {
+  sessionId?: string;
+  input: MessageContent[];
+}
+
+export interface ChatSendMessageResponse {
+  output: MessageContent[];
+  sessionId: string;
+}
+
+// Send chat message
+export async function sendChatMessage(message: string, sessionId?: string): Promise<ApiResponse<ChatSendMessageResponse>> {
+  const requestData: ChatSendMessageRequest = {
+    input: [
+      {
+        type: 'text',
+        text: message
+      }
+    ]
+  };
+  
+  if (sessionId) {
+    requestData.sessionId = sessionId;
+  }
+  
+  return apiCall<ChatSendMessageResponse>('/Services/ChatSendMessage.srv', requestData);
+}
+
 // Utility function to clear the session cookie
 export function clearSessionCookie(): void {
   // Clear the .NutriWellBackend.Session cookie by setting it to expire in the past

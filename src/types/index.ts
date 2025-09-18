@@ -43,11 +43,27 @@ export interface AuthState {
 
 
 /**
- * Chat message structure
+ * Chat message content structure (from API)
+ */
+export interface MessageContent {
+  type?: 'text';
+  text: string;
+}
+
+/**
+ * Chat message structure (from API)
+ */
+export interface ApiChatMessage {
+  role: 'user' | 'assistant';
+  content: MessageContent[];
+}
+
+/**
+ * Local chat message structure for UI
  */
 export interface ChatMessage {
   id: string;
-  content: string;
+  text: string;
   sender: 'user' | 'ai';
   timestamp: Date;
   type?: 'text' | 'calculation' | 'recommendation';
