@@ -43,6 +43,54 @@ const Chat = () => {
     }));
   };
 
+  // Helper function to format message text with markdown and newlines
+  const formatMessageText = (text: string) => {
+    // Split text by newlines to preserve line breaks
+    const lines = text.split('\n');
+    
+    return lines.map((line, lineIndex) => {
+      // Check if line is a bullet point
+      const isBulletPoint = line.trim().startsWith('- ') || line.trim().startsWith('* ');
+      let processedLine = line;
+      
+      // If it's a bullet point, wrap it appropriately
+      if (isBulletPoint) {
+        processedLine = line.replace(/^[\s]*[-*]\s/, '• '); // Replace - or * with bullet
+      }
+      
+      // Process the line for formatting (bold, italic)
+      // First handle bold (**text**)
+      let parts = processedLine.split(/(\*\*.*?\*\*)/g);
+      
+      // Then handle italic (*text*) - but not if it's part of **
+      parts = parts.flatMap(part => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+          return [part]; // Keep bold parts as-is
+        }
+        return part.split(/(\*[^*]+?\*)/g);
+      });
+      
+      return (
+        <React.Fragment key={lineIndex}>
+          {parts.map((part, partIndex) => {
+            // Check if this part should be bold
+            if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
+              const boldText = part.slice(2, -2); // Remove ** from start and end
+              return <strong key={partIndex}>{boldText}</strong>;
+            }
+            // Check if this part should be italic (single * but not part of **)
+            else if (part.startsWith('*') && part.endsWith('*') && part.length > 2 && !part.includes('**')) {
+              const italicText = part.slice(1, -1); // Remove * from start and end
+              return <em key={partIndex}>{italicText}</em>;
+            }
+            return part;
+          })}
+          {lineIndex < lines.length - 1 && <br />}
+        </React.Fragment>
+      );
+    });
+  };
+
   // Load chat messages from API
   useEffect(() => {
     const loadMessages = async () => {
@@ -303,7 +351,7 @@ const Chat = () => {
                       {message.sender === 'user' ? '👤' : '🤖'}
                     </div>
                     <div className="nv-message-content">
-                      <div className="nv-message-bubble">{message.text}</div>
+                      <div className="nv-message-bubble">{formatMessageText(message.text)}</div>
                       <div className="nv-message-time">
                         {formatTime(message.timestamp)}
                       </div>

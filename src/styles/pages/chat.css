@@ -1,4 +1,3 @@
-  margin-top: 80px;
 /* ===================================
    CHAT PAGE STYLES
    =================================== */
@@ -248,6 +247,19 @@
   border-bottom-left-radius: 4px;
   word-wrap: break-word;
   line-height: 1.4;
+}
+
+/* Formatted text elements within message bubbles */
+.nv-message-bubble strong {
+  font-weight: 600;
+}
+
+.nv-message-bubble em {
+  font-style: italic;
+}
+
+.nv-message-bubble br {
+  line-height: 1.2;
 }
 
 .nv-message-user .nv-message-bubble {
