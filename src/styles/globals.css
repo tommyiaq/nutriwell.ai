@@ -35,3 +35,6 @@ body {
 /* Homepage styles moved to pages/index.css */
 /* Language selector moved to components/header.css */
 /* Button components moved to components/buttons.css */
+
+/* Import bubble chat styles */
+@import url('./components/bubble-chat.css');

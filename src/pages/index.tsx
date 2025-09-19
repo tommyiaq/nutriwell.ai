@@ -1,19 +1,19 @@
 import Head from 'next/head';
 import Header from '../components/landing-Header';
 import Footer from '../components/landing-Footer';
+import BubbleChat from '../components/BubbleChat';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { useUser } from '../contexts/UserContext';
 
 export default function Home() {
   const [selectedPlan, setSelectedPlan] = useState('pro');
   const t = useTranslations();
 
 
-  // Import useUser for authentication check
-  // Use useUser hook directly (no require)
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { isAuthenticated } = require('../contexts/UserContext').useUser ? require('../contexts/UserContext').useUser() : { isAuthenticated: false };
+  // Use authentication check
+  const { isAuthenticated } = useUser();
 
   // Handler for chat button click
   const handleChatClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -316,6 +316,9 @@ export default function Home() {
       </section>
 
       <Footer />
+      
+      {/* Bubble Chat */}
+      <BubbleChat />
     </>
   );
 }
