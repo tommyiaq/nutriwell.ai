@@ -95,6 +95,19 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* University Spinoff Section */}
+        <div className="nv-footer-university">
+          <div className="nv-university-content">
+            <span>Azienda </span>
+            <img 
+              src="/images/logo-spinoff.png" 
+              alt="Logo spinoff" 
+              className="nv-spinoff-logo"
+            />
+            <span> dell'Università di Siena per la didattica InnovativA!</span>
+          </div>
+        </div>
+
         {/* Footer Bottom */}
         <div className="nv-footer-bottom">
           <div className="nv-footer-legal">

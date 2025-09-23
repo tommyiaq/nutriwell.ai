@@ -340,7 +340,43 @@ footer{ padding:40px 0; color:var(--nw-muted) }
 .f-title{ color:var(--nw-text); font-weight:700; margin-bottom:6px }
 .f-col a{ display:block; margin:.35rem 0; color:var(--nw-muted) }
 .fineprint{ margin-top:18px; font-size:.9rem }
-@media (max-width:900px){ .f-grid{ grid-template-columns:1fr 1fr } }
+
+/* University Spinoff Section */
+.university-section{ 
+  margin-top:24px; 
+  padding-top:24px; 
+  border-top:1px solid rgba(0,0,0,.1);
+  text-align:center;
+}
+.university-content{ 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  gap:8px; 
+  font-size:1rem; 
+  color:var(--nw-text);
+  font-weight:500;
+}
+.spinoff-logo{ 
+  height:24px; 
+  width:auto; 
+  vertical-align:middle; 
+}
+.yukai-logo{ 
+  height:24px; 
+  width:auto; 
+  vertical-align:middle; 
+}
+
+@media (max-width:900px){ 
+  .f-grid{ grid-template-columns:1fr 1fr }
+  .university-content{ 
+    flex-direction:column; 
+    gap:12px; 
+    font-size:0.9rem; 
+  }
+  .spinoff-logo{ height:20px; }
+}
 
 /* reduce motion */
 @media (prefers-reduced-motion: reduce){ *{ transition-duration:.01ms !important; animation-duration:.01ms !important } }

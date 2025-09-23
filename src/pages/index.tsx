@@ -240,7 +240,7 @@ export default function Home() {
                     popular: false
                   }, {
                     id: 'pro',
-                    name: 'Pro',
+                    name: 'Avanzato',
                     price: '€9/mese',
                     description: 'Tutte le funzioni premium e supporto completo.',
                     features: [
@@ -253,11 +253,12 @@ export default function Home() {
                     popular: true
                   }, {
                     id: 'proplus',
-                    name: 'Pro+',
-                    price: '€19/mese',
+                    name: 'Professionale',
+                    price: '€39/mese',
                     description: 'Funzioni avanzate e priorità nel supporto.',
                     features: [
                       'Tutte le funzioni Pro',
+                      'Crea diete personalizzate',
                       'Supporto prioritario',
                       'Accesso anticipato a nuove feature'
                     ],

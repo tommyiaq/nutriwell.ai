@@ -131,6 +131,32 @@
   transform: translateY(-2px);
 }
 
+/* University Spinoff Section */
+.nv-footer-university {
+  width: 100%;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 1rem 0;
+}
+
+.nv-university-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.nv-spinoff-logo {
+  height: 24px;
+  width: auto;
+  vertical-align: middle;
+  filter: brightness(0) invert(1); /* Make logo white if it's dark */
+}
+
 /* Footer Bottom */
 .nv-footer-bottom {
   display: flex;
@@ -200,6 +226,17 @@
   
   .nv-footer-contact li {
     justify-content: center;
+  }
+  
+  .nv-university-content {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  
+  .nv-spinoff-logo {
+    height: 20px;
   }
   
   .nv-footer-bottom {

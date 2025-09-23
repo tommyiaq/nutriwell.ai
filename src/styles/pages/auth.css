@@ -8,7 +8,7 @@
 }
 
 .nv-auth-container {
-  max-width: 400px;
+  max-width: 600px;
   margin: 2rem auto 2rem auto;
   padding: 0 1rem;
 }
@@ -100,13 +100,75 @@
   text-decoration: underline;
 }
 
+/* Terms and Conditions Section */
+.nv-terms-section {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.nv-checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.nv-checkbox-group:last-child {
+  margin-bottom: 0;
+}
+
+.nv-checkbox-group input[type="checkbox"] {
+  margin: 0;
+  margin-top: 0.25rem;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--nv-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.nv-checkbox-label {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--nv-text);
+  cursor: pointer;
+  text-align: justify;
+}
+
+.nv-terms-link {
+  color: var(--nv-primary);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.nv-terms-link:hover {
+  color: var(--nv-secondary);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .nv-auth-container {
     margin: calc(var(--nv-header-height) + 0.5rem) auto 2rem auto;
+    max-width: none;
+    padding: 0 1rem;
   }
   
   .nv-auth-card {
     padding: 2rem 1.5rem;
+  }
+  
+  .nv-terms-section {
+    padding: 1rem;
+  }
+  
+  .nv-checkbox-group {
+    gap: 0.5rem;
+  }
+  
+  .nv-checkbox-label {
+    font-size: 0.8125rem;
   }
 }
