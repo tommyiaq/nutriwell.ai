@@ -27,6 +27,7 @@ interface UserProviderProps {
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [skipSessionCheck, setSkipSessionCheck] = useState(false);
 
   // Function to call WhoAmI endpoint for session recovery using apiCall helper
   type WhoAmIResponse = { user?: User };
@@ -50,18 +51,37 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   // Check authentication status on app load
   useEffect(() => {
-    refreshUserData();
+    // Check if we're coming from a logout (indicated by URL param or localStorage)
+    const urlParams = new URLSearchParams(window.location.search);
+    const isLoggedOut = urlParams.get('logged_out') === 'true' || 
+                       localStorage.getItem('just_logged_out') === 'true';
+    
+    if (isLoggedOut) {
+      // Clear the flag and skip session check
+      localStorage.removeItem('just_logged_out');
+      setUser(null);
+      setIsLoading(false);
+      setSkipSessionCheck(true);
+    } else {
+      // Normal session check
+      refreshUserData();
+    }
   }, []);
 
   const logout = () => {
-    // Clear the user state
+    // Clear the user state first
     setUser(null);
     
     // Clear the session cookie
     clearSessionCookie();
     
-    // Redirect to home page
-    window.location.href = '/';
+    // Set flag to prevent session check on next load
+    localStorage.setItem('just_logged_out', 'true');
+    
+    // Add a small delay to ensure cookie clearing completes before redirect
+    setTimeout(() => {
+      window.location.href = '/?logged_out=true';
+    }, 100);
   };
 
   const isAuthenticated = user !== null && !isLoading;

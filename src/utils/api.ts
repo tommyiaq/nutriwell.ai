@@ -161,17 +161,12 @@ export async function sendChatMessage(message: string, sessionId?: string): Prom
 
 // Utility function to clear the session cookie
 export function clearSessionCookie(): void {
-  // Clear the .NutriWellBackend.Session cookie by setting it to expire in the past
-  const cookiesToClear = [
-    '.NutriWellBackend.Session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.pragma.software',
-    '.NutriWellBackend.Session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/',
-    '.NutriWellBackend.Session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=pragma.software',
-    '.NutriWellBackend.Session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=localhost'
-  ];
+  console.log('Before clearing cookies:', document.cookie); // Debug log
   
-  cookiesToClear.forEach(cookie => {
-    document.cookie = cookie;
-  });
+  // Simple approach: just clear the cookie name with empty value and past expiry
+  // The browser will match it with the existing cookie regardless of other attributes
+  document.cookie = '.NutriWellBackend.Session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
   
-  console.log('Session cookies cleared'); // Debug log
+  console.log('After clearing cookies:', document.cookie); // Debug log
+  console.log('Session cookie cleared'); // Debug log
 }
