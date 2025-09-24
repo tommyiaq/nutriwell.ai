@@ -72,3 +72,5 @@ pids
 
 # Lighthouse CI
 .lighthouseci/
+
+hidden_assets/*
