@@ -14,14 +14,14 @@ interface Message {
 const Chat = () => {
   const t = useTranslations();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { user, isAuthenticated } = useUser();
+  const { user, isAuthenticated, isLoading } = useUser();
 
-  // Redirect to login if not authenticated
+  // Redirect to login if not authenticated (but wait for loading to complete)
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isLoading && !isAuthenticated) {
       window.location.href = '/signin';
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, isLoading]);
   
 
   const [messages, setMessages] = useState<Message[]>([]);
@@ -278,6 +278,25 @@ const Chat = () => {
       hour12: false,
     });
   };
+
+  // Show loading screen while checking authentication
+  if (isLoading) {
+    return (
+      <div className="nv-chat-page">
+        <LandingHeader logoOnly={true} />
+        <div className="nv-loading-container">
+          <div className="nv-loading-spinner">
+            <div className="nv-typing-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`nv-chat-page ${isKeyboardOpen ? 'nv-keyboard-open' : ''}`}>

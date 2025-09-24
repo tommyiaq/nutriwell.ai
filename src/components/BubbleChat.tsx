@@ -13,7 +13,7 @@ interface Message {
 const BubbleChat: React.FC = () => {
   const router = useRouter();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { isAuthenticated } = useUser();
+  const { isAuthenticated, isLoading } = useUser();
 
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -211,14 +211,17 @@ const BubbleChat: React.FC = () => {
     }
   };
 
-  if (!isAuthenticated && !isOpen) {
+  // Don't show bubble chat while loading or for unauthenticated users (when closed)
+  if (isLoading || (!isAuthenticated && !isOpen)) {
     return (
       <div className="bubble-chat-container">
-        <div className="bubble-chat-trigger" onClick={handleBubbleClick}>
-          <div className="bubble-chat-icon">
-            💬
+        {!isLoading && (
+          <div className="bubble-chat-trigger" onClick={handleBubbleClick}>
+            <div className="bubble-chat-icon">
+              💬
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }

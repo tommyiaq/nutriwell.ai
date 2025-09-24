@@ -1,11 +1,13 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { User, clearSessionCookie } from '../utils/api';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { User, clearSessionCookie, apiCall } from '../utils/api';
 
 interface UserContextType {
   user: User | null;
   setUser: (user: User | null) => void;
   isAuthenticated: boolean;
+  isLoading: boolean;
   logout: () => void;
+  refreshUserData: () => Promise<void>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -24,6 +26,32 @@ interface UserProviderProps {
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Function to call WhoAmI endpoint for session recovery using apiCall helper
+  type WhoAmIResponse = { user?: User };
+  const refreshUserData = async () => {
+    try {
+      setIsLoading(true);
+      const data = await apiCall<WhoAmIResponse>('/Services/WhoAmI.srv', {});
+      if (data.status === 'ok' && data.data && data.data.user) {
+        setUser(data.data.user);
+      } else {
+        // User is not authenticated or session expired
+        setUser(null);
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      setUser(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Check authentication status on app load
+  useEffect(() => {
+    refreshUserData();
+  }, []);
 
   const logout = () => {
     // Clear the user state
@@ -36,20 +64,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     window.location.href = '/';
   };
 
-  const isAuthenticated = user !== null;
-
-  // Check for existing session on mount (optional enhancement)
-  React.useEffect(() => {
-    // Check if we have a session cookie
-    const hasSessionCookie = document.cookie.includes('.NutriWellBackend.Session');
-    
-    if (hasSessionCookie && !user) {
-      // Future enhancement: call a "whoami" endpoint to get user data from session
-    }
-  }, [user]);
+  const isAuthenticated = user !== null && !isLoading;
 
   return (
-    <UserContext.Provider value={{ user, setUser, isAuthenticated, logout }}>
+    <UserContext.Provider value={{ user, setUser, isAuthenticated, isLoading, logout, refreshUserData }}>
       {children}
     </UserContext.Provider>
   );
