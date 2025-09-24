@@ -27,7 +27,6 @@ interface UserProviderProps {
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [skipSessionCheck, setSkipSessionCheck] = useState(false);
 
   // Function to call WhoAmI endpoint for session recovery using apiCall helper
   type WhoAmIResponse = { user?: User };
@@ -61,7 +60,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       localStorage.removeItem('just_logged_out');
       setUser(null);
       setIsLoading(false);
-      setSkipSessionCheck(true);
     } else {
       // Normal session check
       refreshUserData();
