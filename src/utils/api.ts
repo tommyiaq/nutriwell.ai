@@ -102,6 +102,11 @@ export async function loginUser(credentials: LoginRequest): Promise<ApiResponse<
   return apiCall<{ user: User }>('/Services/Login.srv', credentials);
 }
 
+// Logout user
+export async function logoutUser(): Promise<ApiResponse<{}>> {
+  return apiCall<{}>('/Services/Logout.srv', {});
+}
+
 // Chat message interfaces
 export interface MessageContent {
   type?: 'text';

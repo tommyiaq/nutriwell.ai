@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User, clearSessionCookie, apiCall } from '../utils/api';
+import { User, clearSessionCookie, apiCall, logoutUser } from '../utils/api';
 
 interface UserContextType {
   user: User | null;
@@ -66,17 +66,24 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   }, []);
 
-  const logout = () => {
+  const logout = async () => {
     // Clear the user state first
     setUser(null);
     
-    // Clear the session cookie
+    // Call the logout API endpoint
+    try {
+      await logoutUser();
+    } catch (error) {
+      console.error('Error calling logout API:', error);
+    }
+    
+    // Clear the session cookie (as backup)
     clearSessionCookie();
     
     // Set flag to prevent session check on next load
     localStorage.setItem('just_logged_out', 'true');
     
-    // Add a small delay to ensure cookie clearing completes before redirect
+    // Add a small delay to ensure logout completes before redirect
     setTimeout(() => {
       window.location.href = '/?logged_out=true';
     }, 100);
