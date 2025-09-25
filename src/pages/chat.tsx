@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { flushSync } from 'react-dom';
 import { useTranslations } from 'next-intl';
 import LandingHeader from '../components/landing-Header';
 import { useUser } from '../contexts/UserContext';
-import { getChatMessages, sendChatMessage, ApiChatMessage } from '../utils/api';
+import { getChatMessages, sendChatMessageStream, ApiChatMessage } from '../utils/api';
 
 interface Message {
   id: number;
@@ -73,8 +74,40 @@ const Chat = () => {
       return (
         <React.Fragment key={lineIndex}>
           {parts.map((part, partIndex) => {
+            // Check for HTML links first
+            if (part.includes('<a href=')) {
+              const linkRegex = /<a href="([^"]*)"[^>]*>([^<]*)<\/a>/g;
+              const linkParts = [];
+              let lastIndex = 0;
+              let match;
+
+              while ((match = linkRegex.exec(part)) !== null) {
+                // Add text before the link
+                if (match.index > lastIndex) {
+                  linkParts.push(part.slice(lastIndex, match.index));
+                }
+                // Add the link
+                linkParts.push(
+                  <a 
+                    key={`${partIndex}-${match.index}`}
+                    href={match[1]} 
+                    style={{ color: '#007bff', textDecoration: 'underline' }}
+                  >
+                    {match[2]}
+                  </a>
+                );
+                lastIndex = linkRegex.lastIndex;
+              }
+              
+              // Add remaining text after the last link
+              if (lastIndex < part.length) {
+                linkParts.push(part.slice(lastIndex));
+              }
+              
+              return <React.Fragment key={partIndex}>{linkParts}</React.Fragment>;
+            }
             // Check if this part should be bold
-            if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
+            else if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
               const boldText = part.slice(2, -2); // Remove ** from start and end
               return <strong key={partIndex}>{boldText}</strong>;
             }
@@ -215,52 +248,72 @@ const Chat = () => {
     setInputText('');
     setIsTyping(true);
 
+    // Create a placeholder AI message that will be updated with streaming content
+    const aiMessageId = Date.now() + 1;
+    const aiMessage: Message = {
+      id: aiMessageId,
+      text: '',
+      sender: 'ai',
+      timestamp: new Date(),
+    };
+    
+    // Add empty AI message to show typing indicator
+    setMessages(prev => [...prev, aiMessage]);
+
     try {
-      // Send message to API
-      const response = await sendChatMessage(messageText, currentSessionId);
-      
-      if (response.status === 'ok' && response.data) {
-        // Update session ID if we got a new one
-        if (response.data.sessionId) {
-          setCurrentSessionId(response.data.sessionId);
-        }
-        
-        // Process AI response
-        const aiResponseText = response.data.output
-          .map(content => content.text)
-          .join(' ');
+      await sendChatMessageStream(
+        messageText, 
+        currentSessionId,
+        // onDelta: Update the AI message with streaming text
+        (delta: string) => {
+          console.log('UI: Delta received for update:', delta, 'at time:', new Date().toISOString());
+          // Hide typing indicator on first delta
+          setIsTyping(false);
           
-        const aiMessage: Message = {
-          id: Date.now() + 1,
-          text: aiResponseText,
-          sender: 'ai',
-          timestamp: new Date(),
-        };
-        
-        setMessages(prev => [...prev, aiMessage]);
-      } else {
-        // Handle API error
-        console.error('Failed to send message:', response.error);
-        const errorMessage: Message = {
-          id: Date.now() + 1,
-          text: 'Mi dispiace, si è verificato un errore. Riprova più tardi.',
-          sender: 'ai',
-          timestamp: new Date(),
-        };
-        setMessages(prev => [...prev, errorMessage]);
-      }
+          // Force immediate update by using flushSync to bypass React batching
+          flushSync(() => {
+            setMessages(prev => prev.map(msg => 
+              msg.id === aiMessageId 
+                ? { ...msg, text: msg.text + delta }
+                : msg
+            ));
+          });
+          
+          // Force scroll to bottom after each update
+          setTimeout(() => {
+            scrollToBottom();
+          }, 10);
+        },
+        // onEnd: Handle stream completion
+        (data: { sessionId: string; creditLimit: number; usedCredit: number }) => {
+          setCurrentSessionId(data.sessionId);
+          setIsTyping(false);
+        },
+        // onError: Handle errors
+        (error: string) => {
+          console.error('Streaming failed:', error);
+          setIsTyping(false);
+          
+          // Replace the empty AI message with the actual error message
+          setMessages(prev => prev.map(msg => 
+            msg.id === aiMessageId 
+              ? { ...msg, text: error }
+              : msg
+          ));
+        }
+      );
     } catch (error) {
       // Handle network/other errors
       console.error('Error sending message:', error);
-      const errorMessage: Message = {
-        id: Date.now() + 1,
-        text: 'Mi dispiace, si è verificato un errore di connessione. Riprova più tardi.',
-        sender: 'ai',
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, errorMessage]);
-    } finally {
       setIsTyping(false);
+      
+      // Replace the empty AI message with error message
+      const errorMessage = error instanceof Error ? error.message : 'Mi dispiace, si è verificato un errore di connessione. Riprova più tardi.';
+      setMessages(prev => prev.map(msg => 
+        msg.id === aiMessageId 
+          ? { ...msg, text: errorMessage }
+          : msg
+      ));
     }
   };
 
@@ -370,28 +423,23 @@ const Chat = () => {
                       {message.sender === 'user' ? '👤' : '🤖'}
                     </div>
                     <div className="nv-message-content">
-                      <div className="nv-message-bubble">{formatMessageText(message.text)}</div>
+                      <div className={`nv-message-bubble ${message.sender === 'ai' && message.text === '' && isTyping ? 'nv-typing' : ''}`}>
+                        {message.sender === 'ai' && message.text === '' && isTyping ? (
+                          <div className="nv-typing-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                          </div>
+                        ) : (
+                          formatMessageText(message.text)
+                        )}
+                      </div>
                       <div className="nv-message-time">
                         {formatTime(message.timestamp)}
                       </div>
                     </div>
                   </div>
                 ))
-              )}
-
-              {isTyping && (
-                <div className="nv-message nv-message-ai">
-                  <div className="nv-message-avatar">🤖</div>
-                  <div className="nv-message-content">
-                    <div className="nv-message-bubble nv-typing">
-                      <div className="nv-typing-dots">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               )}
               <div ref={messagesEndRef} />
             </div>

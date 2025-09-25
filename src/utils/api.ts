@@ -138,15 +138,37 @@ export async function getChatMessages(sessionId?: string): Promise<ApiResponse<C
 // Chat send message interfaces
 export interface ChatSendMessageRequest {
   sessionId?: string;
+  stream?: boolean;
   input: MessageContent[];
 }
 
 export interface ChatSendMessageResponse {
   output: MessageContent[];
   sessionId: string;
+  creditLimit: number;
+  usedCredit: number;
 }
 
-// Send chat message
+// Streaming event types
+export interface StreamDeltaEvent {
+  type: 'delta';
+  delta: string;
+}
+
+export interface StreamEndEvent {
+  type: 'end';
+  status: 'ok' | 'error';
+  data?: {
+    sessionId: string;
+    creditLimit: number;
+    usedCredit: number;
+  };
+  error?: string;
+}
+
+export type StreamEvent = StreamDeltaEvent | StreamEndEvent;
+
+// Send chat message (non-streaming)
 export async function sendChatMessage(message: string, sessionId?: string): Promise<ApiResponse<ChatSendMessageResponse>> {
   const requestData: ChatSendMessageRequest = {
     input: [
@@ -154,7 +176,8 @@ export async function sendChatMessage(message: string, sessionId?: string): Prom
         type: 'text',
         text: message
       }
-    ]
+    ],
+    stream: false
   };
   
   if (sessionId) {
@@ -162,6 +185,143 @@ export async function sendChatMessage(message: string, sessionId?: string): Prom
   }
   
   return apiCall<ChatSendMessageResponse>('/Services/ChatSendMessage.srv', requestData);
+}
+
+// Send chat message with streaming
+export async function sendChatMessageStream(
+  message: string, 
+  sessionId?: string,
+  onDelta?: (delta: string) => void,
+  onEnd?: (data: { sessionId: string; creditLimit: number; usedCredit: number }) => void,
+  onError?: (error: string) => void
+): Promise<void> {
+  const requestData: ChatSendMessageRequest = {
+    input: [
+      {
+        type: 'text',
+        text: message
+      }
+    ],
+    stream: true
+  };
+  
+  if (sessionId) {
+    requestData.sessionId = sessionId;
+  }
+
+  try {
+    console.log('Streaming API Call:', { endpoint: `${API_BASE_URL}/Services/ChatSendMessage.srv`, data: requestData });
+    
+    const response = await fetch(`${API_BASE_URL}/Services/ChatSendMessage.srv`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(requestData),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Streaming API Error response:', errorText);
+      onError?.(`HTTP error! status: ${response.status}, response: ${errorText}`);
+      return;
+    }
+
+    const reader = response.body?.getReader();
+    if (!reader) {
+      onError?.('Failed to get response reader');
+      return;
+    }
+
+    const decoder = new TextDecoder();
+    let buffer = '';
+    console.log('Stream reader started at:', new Date().toISOString());
+
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        
+        if (done) break;
+        
+        const chunk = decoder.decode(value, { stream: true });
+        console.log('Raw chunk received at', new Date().toISOString(), ':', JSON.stringify(chunk));
+        buffer += chunk;
+        
+        // Check if this is a direct error response (not SSE format)
+        if (buffer.trim().startsWith('{') && buffer.trim().includes('"status": "error"')) {
+          try {
+            const errorResponse = JSON.parse(buffer.trim());
+            if (errorResponse.status === 'error') {
+              console.error('❌ API Error Response:', errorResponse.error);
+              
+              // Handle specific error types with dedicated messages
+              let errorMessage = errorResponse.error;
+              if (errorResponse.error === 'Credit limit exceeded') {
+                errorMessage = '❌ Credit limit exceeded! You have reached your usage limit for this billing period.\n\n💡 Want to continue? Upgrade to a paid account for more prices!\n\n👉 <a href="/#prezzi" style="color: #007bff; text-decoration: underline;">View our pricing plans</a>';
+              } else if (errorResponse.error.includes('authentication') || errorResponse.error.includes('session')) {
+                errorMessage = '❌ Authentication error! Please log in again.';
+              } else if (errorResponse.error.includes('rate limit')) {
+                errorMessage = '❌ Rate limit exceeded! Please wait a moment before sending another message.';
+              }
+              
+              onError?.(errorMessage);
+              return;
+            }
+          } catch (e) {
+            // Not a JSON error response, continue with SSE processing
+          }
+        }
+        
+        // Process complete events (separated by double newlines)
+        const events = buffer.split('\n\n');
+        buffer = events.pop() || ''; // Keep incomplete event in buffer
+        
+        for (const eventBlock of events) {
+          if (eventBlock.trim() === '') continue; // Skip empty blocks
+          
+          console.log('Processing event block:', JSON.stringify(eventBlock)); // Debug log
+          
+          // The entire event block after "data: " is the JSON (including newlines)
+          let eventData = '';
+          if (eventBlock.startsWith('data: ')) {
+            eventData = eventBlock.substring(6); // Remove 'data: ' prefix from the beginning
+          }
+          
+          if (eventData.trim() === '') continue; // Skip empty data
+          
+          console.log('Extracted event data:', JSON.stringify(eventData)); // Debug log
+          
+          try {
+            const event: StreamEvent = JSON.parse(eventData);
+            console.log('Parsed event successfully:', event); // Debug log
+            
+            if (event.type === 'delta') {
+              console.log('Delta received immediately:', event.delta); // Debug timing
+              // Add a tiny delay to ensure DOM can render before next delta
+              setTimeout(() => onDelta?.(event.delta), 0);
+            } else if (event.type === 'end') {
+              console.log('End event received'); // Debug timing
+              if (event.status === 'ok' && event.data) {
+                onEnd?.(event.data);
+              } else {
+                onError?.(event.error || 'Stream ended with error');
+              }
+              return; // End of stream
+            }
+          } catch (parseError) {
+            console.error('Failed to parse SSE event:', parseError, 'Raw data:', JSON.stringify(eventData));
+            console.error('Event block was:', JSON.stringify(eventBlock));
+          }
+        }
+      }
+    } finally {
+      reader.releaseLock();
+    }
+  } catch (error) {
+    console.error('Streaming API Call error:', error);
+    onError?.(error instanceof Error ? error.message : 'An unknown error occurred');
+  }
 }
 
 // Utility function to clear the session cookie
