@@ -251,7 +251,7 @@ export default function Home() {
                     popular: false
                   }, {
                     id: 'pro',
-                    name: 'Avanzato',
+                    name: 'Utente',
                     price: '€9/mese',
                     description: 'Tutte le funzioni premium e supporto completo.',
                     features: [
@@ -264,7 +264,7 @@ export default function Home() {
                     popular: true
                   }, {
                     id: 'proplus',
-                    name: 'Professionale',
+                    name: 'Professionista',
                     price: '€39/mese',
                     description: 'Funzioni avanzate e priorità nel supporto.',
                     features: [

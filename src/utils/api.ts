@@ -273,7 +273,7 @@ export async function sendChatMessageStream(
               // Handle specific error types with dedicated messages
               let errorMessage = errorResponse.error;
               if (errorResponse.error === 'Credit limit exceeded') {
-                errorMessage = '❌ Credit limit exceeded! You have reached your usage limit for this billing period.\n\n💡 Want to continue? Upgrade to a paid account for more prices!\n\n👉 <a href="/#prezzi" style="color: #007bff; text-decoration: underline;">View our pricing plans</a>';
+                errorMessage = '❌ Limite di credito superato! Hai raggiunto il limite di utilizzo per questo periodo di fatturazione.\n\n💡 Vuoi continuare? Passa a un account a pagamento per ulteriori funzionalità!\n\n👉 <a href="/#prezzi" style="color: #007bff; text-decoration: underline;">Scopri i nostri piani tariffari</a>';
               } else if (errorResponse.error.includes('authentication') || errorResponse.error.includes('session')) {
                 errorMessage = '❌ Authentication error! Please log in again.';
               } else if (errorResponse.error.includes('rate limit')) {
