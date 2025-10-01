@@ -354,6 +354,17 @@ const Chat = () => {
   return (
     <div className={`nv-chat-page ${isKeyboardOpen ? 'nv-keyboard-open' : ''}`}>
       <LandingHeader logoOnly={true} />
+      
+      {/* Back to Index with Bubble Chat Button */}
+      <button
+        className="nv-back-to-bubble-btn"
+        onClick={() => window.location.href = '/?openBubbleChat=true'}
+        title="Torna alla home con chat"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M6 14h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      </button>
 
       {/* Desktop Main Content Wrapper */}
       <div className={`nv-chat-main-content ${!isMobile ? 'nv-desktop' : ''}`}>

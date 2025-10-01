@@ -19,6 +19,46 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+}
+
+/* Back to Bubble Chat Button */
+.nv-back-to-bubble-btn {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  z-index: 1000;
+  background: var(--nv-primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.nv-back-to-bubble-btn:hover {
+  background: var(--nv-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.nv-back-to-bubble-btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .nv-back-to-bubble-btn {
+    width: 44px;
+    height: 44px;
+    top: 90px;
+    right: 16px;
+  }
 }
 
 /* Loading Container */

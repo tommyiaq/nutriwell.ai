@@ -3,17 +3,28 @@ import Header from '../components/landing-Header';
 import Footer from '../components/landing-Footer';
 import BubbleChat from '../components/BubbleChat';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useUser } from '../contexts/UserContext';
+import { useRouter } from 'next/router';
 
 export default function Home() {
   const [selectedPlan, setSelectedPlan] = useState('pro');
+  const [autoOpenBubbleChat, setAutoOpenBubbleChat] = useState(false);
   const t = useTranslations();
-
+  const router = useRouter();
 
   // Use authentication check
   const { isAuthenticated } = useUser();
+
+  // Check for openBubbleChat parameter
+  useEffect(() => {
+    if (router.query.openBubbleChat === 'true') {
+      setAutoOpenBubbleChat(true);
+      // Clean the URL by removing the parameter
+      router.replace('/', undefined, { shallow: true });
+    }
+  }, [router]);
 
   // Handler for chat button click
   const handleChatClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -319,7 +330,7 @@ export default function Home() {
       <Footer />
       
       {/* Bubble Chat */}
-      <BubbleChat />
+      <BubbleChat autoOpen={autoOpenBubbleChat} />
     </>
   );
 }

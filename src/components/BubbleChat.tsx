@@ -11,12 +11,16 @@ interface Message {
   timestamp: Date;
 }
 
-const BubbleChat: React.FC = () => {
+interface BubbleChatProps {
+  autoOpen?: boolean;
+}
+
+const BubbleChat: React.FC<BubbleChatProps> = ({ autoOpen = false }) => {
   const router = useRouter();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { isAuthenticated, isLoading } = useUser();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(autoOpen);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoadingMessages, setIsLoadingMessages] = useState(false);
   const [currentSessionId, setCurrentSessionId] = useState<string | undefined>(undefined);
@@ -112,6 +116,13 @@ const BubbleChat: React.FC = () => {
       );
     });
   };
+
+  // Handle autoOpen prop
+  useEffect(() => {
+    if (autoOpen) {
+      setIsOpen(true);
+    }
+  }, [autoOpen]);
 
   // Load chat messages from API when opened
   useEffect(() => {
