@@ -43,9 +43,14 @@
 }
 
 .nv-back-to-bubble-btn:hover {
-  background: var(--nv-primary-dark);
+  background: #f3f4f6; /* Light background on hover */
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+  color: var(--nv-primary); /* Dark icon on light background */
+}
+
+.nv-back-to-bubble-btn svg {
+  transition: color 0.2s ease;
 }
 
 .nv-back-to-bubble-btn:active {
@@ -171,13 +176,44 @@
   margin-bottom: 2rem;
 }
 
+.nv-side-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
 .nv-side-section-title {
   font-size: 0.875rem;
   font-weight: 600;
   color: #374151;
-  margin: 0 0 0.75rem 0;
+  margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.nv-new-session-btn {
+  background: var(--nv-primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nv-new-session-btn:hover {
+  background: #f3f4f6; /* Light background on hover */
+  transform: scale(1.05);
+  color: var(--nv-primary); /* Dark icon on light background */
+}
+
+.nv-new-session-btn svg {
+  transition: color 0.2s ease;
 }
 
 .nv-side-section-item {
@@ -198,6 +234,17 @@
 .nv-side-section-item.nv-active {
   background: var(--nv-light-green);
   color: var(--nv-primary);
+}
+
+.nv-session-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nv-session-date {
+  font-size: 0.875rem;
+  color: inherit;
   font-weight: 500;
 }
 

@@ -3,7 +3,7 @@ import { flushSync } from 'react-dom';
 import { useTranslations } from 'next-intl';
 import LandingHeader from '../components/landing-Header';
 import { useUser } from '../contexts/UserContext';
-import { getChatMessages, sendChatMessageStream, ApiChatMessage } from '../utils/api';
+import { getChatMessages, sendChatMessageStream, listChatSessions, ApiChatMessage, ChatSession } from '../utils/api';
 
 interface Message {
   id: number;
@@ -33,6 +33,10 @@ const Chat = () => {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  
+  // Session management state
+  const [chatSessions, setChatSessions] = useState<ChatSession[]>([]);
+  const [isLoadingSessions, setIsLoadingSessions] = useState(true);
 
   // Helper function to convert API messages to local message format
   const convertApiMessagesToLocal = (apiMessages: ApiChatMessage[]): Message[] => {
@@ -128,10 +132,17 @@ const Chat = () => {
   useEffect(() => {
     const loadMessages = async () => {
       if (!isAuthenticated) return;
+      
+      // Don't load messages for 'new' sessions (they have no messages yet)
+      if (currentSessionId === 'new') {
+        setMessages([]);
+        setIsLoadingMessages(false);
+        return;
+      }
 
       try {
         setIsLoadingMessages(true);
-        const response = await getChatMessages(); // Call without sessionId to get the last session
+        const response = await getChatMessages(currentSessionId); // Pass the current session ID
         
         if (response.status === 'ok' && response.data) {
           const localMessages = convertApiMessagesToLocal(response.data.messages);
@@ -151,6 +162,36 @@ const Chat = () => {
     };
 
     loadMessages();
+  }, [isAuthenticated, currentSessionId]); // Re-load when session changes
+
+  // Load chat sessions
+  const loadSessions = async () => {
+    if (!isAuthenticated) return;
+
+    try {
+      setIsLoadingSessions(true);
+      const response = await listChatSessions();
+      
+      if (response.status === 'ok' && response.data) {
+        // Sort sessions by date (most recent first)
+        const sortedSessions = response.data.sessions.sort((a, b) => 
+          new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime()
+        );
+        setChatSessions(sortedSessions);
+      } else {
+        console.error('Failed to load sessions:', response.error);
+        setChatSessions([]);
+      }
+    } catch (error) {
+      console.error('Error loading sessions:', error);
+      setChatSessions([]);
+    } finally {
+      setIsLoadingSessions(false);
+    }
+  };
+
+  useEffect(() => {
+    loadSessions();
   }, [isAuthenticated]);
 
   // Check if mobile on mount
@@ -219,6 +260,29 @@ const Chat = () => {
     };
   }, []);
 
+  // Session management functions
+  const handleSessionSwitch = async (sessionId: string) => {
+    setCurrentSessionId(sessionId);
+    setMessages([]); // Clear current messages
+    setIsLoadingMessages(true); // Will trigger reload in useEffect
+  };
+
+  const createNewSession = () => {
+    setCurrentSessionId('new'); // Use 'new' as specified in API
+    setMessages([]); // Clear current messages
+  };
+
+  const formatSessionDate = (dateTime: string) => {
+    const date = new Date(dateTime);
+    return date.toLocaleDateString('it-IT', {
+      day: '2-digit',
+      month: '2-digit',
+      year: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   // Handle input focus for mobile
   const handleInputFocus = () => {
     // Scroll to bottom first
@@ -286,8 +350,14 @@ const Chat = () => {
         },
         // onEnd: Handle stream completion
         (data: { sessionId: string; creditLimit: number; usedCredit: number }) => {
+          const wasNewSession = currentSessionId === 'new';
           setCurrentSessionId(data.sessionId);
           setIsTyping(false);
+          
+          // If this was a new session, refresh the sessions list
+          if (wasNewSession) {
+            loadSessions();
+          }
         },
         // onError: Handle errors
         (error: string) => {
@@ -378,10 +448,42 @@ const Chat = () => {
 
             {/* Chat Sessions Section */}
             <div className="nv-side-section">
-              <h3 className="nv-side-section-title">Chat Sessions</h3>
-              <div className="nv-side-section-item nv-active">
-                <span>Current Session</span>
+              <div className="nv-side-section-header">
+                <h3 className="nv-side-section-title">Chat Sessions</h3>
+                <button 
+                  className="nv-new-session-btn"
+                  onClick={createNewSession}
+                  title="Nuova sessione"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 5v14m-7-7h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </button>
               </div>
+              
+              {isLoadingSessions ? (
+                <div className="nv-side-section-item">
+                  <span>Caricamento...</span>
+                </div>
+              ) : chatSessions.length === 0 ? (
+                <div className="nv-side-section-item">
+                  <span>Nessuna sessione</span>
+                </div>
+              ) : (
+                chatSessions.map((session) => (
+                  <div
+                    key={session.sessionId}
+                    className={`nv-side-section-item ${currentSessionId === session.sessionId ? 'nv-active' : ''}`}
+                    onClick={() => handleSessionSwitch(session.sessionId)}
+                  >
+                    <div className="nv-session-info">
+                      <span className="nv-session-date">
+                        {formatSessionDate(session.dateTime)}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
 
             {/* User Section */}

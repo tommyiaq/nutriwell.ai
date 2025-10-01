@@ -135,6 +135,21 @@ export async function getChatMessages(sessionId?: string): Promise<ApiResponse<C
   return apiCall<ChatGetMessagesResponse>('/Services/ChatGetMessages.srv', requestData);
 }
 
+// Chat sessions interfaces
+export interface ChatSession {
+  sessionId: string;
+  dateTime: string;
+}
+
+export interface ListChatSessionsResponse {
+  sessions: ChatSession[];
+}
+
+// List chat sessions
+export async function listChatSessions(): Promise<ApiResponse<ListChatSessionsResponse>> {
+  return apiCall<ListChatSessionsResponse>('/Services/ListChatSessions.srv', {});
+}
+
 // Chat send message interfaces
 export interface ChatSendMessageRequest {
   sessionId?: string;
