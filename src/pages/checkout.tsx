@@ -1,86 +1,95 @@
 import Link from 'next/link';
-import { FiArrowLeft } from 'react-icons/fi';
-import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import LandingHeader from '../components/landing-Header';
 
 export default function Checkout() {
   const router = useRouter();
-  const { plan } = router.query;
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    card: '',
-    expiry: '',
-    cvc: ''
-  });
-  const [message, setMessage] = useState('');
+  const { success, session_id } = router.query;
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  // Plan info
-  const plans = {
-    free: { name: 'Piano NutriWell Free', price: '€0/mese' },
-    pro: { name: 'Piano NutriWell Pro', price: '€9/mese' },
-    proplus: { name: 'Piano NutriWell Pro+', price: '€19/mese' }
-  };
-  type PlanKey = 'free' | 'pro' | 'proplus';
-  let selectedPlan = plans['pro'];
-  if (typeof plan === 'string' && ['free','pro','proplus'].includes(plan)) {
-    selectedPlan = plans[plan as PlanKey];
-  }
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  }
-
-  function handlePay(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    // Simulate payment
-    if (!form.name || !form.email || !form.card || !form.expiry || !form.cvc) {
-      setMessage('Per favore, compila tutti i campi.');
-      return;
+  useEffect(() => {
+    if (success === 'true' && session_id) {
+      setIsSuccess(true);
     }
-    setMessage('Pagamento completato!');
+  }, [success, session_id]);
+
+  if (!isSuccess) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#EFF9F0' }}>
+        <div style={{ textAlign: 'center', color: '#0A4435' }}>
+          <p>Caricamento...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#EFF9F0' }}>
-      <div style={{ width: '100%', maxWidth: 400, margin: '2rem auto', position: 'relative' }}>
-        <Link href="/#prezzi" style={{ position: 'absolute', left: 0, top: 0, display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#0A4435', textDecoration: 'none', fontWeight: 600, fontSize: '1.1rem' }}>
-          <FiArrowLeft size={24} />
-          <span>Indietro</span>
-        </Link>
-        <div style={{ padding: '2.5rem 2rem', background: 'white', borderRadius: 12, boxShadow: '0 4px 20px rgba(10, 68, 53, 0.1)' }}>
-          <h2 style={{ textAlign: 'center', marginBottom: '1.5rem', color: '#0A4435' }}>Checkout</h2>
-          <div style={{ marginBottom: '1.5rem', textAlign: 'center', color: '#222', fontWeight: 500 }}>
-            <span>Riepilogo piano selezionato</span>
-            <div style={{ marginTop: '0.5rem', fontSize: '1.1rem', color: '#2D6A4F' }}>
-              {selectedPlan.name}
+    <div style={{ minHeight: '100vh', background: '#EFF9F0' }}>
+      {/* Use the same simplified header as chat.tsx */}
+      <LandingHeader logoOnly={true} />
+
+      {/* Success Message */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem 2rem' }}>
+        <div style={{ maxWidth: '500px', textAlign: 'center', background: 'white', borderRadius: '16px', padding: '3rem 2rem', boxShadow: '0 4px 20px rgba(10, 68, 53, 0.1)' }}>
+          {/* Success Icon */}
+          <div style={{ marginBottom: '2rem' }}>
+            <div style={{ 
+              width: '80px', 
+              height: '80px', 
+              borderRadius: '50%', 
+              background: '#2D6A4F', 
+              margin: '0 auto', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              fontSize: '2.5rem'
+            }}>
+              ✓
             </div>
-            <div style={{ fontSize: '0.95rem', color: '#666' }}>{selectedPlan.price}</div>
           </div>
-          <form onSubmit={handlePay} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <input name="name" type="text" placeholder="Nome" value={form.name} onChange={handleChange} style={inputStyle} />
-            <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} style={inputStyle} />
-            <input name="card" type="text" placeholder="Numero carta" value={form.card} onChange={handleChange} style={inputStyle} maxLength={19} />
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <input name="expiry" type="text" placeholder="MM/AA" value={form.expiry} onChange={handleChange} style={{ ...inputStyle, flex: 1 }} maxLength={5} />
-              <input name="cvc" type="text" placeholder="CVC" value={form.cvc} onChange={handleChange} style={{ ...inputStyle, flex: 1 }} maxLength={4} />
-            </div>
-            <button type="submit" style={{ background: '#0A4435', color: 'white', fontWeight: 600, border: 'none', borderRadius: 8, padding: '0.75rem', fontSize: '1rem', cursor: 'pointer', marginTop: '1rem' }}>
-              Paga
-            </button>
-          </form>
-          {message && <div style={{ marginTop: '1rem', color: message.includes('completato') ? '#2D6A4F' : '#B00020', textAlign: 'center', fontWeight: 500 }}>{message}</div>}
+
+          {/* Success Message */}
+          <h1 style={{ color: '#0A4435', marginBottom: '1rem', fontSize: '1.8rem', fontWeight: 600 }}>
+            Pagamento Completato!
+          </h1>
+          
+          <p style={{ color: '#666', marginBottom: '2rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
+            Grazie per aver scelto NutriWell AI. Il tuo abbonamento è stato attivato con successo.
+          </p>
+
+          <p style={{ color: '#2D6A4F', marginBottom: '2.5rem', fontSize: '1rem', fontWeight: 500 }}>
+            Ora puoi iniziare a chattare con il tuo assistente nutrizionale personalizzato!
+          </p>
+
+          {/* Chat Button */}
+          <Link 
+            href="/chat" 
+            style={{ 
+              display: 'inline-block',
+              background: '#0A4435', 
+              color: 'white', 
+              padding: '1rem 2rem', 
+              borderRadius: '12px', 
+              textDecoration: 'none', 
+              fontWeight: 600, 
+              fontSize: '1.1rem',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 15px rgba(10, 68, 53, 0.3)'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = '#2D6A4F';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = '#0A4435';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
+          >
+            Inizia a Chattare →
+          </Link>
         </div>
       </div>
     </div>
   );
 }
-
-const inputStyle = {
-  padding: '0.75rem',
-  borderRadius: 6,
-  border: '1px solid #ccc',
-  fontSize: '1rem',
-  outline: 'none',
-  width: '100%'
-};

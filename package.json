@@ -24,11 +24,13 @@
     "clean": "rm -rf .next out node_modules/.cache"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^8.0.0",
     "next": "^15.5.2",
     "next-intl": "^4.3.5",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-icons": "^5.5.0"
+    "react-icons": "^5.5.0",
+    "stripe": "^19.0.0"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",

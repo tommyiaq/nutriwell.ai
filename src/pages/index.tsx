@@ -7,15 +7,17 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useUser } from '../contexts/UserContext';
 import { useRouter } from 'next/router';
+import { redirectToStripeCheckout, isValidPlan } from '../utils/stripe-api';
 
 export default function Home() {
-  const [selectedPlan, setSelectedPlan] = useState('pro');
+  const [selectedPlan, setSelectedPlan] = useState('user');
   const [autoOpenBubbleChat, setAutoOpenBubbleChat] = useState(false);
+  const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
   const t = useTranslations();
   const router = useRouter();
 
   // Use authentication check
-  const { isAuthenticated } = useUser();
+  const { user, isAuthenticated } = useUser();
 
   // Check for openBubbleChat parameter
   useEffect(() => {
@@ -31,6 +33,32 @@ export default function Home() {
     if (!isAuthenticated) {
       e.preventDefault();
       window.location.href = '/signin';
+    }
+  };
+
+  // Handler for Stripe checkout (Pro plan)
+  const handleStripeCheckout = async (planId: string) => {
+    if (!user) {
+      // Redirect to sign in if user is not authenticated
+      router.push('/signin');
+      return;
+    }
+
+    // Validate plan ID
+    if (!isValidPlan(planId)) {
+      console.error('Invalid plan ID:', planId);
+      alert('Piano non valido selezionato');
+      return;
+    }
+
+    setIsCheckoutLoading(true);
+    try {
+      await redirectToStripeCheckout(planId, user);
+    } catch (error) {
+      console.error('Checkout error:', error);
+      alert('Errore durante l\'avvio del checkout. Riprova più tardi.');
+    } finally {
+      setIsCheckoutLoading(false);
     }
   };
 
@@ -250,7 +278,7 @@ export default function Home() {
                     ],
                     popular: false
                   }, {
-                    id: 'pro',
+                    id: 'user',
                     name: 'Utente',
                     price: '€9/mese',
                     description: 'Tutte le funzioni premium e supporto completo.',
@@ -263,7 +291,7 @@ export default function Home() {
                     ],
                     popular: true
                   }, {
-                    id: 'proplus',
+                    id: 'pro',
                     name: 'Professionista',
                     price: '€39/mese',
                     description: 'Funzioni avanzate e priorità nel supporto.',
@@ -289,12 +317,34 @@ export default function Home() {
                           <div className="nv-plan-price">{plan.price}</div>
                           <p className="nv-plan-description">{plan.description}</p>
                         </div>
-                        <Link 
-                          href={`/checkout?plan=${plan.id}`}
-                          className={`nv-btn-primary nv-plan-cta${selectedPlan === plan.id ? ' active' : ''}`}
-                        >
-                          Prosegui
-                        </Link>
+                        {plan.id === 'free' ? (
+                          <Link 
+                            href="/chat"
+                            className={`nv-btn-primary nv-plan-cta${selectedPlan === plan.id ? ' active' : ''}`}
+                          >
+                            Prosegui
+                          </Link>
+                        ) : plan.id === 'user' ? (
+                          <button
+                            onClick={() => handleStripeCheckout(plan.id)}
+                            disabled={isCheckoutLoading}
+                            className={`nv-btn-primary nv-plan-cta${selectedPlan === plan.id ? ' active' : ''}`}
+                            style={{ 
+                              border: 'none',
+                              cursor: isCheckoutLoading ? 'not-allowed' : 'pointer',
+                              opacity: isCheckoutLoading ? 0.7 : 1
+                            }}
+                          >
+                            {isCheckoutLoading ? 'Caricamento...' : 'Prosegui'}
+                          </button>
+                        ) : (
+                          <Link 
+                            href={`/checkout?plan=${plan.id}`}
+                            className={`nv-btn-primary nv-plan-cta${selectedPlan === plan.id ? ' active' : ''}`}
+                          >
+                            Prosegui
+                          </Link>
+                        )}
                         <div className="nv-plan-features">
                           <ul>
                             {plan.features.map((feature, index) => (
