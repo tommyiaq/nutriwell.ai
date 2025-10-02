@@ -11,12 +11,14 @@ html, body {
 }
 
 :root {
-  --nv-primary: #0A4435;
+  ----nv-primary: #0A4435;
+  --nv-primary: #27a39f;     /* Primary green */
   --nv-secondary: #2D6A4F;
   --nv-bg: #EFF9F0;
   --nv-text: #222;
   --nv-accent: #52B788;
   --nv-light-green: #B7E4C7;
+  --nv-verylight-green: #F9FFF8;
   --nv-header-height: 80px;
   --nv-header-spacing: calc(var(--nv-header-height) + 1rem);
 }

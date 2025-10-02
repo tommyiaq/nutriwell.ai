@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import LandingHeader from '../components/landing-Header';
 import { useUser } from '../contexts/UserContext';
 import { getChatMessages, sendChatMessageStream, listChatSessions, ApiChatMessage, ChatSession } from '../utils/api';
+import Image from "next/image";
 
 interface Message {
   id: number;
@@ -470,7 +471,7 @@ const Chat = () => {
                   <span>Nessuna sessione</span>
                 </div>
               ) : (
-                chatSessions.map((session) => (
+                 chatSessions.slice(0, 10).map((session) => (
                   <div
                     key={session.sessionId}
                     className={`nv-side-section-item ${currentSessionId === session.sessionId ? 'nv-active' : ''}`}
@@ -509,13 +510,21 @@ const Chat = () => {
           ></div>
         )}
 
-        <div className="nv-chat-container">
+        <div className="nv-chat-container gradient-x">
           {/* Messages Container */}
           <div className="nv-messages-container">
             <div className="nv-messages-list">
               {isLoadingMessages ? (
                 <div className="nv-message nv-message-ai">
-                  <div className="nv-message-avatar">🤖</div>
+                  
+                  <div className="nv-message-avatar nv-message-avatar-bot">
+                        <Image
+                          src="/images/logo02.svg"
+                          alt="Logo Bot"
+                          width={32}
+                          height={32}
+                        />
+                    </div>
                   <div className="nv-message-content">
                     <div className="nv-message-bubble nv-typing">
                       <div className="nv-typing-dots">
@@ -532,8 +541,23 @@ const Chat = () => {
                     key={message.id}
                     className={`nv-message ${message.sender === 'user' ? 'nv-message-user' : 'nv-message-ai'}`}
                   >
-                    <div className="nv-message-avatar">
-                      {message.sender === 'user' ? '👤' : '🤖'}
+                    <div
+                      className={`nv-message-avatar ${
+                        message.sender === "user"
+                          ? "nv-message-avatar-human"
+                          : "nv-message-avatar-bot"
+                      }`}
+                    >
+                      {message.sender === "user" ? (
+                        "👤"
+                      ) : (
+                        <Image
+                          src="/images/logo02.svg"
+                          alt="Logo Bot"
+                          width={32}
+                          height={32}
+                        />
+                      )}
                     </div>
                     <div className="nv-message-content">
                       <div className={`nv-message-bubble ${message.sender === 'ai' && message.text === '' && isTyping ? 'nv-typing' : ''}`}>

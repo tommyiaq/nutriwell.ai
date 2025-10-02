@@ -25,7 +25,7 @@
 /* Back to Bubble Chat Button */
 .nv-back-to-bubble-btn {
   position: fixed;
-  top: 100px;
+  top: 15px;
   right: 20px;
   z-index: 1000;
   background: var(--nv-primary);
@@ -319,6 +319,11 @@
   flex-direction: row-reverse;
 }
 
+.nv-message-avatar-bot{
+  
+  background: none !important;
+}
+
 .nv-message-avatar {
   font-size: 1.5rem;
   width: 40px;
@@ -346,7 +351,7 @@
 }
 
 .nv-message-bubble {
-  background: var(--nv-light-green);
+  background: var(--nv-verylight-green);
   padding: 0.75rem 1rem;
   border-radius: 18px;
   border-bottom-left-radius: 4px;

@@ -129,6 +129,9 @@
   height:64px; display:flex; align-items:center; justify-content:space-between; 
   position:relative; /* Added for mobile menu positioning */
 }
+.nv-chat-page .container{
+  margin: 0 !important;
+}
 .brand{ display:flex; gap:.6rem; align-items:center }
 .brand .payoff{ font-size:.8rem; color:var(--nw-muted); margin-top:2px }
 .nav{ display:flex; gap:1.25rem; align-items:center }

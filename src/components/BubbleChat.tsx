@@ -3,6 +3,7 @@ import { flushSync } from 'react-dom';
 import { useUser } from '../contexts/UserContext';
 import { getChatMessages, sendChatMessageStream, ApiChatMessage } from '../utils/api';
 import { useRouter } from 'next/router';
+import Image from "next/image";
 
 interface Message {
   id: number;
@@ -336,7 +337,14 @@ const BubbleChat: React.FC<BubbleChatProps> = ({ autoOpen = false }) => {
           <div className="bubble-chat-messages">
             {isLoadingMessages ? (
               <div className="bubble-message bubble-message-ai">
-                <div className="bubble-message-avatar">🤖</div>
+                <div className="bubble-message-avatar">
+                    <Image
+                      src="/images/logo02.svg"
+                      alt="Logo Bot"
+                      width={32}
+                      height={32}
+                    />
+                </div>
                 <div className="bubble-message-content">
                   <div className="bubble-message-bubble bubble-typing">
                     <div className="bubble-typing-dots">
@@ -350,7 +358,14 @@ const BubbleChat: React.FC<BubbleChatProps> = ({ autoOpen = false }) => {
             ) : messages.length === 0 ? (
               <div className="bubble-chat-empty">
                 <div className="bubble-chat-welcome">
-                  <span>🤖</span>
+                  <span>
+                    <Image
+                      src="/images/logo02.svg"
+                      alt="Logo Bot"
+                      width={32}
+                      height={32}
+                    />
+                  </span>
                   <p>Ciao! Come posso aiutarti oggi con la tua nutrizione?</p>
                 </div>
               </div>
@@ -361,7 +376,16 @@ const BubbleChat: React.FC<BubbleChatProps> = ({ autoOpen = false }) => {
                   className={`bubble-message ${message.sender === 'user' ? 'bubble-message-user' : 'bubble-message-ai'}`}
                 >
                   <div className="bubble-message-avatar">
-                    {message.sender === 'user' ? '👤' : '🤖'}
+                    {message.sender === "user" ? (
+                      "👤"
+                    ) : (
+                      <Image
+                        src="/images/logo02.svg"
+                        alt="Logo Bot"
+                        width={32}
+                        height={32}
+                      />
+                    )}
                   </div>
                   <div className="bubble-message-content">
                     <div className={`bubble-message-bubble ${message.sender === 'ai' && message.text === '' && isTyping ? 'bubble-typing' : ''}`}>
