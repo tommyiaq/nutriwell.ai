@@ -8,6 +8,8 @@ interface UserContextType {
   isLoading: boolean;
   logout: () => void;
   refreshUserData: () => Promise<void>;
+  currentSessionId: string | undefined;
+  setCurrentSessionId: (sessionId: string | undefined) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -27,6 +29,7 @@ interface UserProviderProps {
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentSessionId, setCurrentSessionId] = useState<string | undefined>(undefined);
 
   // Function to call WhoAmI endpoint for session recovery using apiCall helper
   type WhoAmIResponse = { user?: User };
@@ -92,7 +95,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const isAuthenticated = user !== null && !isLoading;
 
   return (
-    <UserContext.Provider value={{ user, setUser, isAuthenticated, isLoading, logout, refreshUserData }}>
+    <UserContext.Provider value={{ user, setUser, isAuthenticated, isLoading, logout, refreshUserData, currentSessionId, setCurrentSessionId }}>
       {children}
     </UserContext.Provider>
   );

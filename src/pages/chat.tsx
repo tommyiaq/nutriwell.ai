@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { flushSync } from 'react-dom';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
 import LandingHeader from '../components/landing-Header';
 import { useUser } from '../contexts/UserContext';
 import { getChatMessages, sendChatMessageStream, listChatSessions, ApiChatMessage, ChatSession } from '../utils/api';
@@ -15,8 +16,9 @@ interface Message {
 
 const Chat = () => {
   const t = useTranslations();
+  const router = useRouter();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { user, isAuthenticated, isLoading } = useUser();
+  const { user, isAuthenticated, isLoading, currentSessionId, setCurrentSessionId } = useUser();
 
   // Redirect to login if not authenticated (but wait for loading to complete)
   useEffect(() => {
@@ -28,7 +30,6 @@ const Chat = () => {
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoadingMessages, setIsLoadingMessages] = useState(true);
-  const [currentSessionId, setCurrentSessionId] = useState<string | undefined>(undefined);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
@@ -395,14 +396,6 @@ const Chat = () => {
     }
   };
 
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    });
-  };
-
   // Show loading screen while checking authentication
   if (isLoading) {
     return (
@@ -429,7 +422,7 @@ const Chat = () => {
       {/* Back to Index with Bubble Chat Button */}
       <button
         className="nv-back-to-bubble-btn"
-        onClick={() => window.location.href = '/?openBubbleChat=true'}
+        onClick={() => router.push('/?openBubbleChat=true')}
         title="Torna alla home con chat"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -570,9 +563,6 @@ const Chat = () => {
                         ) : (
                           formatMessageText(message.text)
                         )}
-                      </div>
-                      <div className="nv-message-time">
-                        {formatTime(message.timestamp)}
                       </div>
                     </div>
                   </div>

@@ -19,12 +19,11 @@ interface BubbleChatProps {
 const BubbleChat: React.FC<BubbleChatProps> = ({ autoOpen = false }) => {
   const router = useRouter();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { isAuthenticated, isLoading } = useUser();
+  const { isAuthenticated, isLoading, currentSessionId, setCurrentSessionId } = useUser();
 
   const [isOpen, setIsOpen] = useState(autoOpen);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoadingMessages, setIsLoadingMessages] = useState(false);
-  const [currentSessionId, setCurrentSessionId] = useState<string | undefined>(undefined);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
@@ -132,7 +131,7 @@ const BubbleChat: React.FC<BubbleChatProps> = ({ autoOpen = false }) => {
 
       try {
         setIsLoadingMessages(true);
-        const response = await getChatMessages(); // Call without sessionId to get the last session
+        const response = await getChatMessages(currentSessionId); // Use the current session ID
         
         if (response.status === 'ok' && response.data) {
           const localMessages = convertApiMessagesToLocal(response.data.messages);
@@ -152,7 +151,7 @@ const BubbleChat: React.FC<BubbleChatProps> = ({ autoOpen = false }) => {
     };
 
     loadMessages();
-  }, [isOpen, isAuthenticated]);
+  }, [isOpen, isAuthenticated, currentSessionId]); // Reload when session changes
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -198,7 +197,6 @@ const BubbleChat: React.FC<BubbleChatProps> = ({ autoOpen = false }) => {
         currentSessionId,
         // onDelta: Update the AI message with streaming text
         (delta: string) => {
-          console.log('BubbleChat: Delta received for update:', delta, 'at time:', new Date().toISOString());
           // Hide typing indicator on first delta
           setIsTyping(false);
           
@@ -254,14 +252,6 @@ const BubbleChat: React.FC<BubbleChatProps> = ({ autoOpen = false }) => {
       e.preventDefault();
       handleSendMessage();
     }
-  };
-
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    });
   };
 
   const handleExpandClick = () => {
@@ -398,9 +388,6 @@ const BubbleChat: React.FC<BubbleChatProps> = ({ autoOpen = false }) => {
                       ) : (
                         formatMessageText(message.text)
                       )}
-                    </div>
-                    <div className="bubble-message-time">
-                      {formatTime(message.timestamp)}
                     </div>
                   </div>
                 </div>
