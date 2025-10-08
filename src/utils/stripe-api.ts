@@ -126,3 +126,76 @@ export function formatPrice(amount: number, currency: string = 'EUR'): string {
     currency: currency.toUpperCase(),
   }).format(amount);
 }
+
+/**
+ * Get Stripe checkout session status
+ */
+export interface StripeSessionStatus {
+  status: string;
+  payment_status: string;
+  cancel_at_period_end?: boolean;
+  current_period_end?: number;
+  subscription_id?: string;
+  customer_id?: string;
+  plan_id?: number | null;
+  price_id?: string;
+  metadata?: any;
+}
+
+export async function getCheckoutSessionStatus(
+  sessionId: string
+): Promise<StripeSessionStatus | { error: string }> {
+  try {
+    const response = await fetch(`/api/stripe/status?session_id=${sessionId}`);
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to get session status');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error getting checkout session status:', error);
+    return { 
+      error: error instanceof Error ? error.message : 'Failed to get session status' 
+    };
+  }
+}
+
+/**
+ * Notify backend about service plan purchase
+ */
+export async function notifyServicePlanPurchased(
+  planId: number,
+  stripeCustomerId: string
+): Promise<{ status: 'ok' | 'error'; data?: any; error?: string }> {
+  try {
+    const API_BASE_URL = 'https://nutriwellai.pragma.software';
+    
+    const response = await fetch(`${API_BASE_URL}/Services/ServicePlanPurchased.srv`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        planId,
+        stripeCustomerId
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error notifying service plan purchase:', error);
+    return {
+      status: 'error',
+      error: error instanceof Error ? error.message : 'Failed to notify purchase'
+    };
+  }
+}
