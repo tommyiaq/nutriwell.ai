@@ -148,6 +148,78 @@
   color: var(--nv-secondary);
 }
 
+/* Disclaimer Boxes */
+.nv-disclaimer-box {
+  padding: 1rem;
+  background: #fef3c7;
+  border: 2px solid #fbbf24;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.nv-disclaimer-text {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #78350f;
+  margin: 0;
+}
+
+.nv-disclaimer-footer {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  background: #dbeafe;
+  border-color: #3b82f6;
+}
+
+.nv-disclaimer-footer .nv-disclaimer-text {
+  color: #1e40af;
+}
+
+.nv-info-box {
+  padding: 1rem;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.nv-info-box p {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #0c4a6e;
+  margin: 0;
+}
+
+.nv-auth-box {
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(10, 68, 53, 0.1);
+  border: 1px solid rgba(10, 68, 53, 0.1);
+}
+
+.nv-submit-btn {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.nv-auth-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.nv-link {
+  color: var(--nv-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nv-link:hover {
+  text-decoration: underline;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .nv-auth-container {
@@ -156,7 +228,8 @@
     padding: 0 1rem;
   }
   
-  .nv-auth-card {
+  .nv-auth-card,
+  .nv-auth-box {
     padding: 2rem 1.5rem;
   }
   
@@ -169,6 +242,16 @@
   }
   
   .nv-checkbox-label {
+    font-size: 0.8125rem;
+  }
+  
+  .nv-disclaimer-box,
+  .nv-info-box {
+    padding: 0.875rem;
+  }
+  
+  .nv-disclaimer-text,
+  .nv-info-box p {
     font-size: 0.8125rem;
   }
 }

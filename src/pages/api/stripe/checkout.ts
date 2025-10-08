@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 // Price IDs mapping
 const PRICE_IDS = {
   basic: 'price_1SBiE0JutzSMwE36zYk3pzZ9', // €9/month user plan
-  pro: 'price_1QH0yVJutzSMwE36iVn2X3mR',   // €39/month pro plan
+  pro: 'price_1SBig9JutzSMwE36uz3QEFvf',   // €39/month pro plan
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

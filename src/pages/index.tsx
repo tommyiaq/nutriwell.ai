@@ -337,6 +337,13 @@ export default function Home() {
                           >
                             {isCheckoutLoading ? 'Caricamento...' : 'Prosegui'}
                           </button>
+                        ) : plan.id === 'pro' ? (
+                          <Link 
+                            href="/professional-agreement"
+                            className={`nv-btn-primary nv-plan-cta${selectedPlan === plan.id ? ' active' : ''}`}
+                          >
+                            Prosegui
+                          </Link>
                         ) : (
                           <Link 
                             href={`/checkout?plan=${plan.id}`}
