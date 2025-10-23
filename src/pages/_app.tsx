@@ -11,39 +11,24 @@ import type { AppProps } from 'next/app';
 import { NextIntlClientProvider } from 'next-intl';
 import { useRouter } from 'next/router';
 import { UserProvider } from '../contexts/UserContext';
-import { useEffect, useState } from 'react';
+import en from '../../messages/en.json';
+import it from '../../messages/it.json';
 
 // importa QUI tutti i CSS globali
 import '../styles/tokens.css';
 import '../styles/landing.css';
 
+const messages: Record<string, any> = { en, it };
+
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const [messages, setMessages] = useState<any>(null);
-  const [isReady, setIsReady] = useState(false);
 
-  useEffect(() => {
-    // Load messages based on locale only after router is ready
-    if (!router.isReady) return;
-
-    let loadedMessages;
-    try {
-      loadedMessages = require(`../../messages/${router.locale || 'en'}.json`);
-    } catch (error) {
-      loadedMessages = require(`../../messages/en.json`);
-    }
-    
-    setMessages(loadedMessages);
-    setIsReady(true);
-  }, [router.isReady, router.locale]);
-
-  // Show nothing while loading to avoid hydration mismatch
-  if (!isReady || !messages) {
-    return null;
-  }
+  // Get the correct locale, defaulting to 'en'
+  const locale = router.locale || 'en';
+  const currentMessages = messages[locale] || messages['en'];
 
   return (
-    <NextIntlClientProvider locale={router.locale || 'en'} messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={currentMessages}>
       <UserProvider>
         <Component {...pageProps} />
       </UserProvider>
