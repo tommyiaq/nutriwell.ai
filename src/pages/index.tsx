@@ -19,14 +19,16 @@ export default function Home() {
   // Use authentication check
   const { user, isAuthenticated } = useUser();
 
-  // Check for openBubbleChat parameter
+  // Check for openBubbleChat parameter (only on client side)
   useEffect(() => {
+    if (!router.isReady) return; // Wait for router to be ready
+    
     if (router.query.openBubbleChat === 'true') {
       setAutoOpenBubbleChat(true);
       // Clean the URL by removing the parameter
       router.replace('/', undefined, { shallow: true });
     }
-  }, [router]);
+  }, [router.isReady, router.query.openBubbleChat]);
 
   // Handler for chat button click
   const handleChatClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -392,12 +394,11 @@ export default function Home() {
   );
 }
 
-export async function getStaticProps(context: any) {
+export async function getServerSideProps(context: any) {
   const locale = context.locale || 'en';
   return {
     props: {
       locale,
     },
-    revalidate: 3600,
   };
 }
