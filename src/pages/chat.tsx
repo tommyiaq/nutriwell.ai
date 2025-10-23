@@ -610,4 +610,10 @@ const Chat = () => {
   );
 };
 
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
+}
+
 export default Chat;

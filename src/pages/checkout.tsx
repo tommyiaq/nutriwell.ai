@@ -213,3 +213,9 @@ export default function Checkout() {
     </div>
   );
 }
+
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
+}
