@@ -9,7 +9,6 @@ import '@/styles/pages/chat.css'
 import '@/styles/pages/auth.css'
 import type { AppProps } from 'next/app';
 import { NextIntlClientProvider } from 'next-intl';
-import { useRouter } from 'next/router';
 import { UserProvider } from '../contexts/UserContext';
 import en from '../../messages/en.json';
 import it from '../../messages/it.json';
@@ -21,10 +20,9 @@ import '../styles/landing.css';
 const messages: Record<string, any> = { en, it };
 
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-
-  // Get the correct locale, defaulting to 'en'
-  const locale = router.locale || 'en';
+  // Get locale from pageProps (passed via getStaticProps/getServerSideProps)
+  // This avoids accessing router during prerendering
+  const locale = (pageProps.locale as string) || 'en';
   const currentMessages = messages[locale] || messages['en'];
 
   return (

@@ -156,9 +156,12 @@ const SignIn = () => {
   );
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: any) {
+  const locale = context.locale || 'en';
   return {
-    props: {},
+    props: {
+      locale,
+    },
   };
 }
 

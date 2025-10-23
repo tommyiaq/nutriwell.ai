@@ -391,3 +391,13 @@ export default function Home() {
     </>
   );
 }
+
+export async function getStaticProps(context: any) {
+  const locale = context.locale || 'en';
+  return {
+    props: {
+      locale,
+    },
+    revalidate: 3600,
+  };
+}
