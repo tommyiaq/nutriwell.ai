@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://nutriwellai.pragma.software';
+const API_BASE_URL = 'https://10.101.29.182';
 
 export interface ApiResponse<T = any> {
   status: 'ok' | 'error';
