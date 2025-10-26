@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://10.101.29.182:8080';
+const API_BASE_URL = 'https://193.128.7.245';
 
 export interface ApiResponse<T = any> {
   status: 'ok' | 'error';
