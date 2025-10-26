@@ -225,9 +225,9 @@ export async function sendChatMessageStream(
   }
 
   try {
-    console.log('Streaming API Call:', { endpoint: `${API_BASE_URL}?endpoint=ChatSendMessage.srv`, data: requestData });
+    console.log('Streaming API Call:', { endpoint: `/api/chat-stream`, data: requestData });
     
-    const response = await fetch(`${API_BASE_URL}?endpoint=ChatSendMessage.srv`, {
+    const response = await fetch(`/api/chat-stream`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
