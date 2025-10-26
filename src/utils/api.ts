@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://193.128.7.245';
+const API_BASE_URL = '/api/proxy';
 
 export interface ApiResponse<T = any> {
   status: 'ok' | 'error';
@@ -60,9 +60,9 @@ export async function hashPassword(password: string): Promise<string> {
 // Generic API call function
 export async function apiCall<T>(endpoint: string, data: any): Promise<ApiResponse<T>> {
   try {
-    console.log('API Call:', { endpoint: `${API_BASE_URL}${endpoint}`, data }); // Debug log
+    console.log('API Call:', { endpoint: `${API_BASE_URL}?endpoint=${endpoint}`, data }); // Debug log
     
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    const response = await fetch(`${API_BASE_URL}?endpoint=${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -94,17 +94,17 @@ export async function apiCall<T>(endpoint: string, data: any): Promise<ApiRespon
 
 // Register user
 export async function registerUser(userData: RegisterRequest): Promise<ApiResponse<{ user: User }>> {
-  return apiCall<{ user: User }>('/Services/Register.srv', userData);
+  return apiCall<{ user: User }>('Register.srv', userData);
 }
 
 // Login user (for future use)
 export async function loginUser(credentials: LoginRequest): Promise<ApiResponse<{ user: User }>> {
-  return apiCall<{ user: User }>('/Services/Login.srv', credentials);
+  return apiCall<{ user: User }>('Login.srv', credentials);
 }
 
 // Logout user
 export async function logoutUser(): Promise<ApiResponse<{}>> {
-  return apiCall<{}>('/Services/Logout.srv', {});
+  return apiCall<{}>('Logout.srv', {});
 }
 
 // Chat message interfaces
@@ -132,7 +132,7 @@ export async function getChatMessages(sessionId?: string): Promise<ApiResponse<C
   if (sessionId) {
     requestData.sessionId = sessionId;
   }
-  return apiCall<ChatGetMessagesResponse>('/Services/ChatGetMessages.srv', requestData);
+  return apiCall<ChatGetMessagesResponse>('ChatGetMessages.srv', requestData);
 }
 
 // Chat sessions interfaces
@@ -147,7 +147,7 @@ export interface ListChatSessionsResponse {
 
 // List chat sessions
 export async function listChatSessions(): Promise<ApiResponse<ListChatSessionsResponse>> {
-  return apiCall<ListChatSessionsResponse>('/Services/ListChatSessions.srv', {});
+  return apiCall<ListChatSessionsResponse>('ListChatSessions.srv', {});
 }
 
 // Chat send message interfaces
@@ -199,7 +199,7 @@ export async function sendChatMessage(message: string, sessionId?: string): Prom
     requestData.sessionId = sessionId;
   }
   
-  return apiCall<ChatSendMessageResponse>('/Services/ChatSendMessage.srv', requestData);
+  return apiCall<ChatSendMessageResponse>('ChatSendMessage.srv', requestData);
 }
 
 // Send chat message with streaming
@@ -225,9 +225,9 @@ export async function sendChatMessageStream(
   }
 
   try {
-    console.log('Streaming API Call:', { endpoint: `${API_BASE_URL}/Services/ChatSendMessage.srv`, data: requestData });
+    console.log('Streaming API Call:', { endpoint: `${API_BASE_URL}?endpoint=ChatSendMessage.srv`, data: requestData });
     
-    const response = await fetch(`${API_BASE_URL}/Services/ChatSendMessage.srv`, {
+    const response = await fetch(`${API_BASE_URL}?endpoint=ChatSendMessage.srv`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
