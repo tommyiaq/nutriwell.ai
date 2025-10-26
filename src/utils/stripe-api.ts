@@ -171,7 +171,7 @@ export async function notifyServicePlanPurchased(
   stripeCustomerId: string
 ): Promise<{ status: 'ok' | 'error'; data?: any; error?: string }> {
   try {
-    const API_BASE_URL = 'https://10.101.29.182';
+    const API_BASE_URL = 'http://10.101.29.182';
     
     const response = await fetch(`${API_BASE_URL}/Services/ServicePlanPurchased.srv`, {
       method: 'POST',
