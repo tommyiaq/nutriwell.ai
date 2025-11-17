@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-09-30.clover',
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -47,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const item = subscription.items.data[0];
     const priceId = item?.price?.id;
 
-    // Map price IDs to plan IDs (1 for user/basic, 2 for pro)
+    // Map price IDs to plan IDs (2 for user/basic, 3 for pro)
     let planId = null;
     if (priceId === 'price_1SBiE0JutzSMwE36zYk3pzZ9') {
       planId = 2; // user/basic plan
